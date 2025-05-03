@@ -10,9 +10,12 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import utils.Assets;
 
+import java.net.URL;
 import java.util.ArrayList;
 
 public class GameScene extends AnimationTimer {
@@ -32,7 +35,10 @@ public class GameScene extends AnimationTimer {
         this.player = new Player(100, 0);
         this.camera = new Camera(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
         this.background = Assets.loadImage("BG.png");
-
+        
+        SoundManager.playBGM("BG_music.mp3");
+        SoundManager.playSEF("Into.m4a");
+        
         monsters.add(new Monster(600, GameConfig.GROUND_LEVEL - 30, player));
     }
 
@@ -115,4 +121,35 @@ public class GameScene extends AnimationTimer {
         gc.setFill(Color.BLACK);
         gc.fillText((int) player.getCurrentMana() + " / " + player.getMaxMana(), x + 5, manaY + 14);
     }
+    
+    public class SoundManager {
+    	private static MediaPlayer bgmPlayer;
+    	private static MediaPlayer sefPlayer;
+    	
+    	public static void playBGM(String filename) {
+    		URL resource = SoundManager.class.getResource("/" +  filename);
+    		Media media = new Media(resource.toString());
+    		bgmPlayer = new MediaPlayer(media);
+    		bgmPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+    		bgmPlayer.setVolume(1);
+    		bgmPlayer.play();
+    		
+    		
+    	}
+    	
+    	public static void stopBGM() {
+    		if (bgmPlayer != null) bgmPlayer.stop();;
+    	}
+    	
+    	public static void playSEF(String filename) {
+    		URL resource = SoundManager.class.getResource("/" +  filename);
+    		Media media = new Media(resource.toString());
+    		sefPlayer = new MediaPlayer(media);
+    		sefPlayer.setVolume(1);
+    		sefPlayer.play();
+    	}
+    }
+    
+    
+    
 }
