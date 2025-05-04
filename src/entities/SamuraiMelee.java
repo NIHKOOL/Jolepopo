@@ -7,6 +7,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import utils.Assets;
+import utils.SoundManager;
 
 public class SamuraiMelee extends Character{
     private double x, y;
@@ -41,6 +42,11 @@ public class SamuraiMelee extends Character{
     private Image[] walkFrames, dashFrames, jumpFrames, attackFrames, defendFrames;
 
     private boolean dead = false;
+    
+    private int tempHealth = 0;
+    private long tempHealthStartTime = 0;
+    private static final int TEMP_HEAL_AMOUNT = 10;
+    private static final long TEMP_HEAL_DURATION = 1000;
     
     public SamuraiMelee(double x, double y) {
         this.x = x;
@@ -94,6 +100,10 @@ public class SamuraiMelee extends Character{
         updateMovement(now, left, right);
         updateJump(now);
         regenMana();
+        if (System.currentTimeMillis() - tempHealthStartTime > TEMP_HEAL_DURATION) {
+        	tempHealth = 0;
+        }
+        
     }
     
     @Override
@@ -109,10 +119,16 @@ public class SamuraiMelee extends Character{
         double barHeight = 6;
         double barX = drawX + (drawWidth / 2) - (barWidth / 2);
         double barY = drawY - 15;
-
+        
+        
         gc.setFill(Color.GRAY);
         gc.fillRect(barX, barY, barWidth, barHeight);
 
+        gc.setFill(Color.YELLOW);
+        double totalHP = currentHealth + tempHealth;
+        double hpRatio = Math.min(totalHP / GameConfig.PLAYER_MAX_HEALTH, 1.0);
+        gc.fillRect(barX, barY, barWidth * hpRatio, barHeight);
+        
         gc.setFill(Color.RED);
         gc.fillRect(barX, barY, barWidth * currentHealth / GameConfig.PLAYER_MAX_HEALTH, barHeight);
 
@@ -122,6 +138,11 @@ public class SamuraiMelee extends Character{
             gc.drawImage(frame, 0, 0, frame.getWidth(), frame.getHeight(),
                          drawX + drawWidth, drawY, -drawWidth, drawHeight);
         }
+        
+        
+        
+        
+        
     }
     
     @Override
@@ -133,6 +154,8 @@ public class SamuraiMelee extends Character{
             lastAttackFrameTime = now;
             lastAttackTime = now;
         }
+        
+        SoundManager.playSEF("sword-sound-260274.mp3");
     }
     
     private void updateAttack(long now) {
@@ -155,6 +178,8 @@ public class SamuraiMelee extends Character{
             lastDashTime = now;
             currentMana -= GameConfig.DASH_MANA_COST;
         }
+        
+        SoundManager.playSEF("clean-fast-swooshaiff-14784.mp3");
     }
     
     private void updateDash(long now) {
@@ -180,6 +205,9 @@ public class SamuraiMelee extends Character{
             velocityY = GameConfig.JUMP_STRENGTH;
             onGround = false;
         }
+        
+        SoundManager.playSEF("metal-crunch-263638.mp3");
+        
     }
     
     private void updateJump(long now) {
@@ -197,6 +225,7 @@ public class SamuraiMelee extends Character{
             onGround = true;
         } else {
             onGround = false;
+            
         }
     }
     
@@ -209,6 +238,14 @@ public class SamuraiMelee extends Character{
             lastDefendFrameTime = now;
             lastDefendTime = now;
         }
+        
+        if (now - tempHealthStartTime >= TEMP_HEAL_DURATION) {
+        	tempHealth = TEMP_HEAL_AMOUNT;
+        	tempHealthStartTime = now;
+        	//System.out.println("BLOCK"+"+"+TEMP_HEAL_AMOUNT);
+        }
+        
+        SoundManager.playSEF("metal-clang-284809.mp3");
     }
 
     private void updateDefend(long now) {
@@ -246,12 +283,21 @@ public class SamuraiMelee extends Character{
             if (right) {
                 x += GameConfig.PLAYER_SPEED;
                 facingRight = true;
+   
             }
 
             if (now - lastFrameTime > 150 && (left || right)) {
                 currentFrame = (currentFrame + 1) % walkFrames.length;
                 lastFrameTime = now;
+                
+                if (onGround) {
+                	SoundManager.playSEF("st3-footstep-sfx-323056.mp3", 625);
+                }
+                
+                	
             }
+            
+            
         }
     }
 
@@ -275,9 +321,22 @@ public class SamuraiMelee extends Character{
 
     @Override
     public void takeDamage(int damage) {
+    	if (tempHealth > 0) { //Block najaaaaa
+    		int absorbed = Math.min(damage, tempHealth);
+    		tempHealth -= absorbed;
+    		damage -= absorbed;
+    		SoundManager.playSEF("sword-clash-241729.mp3");
+    	}
+    	
         currentHealth -= damage;
         if (currentHealth < 0) currentHealth = 0;
         if (currentHealth == 0) dead = true;
+    }
+    
+    @Override
+    public void setPosition(double x, double y) {
+    	this.x = x;
+    	this.y = y;
     }
     
     @Override
