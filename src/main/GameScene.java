@@ -5,6 +5,7 @@ import config.GameConfig;
 import entities.Monster;
 import entities.SamuraiMelee;
 import entities.Character;
+import entities.Minotaur;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -56,9 +57,9 @@ public class GameScene extends AnimationTimer {
         SoundManager.playBGM("10. Fighting.mp3");
         //SoundManager.playSEF("Into.m4a");
         
-        monsters.add(new Monster(600, GameConfig.GROUND_LEVEL - 30, currentPlayer));
-        monsters.add(new Monster(1600, GameConfig.GROUND_LEVEL - 30, currentPlayer));
-        monsters.add(new Monster(2600, GameConfig.GROUND_LEVEL - 30, currentPlayer));
+        monsters.add(new Minotaur(600, GameConfig.GROUND_LEVEL - 30, currentPlayer));
+        monsters.add(new Minotaur(1600, GameConfig.GROUND_LEVEL - 30, currentPlayer));
+        monsters.add(new Minotaur(2600, GameConfig.GROUND_LEVEL - 30, currentPlayer));
     }
 
     public void start(Scene scene) {
