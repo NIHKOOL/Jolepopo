@@ -5,6 +5,7 @@ import config.GameConfig;
 import entities.Monster;
 import entities.Player;
 import javafx.animation.AnimationTimer;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -14,6 +15,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import utils.Assets;
+import utils.SoundManager;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -71,9 +73,24 @@ public class GameScene extends AnimationTimer {
     private void update() {
         player.update(moveLeft, moveRight);
         camera.update(player);
+        
         for (Monster m : monsters) {
             m.update();
         }
+        
+        monsters.removeIf(m -> m.isDead());
+        
+        if (player.isAttacking()) {
+            Rectangle2D playerAtk = player.getAttackBox();
+            
+            for (Monster m : monsters) {
+                if (playerAtk.intersects(m.getHitbox())) {
+                    m.takeDamage(1);  // หรือใส่ค่าดาเมจตามที่ต้องการ
+                }
+            }
+        }
+
+        
     }
 
     private void render() {
@@ -121,35 +138,5 @@ public class GameScene extends AnimationTimer {
         gc.setFill(Color.BLACK);
         gc.fillText((int) player.getCurrentMana() + " / " + player.getMaxMana(), x + 5, manaY + 14);
     }
-    
-    public class SoundManager {
-    	private static MediaPlayer bgmPlayer;
-    	private static MediaPlayer sefPlayer;
-    	
-    	public static void playBGM(String filename) {
-    		URL resource = SoundManager.class.getResource("/" +  filename);
-    		Media media = new Media(resource.toString());
-    		bgmPlayer = new MediaPlayer(media);
-    		bgmPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-    		bgmPlayer.setVolume(1);
-    		bgmPlayer.play();
-    		
-    		
-    	}
-    	
-    	public static void stopBGM() {
-    		if (bgmPlayer != null) bgmPlayer.stop();;
-    	}
-    	
-    	public static void playSEF(String filename) {
-    		URL resource = SoundManager.class.getResource("/" +  filename);
-    		Media media = new Media(resource.toString());
-    		sefPlayer = new MediaPlayer(media);
-    		sefPlayer.setVolume(1);
-    		sefPlayer.play();
-    	}
-    }
-    
-    
     
 }
