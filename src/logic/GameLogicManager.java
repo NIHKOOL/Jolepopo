@@ -33,7 +33,7 @@ public class GameLogicManager {
             for (Monster m : monsters) {
                 if (playerAtk.intersects(m.getHitbox())) {
                     m.takeDamage(1);  
-                    SoundManager.playSEF("hit-swing-sword-small-2-95566.mp3");
+                    SoundManager.playSEF("hit-swing-sword-small-2-95566.mp3", 100);
                 }
             }
         }

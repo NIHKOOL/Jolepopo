@@ -2,14 +2,21 @@ package ui;
 
 import entities.Character;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import utils.Assets;
 
 public class HUDRenderer {
 	
 	private Character player;
+	private final Image hudFrame;
+	private final Image SamuraiFace;
 	
 	public HUDRenderer(Character player) {
 		this.player = player;
+		this.hudFrame = Assets.loadImage("Hbar_Mbar.png");
+		this.SamuraiFace = Assets.loadImage("faceSumuraimelee.png"); 
 	}
 	
 	public void setCharacter(Character c) {
@@ -17,31 +24,32 @@ public class HUDRenderer {
 	}
 	
 	public void renderHUD(GraphicsContext gc) {
-        double x = 20;
-        double y = 20;
-
-        double healthWidth = 200;
-        double healthHeight = 20;
-        gc.setFill(Color.GRAY);
-        gc.fillRect(x, y, healthWidth, healthHeight);
-        gc.setFill(Color.RED);
-        double healthPercent = (double) player.getCurrentHealth() / player.getMaxHealth();
-        gc.fillRect(x, y, healthWidth * healthPercent, healthHeight);
-
-        gc.setFill(Color.WHITE);
-        gc.fillText(player.getCurrentHealth() + " / " + player.getMaxHealth(), x + 5, y + 14);
-
-        double manaWidth = 300;
-        double manaHeight = 20;
-        double manaY = y + healthHeight + 5;
-        gc.setFill(Color.BISQUE);
-        gc.fillRect(x, manaY, manaWidth, manaHeight);
-        gc.setFill(Color.LIGHTYELLOW);
-        double manaPercent = player.getCurrentMana() / player.getMaxMana();
-        gc.fillRect(x, manaY, manaWidth * manaPercent, manaHeight);
-
-        gc.setFill(Color.BLACK);
-        gc.fillText((int) player.getCurrentMana() + " / " + player.getMaxMana(), x + 5, manaY + 14);
+		double hudX = 20;
+		double hudY = 20;
+		
+		double healthPercent = (double) player.getCurrentHealth() / player.getMaxHealth();
+		double manaPercent = (double) player.getCurrentMana() / player.getMaxMana();
+		
+		gc.setFill(Color.BLACK);
+		gc.fillRect(hudX + 30, hudY + 25, 80, 60); //Very Very First 
+		
+		gc.setFill(Color.LIGHTGRAY);
+		gc.fillRect(hudX + 121, hudY + 30, 215, 16);
+		gc.setFill(Color.RED);
+		gc.fillRect(hudX + 121, hudY + 30, 215 * healthPercent, 16);
+		
+		gc.setFill(Color.GRAY);
+		gc.fillRect(hudX + 121, hudY + 63, 215, 16);
+		gc.setFill(Color.AQUA);
+		gc.fillRect(hudX + 121, hudY + 63, 215 * manaPercent, 16);
+		
+		gc.drawImage(SamuraiFace, hudX + 40, hudY + 20);
+		gc.drawImage(hudFrame, hudX, hudY);
+		
+		gc.setFill(Color.BLACK);
+		gc.fillText(player.getCurrentHealth() + "/" + player.getMaxHealth(), hudX + 126, hudY + 42);
+		gc.setFill(Color.BLACK);
+		gc.fillText((int) player.getCurrentMana() + "/" + player.getMaxHealth(), hudX + 126, hudY + 75);
     }
 	
 }
