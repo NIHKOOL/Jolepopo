@@ -121,7 +121,7 @@ public class SamuraiMelee extends Character{
         double barY = drawY - 15;
         
         
-        gc.setFill(Color.GRAY);
+        gc.setFill(Color.LIGHTGRAY);
         gc.fillRect(barX, barY, barWidth, barHeight);
 
         gc.setFill(Color.YELLOW);
