@@ -2,6 +2,7 @@ package entities;
 
 import camera.Camera;
 import config.GameConfig;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -48,6 +49,8 @@ public class Monster {
     }
 
     public void update() {
+    	long now = System.currentTimeMillis();
+    	
         double dx = player.getX() - x;
         facingRight = dx > 0;
 
@@ -61,6 +64,7 @@ public class Monster {
         } else {
             tryAttack();
         }
+        
     }
 
     private void moveTowardPlayer(double dx) {
@@ -123,6 +127,16 @@ public class Monster {
         currentHealth -= damage;
         if (currentHealth < 0) currentHealth = 0;
     }
+    
+    public Rectangle2D getHitbox() {
+        Image frame = walkFrames[0]; 
+        return new Rectangle2D(x, y, frame.getWidth() * 2, frame.getHeight() * 2);
+    }
+    
+    public boolean isDead() {
+        return currentHealth <= 0;
+    }
+
 
     public double getX() { return x; }
     public double getY() { return y; }

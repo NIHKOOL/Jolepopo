@@ -2,6 +2,7 @@ package entities;
 
 import camera.Camera;
 import config.GameConfig;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -169,7 +170,16 @@ public class Player {
             lastAttackTime = now;
         }
     }
+    
+    public Rectangle2D getAttackBox() {
+        double attackWidth = 50;
+        double attackHeight = 60;
+        double offsetX = facingRight ? 40 : -40;
 
+        return new Rectangle2D(x + offsetX, y, attackWidth, attackHeight);
+    }
+    
+    
     public void defend() {
         long now = System.currentTimeMillis();
         if (!defending && now - lastDefendTime >= GameConfig.DEFEND_DURATION) {
@@ -236,7 +246,12 @@ public class Player {
         currentHealth -= damage;
         if (currentHealth < 0) currentHealth = 0;
     }
-
+    
+    
+    public boolean isAttacking() {
+        return attacking;
+    }
+    
     public double getX() { return x; }
     public double getY() { return y; }
     public int getCurrentHealth() { return currentHealth; }
