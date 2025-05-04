@@ -5,6 +5,7 @@ import java.util.List;
 import entities.Monster;
 import entities.Character;
 import javafx.geometry.Rectangle2D;
+import utils.SoundManager;
 
 public class GameLogicManager {
 	private Character player;
@@ -32,6 +33,7 @@ public class GameLogicManager {
             for (Monster m : monsters) {
                 if (playerAtk.intersects(m.getHitbox())) {
                     m.takeDamage(1);  
+                    SoundManager.playSEF("hit-swing-sword-small-2-95566.mp3");
                 }
             }
         }

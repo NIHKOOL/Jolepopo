@@ -42,7 +42,7 @@ public class GameScene extends AnimationTimer {
         
         List<Character> team = new ArrayList<>();
         team.add(new SamuraiMelee(100, 0));
-        team.add(new SamuraiMelee(200, 0));
+        team.add(new SamuraiMelee(100, 0));
         
         this.teamManager = new PlayerTeamManager(team);
         this.currentPlayer = teamManager.getCurrentCharacter();
@@ -57,6 +57,8 @@ public class GameScene extends AnimationTimer {
         //SoundManager.playSEF("Into.m4a");
         
         monsters.add(new Monster(600, GameConfig.GROUND_LEVEL - 30, currentPlayer));
+        monsters.add(new Monster(1600, GameConfig.GROUND_LEVEL - 30, currentPlayer));
+        monsters.add(new Monster(2600, GameConfig.GROUND_LEVEL - 30, currentPlayer));
     }
 
     public void start(Scene scene) {
@@ -69,8 +71,15 @@ public class GameScene extends AnimationTimer {
             if (code == KeyCode.K) currentPlayer.attack();
             if (code == KeyCode.L) currentPlayer.defend();
             if (code == KeyCode.TAB) {
+            	
+            	double oldX = currentPlayer.getX();
+            	double oldY = currentPlayer.getY();
+            	
             	teamManager.switchToNext();
             	currentPlayer = teamManager.getCurrentCharacter();
+            	
+            	currentPlayer.setPosition(oldX, oldY+100);
+            	
             	hudRenderer.setCharacter(currentPlayer);
             	logicManger.setPlayer(currentPlayer);
             }
@@ -102,6 +111,8 @@ public class GameScene extends AnimationTimer {
         currentPlayer.update(moveLeft, moveRight);
         camera.update(currentPlayer);
         logicManger.updateLogic();
+
+        System.out.println("SystemTIME : " + System.currentTimeMillis() + " | X : " + currentPlayer.getX() + " | Y : " + currentPlayer.getY());
         
         
     }

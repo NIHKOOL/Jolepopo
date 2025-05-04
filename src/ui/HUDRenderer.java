@@ -34,9 +34,9 @@ public class HUDRenderer {
         double manaWidth = 300;
         double manaHeight = 20;
         double manaY = y + healthHeight + 5;
-        gc.setFill(Color.DARKBLUE);
+        gc.setFill(Color.BISQUE);
         gc.fillRect(x, manaY, manaWidth, manaHeight);
-        gc.setFill(Color.AQUAMARINE);
+        gc.setFill(Color.LIGHTYELLOW);
         double manaPercent = player.getCurrentMana() / player.getMaxMana();
         gc.fillRect(x, manaY, manaWidth * manaPercent, manaHeight);
 

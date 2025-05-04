@@ -1,12 +1,17 @@
 package utils;
 
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 public class SoundManager {
 	private static MediaPlayer bgmPlayer;
 	private static MediaPlayer sefPlayer;
+	private static final Map<String, Long> soundCooldowns = new HashMap<>();
+	
 	
 	public static void playBGM(String filename) {
 		URL resource = SoundManager.class.getResource("/" +  filename);
@@ -30,4 +35,20 @@ public class SoundManager {
 		sefPlayer.setVolume(1);
 		sefPlayer.play();
 	}
+	
+	public static void playSEF(String filename, long cooldownMillis) {
+		long now = System.currentTimeMillis();
+		long lastPlayed = soundCooldowns.getOrDefault(filename, 0L);
+		if (now - lastPlayed >= cooldownMillis) {
+			playSEF(filename);
+			soundCooldowns.put(filename, now);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
 }

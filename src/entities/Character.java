@@ -24,7 +24,7 @@ public abstract class Character {
 
     public abstract Rectangle2D getAttackBox();
     public abstract void takeDamage(int damage);
-
+    public abstract void setPosition(double x, double y);
     
     public double getX() { return x; }
     public double getY() { return y; }
@@ -34,4 +34,5 @@ public abstract class Character {
     public int getMaxMana() { return GameConfig.PLAYER_MAX_MANA; }
 	public boolean isAttacking() { return attacking; }
     public boolean isDead() { return dead; }
+	
 }
