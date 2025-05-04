@@ -49,8 +49,6 @@ public class Monster {
     }
 
     public void update() {
-    	long now = System.currentTimeMillis();
-    	
         double dx = player.getX() - x;
         facingRight = dx > 0;
 

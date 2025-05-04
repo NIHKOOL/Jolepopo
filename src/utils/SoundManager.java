@@ -13,7 +13,7 @@ public class SoundManager {
 		Media media = new Media(resource.toString());
 		bgmPlayer = new MediaPlayer(media);
 		bgmPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-		bgmPlayer.setVolume(0.5);
+		bgmPlayer.setVolume(0.3);
 		bgmPlayer.play();
 		
 		
