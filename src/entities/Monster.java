@@ -12,7 +12,7 @@ public class Monster {
     private double x, y;
     private int currentHealth = GameConfig.MONSTER_MAX_HEALTH;
 
-    private final Player player;
+    private Character player;
     private boolean attacking = false;
     private boolean facingRight = false;
 
@@ -25,9 +25,9 @@ public class Monster {
     private final Image[] walkFrames;
     private final Image[] attackFrames;
 
-    public Monster(double x, double y, Player player) {
+    public Monster(double x, double y, Character player) {
         this.x = x;
-        this.y = GameConfig.GROUND_LEVEL - 35; // ให้ต่ำกว่าผู้เล่นเล็กน้อย (ถ้าต้องการ)
+        this.y = GameConfig.GROUND_LEVEL - 35; 
         this.player = player;
 
         walkFrames = new Image[] {
@@ -80,7 +80,7 @@ public class Monster {
             attacking = true;
             currentAttackFrame = 0;
             lastAttackTime = now;
-            player.takeDamage(10); // ตีแล้วลด HP
+            player.takeDamage(10); 
         }
     }
 
@@ -138,4 +138,8 @@ public class Monster {
 
     public double getX() { return x; }
     public double getY() { return y; }
+
+	public void setTarget(Character currentPlayer) {
+		this.player = currentPlayer;
+	}
 }

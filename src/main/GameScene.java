@@ -3,7 +3,8 @@ package main;
 import camera.Camera;
 import config.GameConfig;
 import entities.Monster;
-import entities.Player;
+import entities.SamuraiMelee;
+import entities.Character;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -11,16 +12,20 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import logic.GameLogicManager;
+import logic.PlayerTeamManager;
 import ui.HUDRenderer;
 import utils.Assets;
 import utils.SoundManager;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameScene extends AnimationTimer {
     private final Canvas canvas;
     private final GraphicsContext gc;
     private final HUDRenderer hudRenderer;
-    private final Player player;
+    private Character currentPlayer;
+    private PlayerTeamManager teamManager;
     private final Camera camera;
     private final Image background;
     private final ArrayList<Monster> monsters = new ArrayList<>();
@@ -33,16 +38,25 @@ public class GameScene extends AnimationTimer {
     public GameScene(Canvas canvas) {
         this.canvas = canvas;
         this.gc = canvas.getGraphicsContext2D();
-        this.player = new Player(100, 0);
         this.camera = new Camera(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
-        this.logicManger = new GameLogicManager(player, monsters);
+        
+        List<Character> team = new ArrayList<>();
+        team.add(new SamuraiMelee(100, 0));
+        team.add(new SamuraiMelee(200, 0));
+        
+        this.teamManager = new PlayerTeamManager(team);
+        this.currentPlayer = teamManager.getCurrentCharacter();
+        this.logicManger = new GameLogicManager(currentPlayer, monsters);
         this.background = Assets.loadImage("BG.png");
-        this.hudRenderer = new HUDRenderer(player);
+        this.hudRenderer = new HUDRenderer(currentPlayer);
+        
+        
+        
         
         SoundManager.playBGM("10. Fighting.mp3");
         //SoundManager.playSEF("Into.m4a");
         
-        monsters.add(new Monster(600, GameConfig.GROUND_LEVEL - 30, player));
+        monsters.add(new Monster(600, GameConfig.GROUND_LEVEL - 30, currentPlayer));
     }
 
     public void start(Scene scene) {
@@ -50,10 +64,22 @@ public class GameScene extends AnimationTimer {
             KeyCode code = e.getCode();
             if (code == KeyCode.A) moveLeft = true;
             if (code == KeyCode.D) moveRight = true;
-            if (code == KeyCode.SHIFT) player.dash();
-            if (code == KeyCode.SPACE || code == KeyCode.W) player.jump();
-            if (code == KeyCode.K) player.attack();
-            if (code == KeyCode.L) player.defend();
+            if (code == KeyCode.SHIFT) currentPlayer.dash();
+            if (code == KeyCode.SPACE || code == KeyCode.W) currentPlayer.jump();
+            if (code == KeyCode.K) currentPlayer.attack();
+            if (code == KeyCode.L) currentPlayer.defend();
+            if (code == KeyCode.TAB) {
+            	teamManager.switchToNext();
+            	currentPlayer = teamManager.getCurrentCharacter();
+            	hudRenderer.setCharacter(currentPlayer);
+            	logicManger.setPlayer(currentPlayer);
+            }
+            
+            for (Monster m : monsters) {
+            	m.setTarget(currentPlayer);
+            }
+            
+            
         });
 
         scene.setOnKeyReleased(e -> {
@@ -73,8 +99,8 @@ public class GameScene extends AnimationTimer {
     }
 
     private void update() {
-        player.update(moveLeft, moveRight);
-        camera.update(player);
+        currentPlayer.update(moveLeft, moveRight);
+        camera.update(currentPlayer);
         logicManger.updateLogic();
         
         
@@ -88,7 +114,7 @@ public class GameScene extends AnimationTimer {
             m.render(gc, camera);
         }
 
-        player.render(gc, camera);
+        currentPlayer.render(gc, camera);
         hudRenderer.renderHUD(gc);
     }
 

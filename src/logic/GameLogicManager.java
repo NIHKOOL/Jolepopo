@@ -3,19 +3,23 @@ package logic;
 import java.util.List;
 
 import entities.Monster;
-import entities.Player;
+import entities.Character;
 import javafx.geometry.Rectangle2D;
 
 public class GameLogicManager {
-	private Player player;
+	private Character player;
 	private List<Monster> monsters;
 	
-	public GameLogicManager(Player player, List<Monster> monsters) {
+	public GameLogicManager(Character player, List<Monster> monsters) {
 		this.player = player;
 		this.monsters = monsters;
 		
 	}
-
+	
+	public void setPlayer(Character c) {
+		this.player = c;
+	}
+	
 	public void updateLogic() {
 		
 		for (Monster m : monsters) {
@@ -33,6 +37,10 @@ public class GameLogicManager {
         }
         
         monsters.removeIf(m -> m.isDead());
+        
+        if (player.isDead()) {
+        	System.out.println(" ##-{ YOU DIED }-## ");
+        }
         
 	}
 }

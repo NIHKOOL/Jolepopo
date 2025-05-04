@@ -1,15 +1,19 @@
 package ui;
 
-import entities.Player;
+import entities.Character;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class HUDRenderer {
 	
-	private final Player player;
+	private Character player;
 	
-	public HUDRenderer(Player player) {
+	public HUDRenderer(Character player) {
 		this.player = player;
+	}
+	
+	public void setCharacter(Character c) {
+		this.player = c;
 	}
 	
 	public void renderHUD(GraphicsContext gc) {
