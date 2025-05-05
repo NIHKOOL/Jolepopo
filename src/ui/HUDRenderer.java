@@ -49,7 +49,7 @@ public class HUDRenderer {
 		gc.setFill(Color.BLACK);
 		gc.fillText(player.getCurrentHealth() + "/" + player.getMaxHealth(), hudX + 126, hudY + 42);
 		gc.setFill(Color.BLACK);
-		gc.fillText((int) player.getCurrentMana() + "/" + player.getMaxHealth(), hudX + 126, hudY + 75);
+		gc.fillText((int) player.getCurrentMana() + "/" + player.getMaxMana(), hudX + 126, hudY + 75);
     }
 	
 }
