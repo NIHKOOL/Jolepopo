@@ -11,7 +11,7 @@ public class GameConfig {
     public static final int DASH_MANA_COST = 30;
     public static final double MANA_REGEN = 0.2;
 
-    public static final int PLAYER_MAX_HEALTH = 100;
+    public static final int PLAYER_MAX_HEALTH = 200;
     public static final int PLAYER_MAX_MANA = 100;
     public static final double GRAVITY = 0.5;
     public static final double JUMP_STRENGTH = -15;

@@ -3,6 +3,7 @@ package main;
 import camera.Camera;
 import config.GameConfig;
 import entities.Monster;
+import entities.SamuraiArcher;
 import entities.SamuraiMelee;
 import entities.Character;
 import entities.Minotaur;
@@ -43,7 +44,7 @@ public class GameScene extends AnimationTimer {
         
         List<Character> team = new ArrayList<>();
         team.add(new SamuraiMelee(100, 0));
-        team.add(new SamuraiMelee(100, 0));
+        team.add(new SamuraiArcher(100, 0));
         
         this.teamManager = new PlayerTeamManager(team);
         this.currentPlayer = teamManager.getCurrentCharacter();
