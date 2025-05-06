@@ -43,8 +43,8 @@ public class GameScene extends AnimationTimer {
         this.camera = new Camera(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
         
         List<Character> team = new ArrayList<>();
-        team.add(new SamuraiMelee(100, 0));
-        team.add(new SamuraiArcher(100, 0));
+        	team.add(new SamuraiMelee(100, 0));
+        	team.add(new SamuraiArcher(100, 0));
         
         this.teamManager = new PlayerTeamManager(team);
         this.currentPlayer = teamManager.getCurrentCharacter();
@@ -55,7 +55,7 @@ public class GameScene extends AnimationTimer {
         
         
         
-        SoundManager.playBGM("10. Fighting.mp3");
+        SoundManager.playBGM("10. Fighting.mp3", 0.3);
         //SoundManager.playSEF("Into.m4a");
         
         monsters.add(new Minotaur(600, GameConfig.GROUND_LEVEL - 30, currentPlayer));
@@ -84,6 +84,9 @@ public class GameScene extends AnimationTimer {
             	
             	hudRenderer.setCharacter(currentPlayer);
             	logicManger.setPlayer(currentPlayer);
+            	
+            	SoundManager.playSEF("hotel-bell-334109.mp3", 0.3);
+            	
             }
             
             for (Monster m : monsters) {

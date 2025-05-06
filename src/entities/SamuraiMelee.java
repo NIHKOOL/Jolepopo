@@ -155,7 +155,7 @@ public class SamuraiMelee extends Character{
             lastAttackTime = now;
         }
         
-        SoundManager.playSEF("sword-sound-260274.mp3");
+        SoundManager.playSEF("sword-sound-260274.mp3", 1);
     }
     
     private void updateAttack(long now) {
@@ -179,7 +179,7 @@ public class SamuraiMelee extends Character{
             currentMana -= GameConfig.DASH_MANA_COST;
         }
         
-        SoundManager.playSEF("clean-fast-swooshaiff-14784.mp3");
+        SoundManager.playSEF("clean-fast-swooshaiff-14784.mp3", 1);
     }
     
     private void updateDash(long now) {
@@ -206,7 +206,7 @@ public class SamuraiMelee extends Character{
             onGround = false;
         }
         
-        SoundManager.playSEF("metal-crunch-263638.mp3");
+        SoundManager.playSEF("metal-crunch-263638.mp3", 1);
         
     }
     
@@ -245,7 +245,7 @@ public class SamuraiMelee extends Character{
         	//System.out.println("BLOCK"+"+"+TEMP_HEAL_AMOUNT);
         }
         
-        SoundManager.playSEF("metal-clang-284809.mp3");
+        SoundManager.playSEF("metal-clang-284809.mp3", 0.8);
     }
 
     private void updateDefend(long now) {
@@ -291,12 +291,10 @@ public class SamuraiMelee extends Character{
                 lastFrameTime = now;
                 
                 if (onGround) {
-                	SoundManager.playSEF("st3-footstep-sfx-323056.mp3", 625);
+                	SoundManager.playSEF("st3-footstep-sfx-323056.mp3", 1, 625);
                 }
-                
-                	
+                  	
             }
-            
             
         }
     }
@@ -325,7 +323,7 @@ public class SamuraiMelee extends Character{
     		int absorbed = Math.min(damage, tempHealth);
     		tempHealth -= absorbed;
     		damage -= absorbed;
-    		SoundManager.playSEF("sword-clash-241729.mp3");
+    		SoundManager.playSEF("sword-clash-241729.mp3", 0.7);
     	}
     	
         currentHealth -= damage;
