@@ -43,6 +43,7 @@ public class GameScene extends AnimationTimer {
         List<Character> team = new ArrayList<>();
         team.add(new SamuraiMelee(100, 0));
         team.add(new SamuraiArcher(100, 0));
+        team.add(new SamuraiCommander(100, 0, monsters));
 
         this.teamManager = new PlayerTeamManager(team);
         this.currentPlayer = teamManager.getCurrentCharacter();
