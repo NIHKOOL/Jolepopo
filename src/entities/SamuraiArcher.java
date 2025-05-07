@@ -1,5 +1,8 @@
 package entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import camera.Camera;
 import config.GameConfig;
 import javafx.geometry.Rectangle2D;
@@ -30,7 +33,6 @@ public class SamuraiArcher extends Character{
     private long lastAttackFrameTime = 0;
 
     private boolean defending = false;
-    private long lastDefendTime = 0;
     private int currentDefendFrame = 0;
     private long lastDefendFrameTime = 0;
 
@@ -42,11 +44,11 @@ public class SamuraiArcher extends Character{
     private Image[] walkFrames, dashFrames, jumpFrames, attackFrames, defendFrames;
 
     private boolean dead = false;
+    private List<BigArrow> bigArrows = new ArrayList<>();
+    private List<Arrow> arrows = new ArrayList<>();
     
-    private int tempHealth = 0;
-    private long tempHealthStartTime = 0;
-    private static final int TEMP_HEAL_AMOUNT = 10;
-    private static final long TEMP_HEAL_DURATION = 1000;
+    private long lastBigArrowTime = 0;
+    private static final long BIG_ARROW_COOLDOWN = 1500;
     
     public SamuraiArcher(double x, double y) {
         this.x = x;
@@ -68,26 +70,47 @@ public class SamuraiArcher extends Character{
             Assets.loadImage("arDash_2.png"), 
             Assets.loadImage("arDash_3.png"), 
             Assets.loadImage("arDash_4.png"), 
-            
+        
         };
 
         jumpFrames = new Image[] {
-            Assets.loadImage("jump01.png"),
-            Assets.loadImage("jump02.png"),
-            Assets.loadImage("jump03.png"), 
-            Assets.loadImage("jump04.png"), 
-            Assets.loadImage("jump05.png")
+            Assets.loadImage("arJump_1.png"),
+            Assets.loadImage("arJump_2.png"),
+            Assets.loadImage("arJump_3.png"),
+            Assets.loadImage("arJump_4.png"),
+            Assets.loadImage("arJump_5.png"),
+            Assets.loadImage("arJump_6.png"),
+            Assets.loadImage("arJump_7.png")
+            
         };
 
         attackFrames = new Image[] {
-            Assets.loadImage("attack01.png"), 
-            Assets.loadImage("dash04.png"), 
-            Assets.loadImage("attack05.png")
+            Assets.loadImage("arShoot_0.png"), 
+            Assets.loadImage("arShoot_1.png"), 
+            Assets.loadImage("arShoot_2.png"), 
+            Assets.loadImage("arShoot_3.png"), 
+            Assets.loadImage("arShoot_4.png"), 
+            Assets.loadImage("arShoot_5.png"), 
+            Assets.loadImage("arShoot_6.png"), 
+            Assets.loadImage("arShoot_7.png"), 
+            Assets.loadImage("arShoot_8.png"), 
+            Assets.loadImage("arShoot_9.png"), 
+            Assets.loadImage("arShoot_10.png"), 
+            Assets.loadImage("arShoot_11.png"), 
+            Assets.loadImage("arShoot_12.png"), 
+            Assets.loadImage("arShoot_13.png"),         
         };
 
         defendFrames = new Image[] {
-            Assets.loadImage("defend01.png"), 
-            Assets.loadImage("defend02.png")
+                Assets.loadImage("arShoot_5.png"), 
+                Assets.loadImage("arShoot_6.png"), 
+                Assets.loadImage("arShoot_7.png"), 
+                Assets.loadImage("arShoot_8.png"), 
+                Assets.loadImage("arShoot_9.png"), 
+                Assets.loadImage("arShoot_10.png"), 
+                Assets.loadImage("arShoot_11.png"), 
+                Assets.loadImage("arShoot_12.png"), 
+                Assets.loadImage("arShoot_13.png"), 
         };
     }
     
@@ -100,18 +123,27 @@ public class SamuraiArcher extends Character{
         updateMovement(now, left, right);
         updateJump(now);
         regenMana();
-        if (System.currentTimeMillis() - tempHealthStartTime > TEMP_HEAL_DURATION) {
-        	tempHealth = 0;
-        }
         
+        for (Arrow arrow : arrows) {
+        	arrow.update();
+        }
+        arrows.removeIf(a -> !a.isActive());
+        
+        for (BigArrow ba : bigArrows) {
+            ba.update();
+        }
+        bigArrows.removeIf(b -> !b.isActive());
     }
     
     @Override
     public void render(GraphicsContext gc, Camera camera) {
         Image frame = getCurrentFrame();
 
-        double drawX = x - camera.getX();
-        double drawY = y - camera.getY();
+        double baseHeight = walkFrames[0].getHeight();
+        double drawOffsetY = (frame.getHeight() - baseHeight) * 2;
+        double drawOffsetX = 50;
+        double drawX = x - camera.getX() - drawOffsetX;
+        double drawY = y - camera.getY() - drawOffsetY;
         double drawWidth = frame.getWidth() * 2;
         double drawHeight = frame.getHeight() * 2;
 
@@ -125,7 +157,7 @@ public class SamuraiArcher extends Character{
         gc.fillRect(barX, barY, barWidth, barHeight);
 
         gc.setFill(Color.YELLOW);
-        double totalHP = currentHealth + tempHealth;
+        double totalHP = currentHealth ;
         double hpRatio = Math.min(totalHP / GameConfig.PLAYER_MAX_HEALTH, 1.0);
         gc.fillRect(barX, barY, barWidth * hpRatio, barHeight);
         
@@ -139,10 +171,13 @@ public class SamuraiArcher extends Character{
                          drawX + drawWidth, drawY, -drawWidth, drawHeight);
         }
         
+        for (Arrow arrow : arrows) {
+            arrow.render(gc, camera);
+        }
         
-        
-        
-        
+        for (BigArrow ba : bigArrows) {
+            ba.render(gc, camera);
+        }
     }
     
     @Override
@@ -153,20 +188,32 @@ public class SamuraiArcher extends Character{
             currentAttackFrame = 0;
             lastAttackFrameTime = now;
             lastAttackTime = now;
+            
+            double arrowX = facingRight ? x + 40 : x - 40;
+            arrows.add(new Arrow(arrowX, y - 20, facingRight));
+            
+            currentMana -= 20;
+            if (currentMana < 0) currentMana = 0;
+            
+            SoundManager.playSEF("sword-sound-260274.mp3", 1);
+            
+            
+            
         }
         
-        SoundManager.playSEF("sword-sound-260274.mp3", 1);
     }
     
     private void updateAttack(long now) {
-        if (attacking && now - lastAttackFrameTime > GameConfig.ATTACK_FRAME_INTERVAL) {
+        if (attacking && now - lastAttackFrameTime > GameConfig.ATTACK_FRAME_INTERVAL - 85) {
             currentAttackFrame++;
             lastAttackFrameTime = now;
             if (currentAttackFrame >= attackFrames.length) {
                 attacking = false;
                 currentAttackFrame = 0;
             }
+            
         }
+        
     }
 
     @Override
@@ -231,21 +278,19 @@ public class SamuraiArcher extends Character{
     
     @Override
     public void defend() {
-        long now = System.currentTimeMillis();
-        if (!defending && now - lastDefendTime >= GameConfig.DEFEND_DURATION) {
-            defending = true;
-            currentDefendFrame = 0;
-            lastDefendFrameTime = now;
-            lastDefendTime = now;
+    	long now = System.currentTimeMillis();
+    	
+    	new BigArrow(x, y, facingRight);
+
+    	if (now - lastBigArrowTime >= BIG_ARROW_COOLDOWN && currentMana >= GameConfig.BIG_ARROW_MANA_COST) {
+        	double arrowX = facingRight ? x + 40 : x - 40;
+        	bigArrows.add(new BigArrow(arrowX, y - 20, facingRight));
+        	currentMana -= GameConfig.BIG_ARROW_MANA_COST;
+        	if (currentMana < 0) currentMana = 0;
+        	SoundManager.playSEF("metal-clang-284809.mp3", 1);
         }
         
-        if (now - tempHealthStartTime >= TEMP_HEAL_DURATION) {
-        	tempHealth = TEMP_HEAL_AMOUNT;
-        	tempHealthStartTime = now;
-        	//System.out.println("BLOCK"+"+"+TEMP_HEAL_AMOUNT);
-        }
         
-        SoundManager.playSEF("metal-clang-284809.mp3", 1);
     }
 
     private void updateDefend(long now) {
@@ -277,11 +322,11 @@ public class SamuraiArcher extends Character{
     private void updateMovement(long now, boolean left, boolean right) {
         if (!dashing) {
             if (left) {
-                x -= GameConfig.PLAYER_SPEED;
+                x -= GameConfig.PLAYER_SPEED - 1;
                 facingRight = false;
             }
             if (right) {
-                x += GameConfig.PLAYER_SPEED;
+                x += GameConfig.PLAYER_SPEED - 1;
                 facingRight = true;
    
             }
@@ -291,7 +336,7 @@ public class SamuraiArcher extends Character{
                 lastFrameTime = now;
                 
                 if (onGround) {
-                	SoundManager.playSEF("st3-footstep-sfx-323056.mp3", 625);
+                	SoundManager.playSEF("st3-footstep-sfx-323056.mp3", 1, 625);
                 }
                   	
             }
@@ -319,13 +364,6 @@ public class SamuraiArcher extends Character{
 
     @Override
     public void takeDamage(int damage) {
-    	if (tempHealth > 0) { //Block najaaaaa
-    		int absorbed = Math.min(damage, tempHealth);
-    		tempHealth -= absorbed;
-    		damage -= absorbed;
-    		SoundManager.playSEF("sword-clash-241729.mp3", 1);
-    	}
-    	
         currentHealth -= damage;
         if (currentHealth < 0) currentHealth = 0;
         if (currentHealth == 0) dead = true;
@@ -348,6 +386,7 @@ public class SamuraiArcher extends Character{
     public int getMaxHealth() { return (int) (GameConfig.PLAYER_MAX_HEALTH * 0.40); }
     public double getCurrentMana() { return currentMana * 2; }
     public int getMaxMana() { return GameConfig.PLAYER_MAX_MANA * 2; }
-    
+    public List<Arrow> getArrows() { return arrows;}
+    public List<BigArrow> getBigArrows() { return bigArrows;}
     
 }

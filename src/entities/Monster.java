@@ -23,8 +23,8 @@ public abstract class Monster {
     public abstract void render(GraphicsContext gc, Camera camera);
     public abstract Rectangle2D getHitbox();
     
-    public void takeDamage(int damage) {
-        currentHealth -= damage;
+    public void takeDamage(int d) {
+        currentHealth -= d;
         if (currentHealth < 0) currentHealth = 0;
     }
 
@@ -34,6 +34,7 @@ public abstract class Monster {
 
     public void setTarget(Character player) {
         this.player = player;
+        System.out.println("[Monster.setTarget] Target set to: " + player.getX() + ", " + player.getY());
     }
 
     public double getX() { return x; }

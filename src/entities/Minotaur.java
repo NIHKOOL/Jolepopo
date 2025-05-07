@@ -51,6 +51,7 @@ public class Minotaur extends Monster{
     	if (player == null) return;
     	
         double dx = player.getX() - this.x;
+        System.out.println("Monster X: " + x + " | Target X: " + player.getX() + " | dx = " + dx);
         facingRight = dx > 0;
 
         if (attacking) {
@@ -144,6 +145,4 @@ public class Minotaur extends Monster{
     public double getX() { return x; }
     public double getY() { return y; }
 
-	public void setTarget(Character currentPlayer) {
-	}
 }

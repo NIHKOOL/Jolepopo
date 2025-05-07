@@ -55,12 +55,14 @@ public class GameScene extends AnimationTimer {
         
         
         
-        SoundManager.playBGM("10. Fighting.mp3", 0.3);
+        SoundManager.playBGM("10. Fighting.mp3", 0.1);
         //SoundManager.playSEF("Into.m4a");
         
         monsters.add(new Minotaur(600, GameConfig.GROUND_LEVEL - 30, currentPlayer));
         monsters.add(new Minotaur(1600, GameConfig.GROUND_LEVEL - 30, currentPlayer));
         monsters.add(new Minotaur(2600, GameConfig.GROUND_LEVEL - 30, currentPlayer));
+        
+        
     }
 
     public void start(Scene scene) {
@@ -80,19 +82,21 @@ public class GameScene extends AnimationTimer {
             	teamManager.switchToNext();
             	currentPlayer = teamManager.getCurrentCharacter();
             	
-            	currentPlayer.setPosition(oldX, oldY+100);
+            	currentPlayer.setPosition(oldX, oldY + 100);
             	
-            	hudRenderer.setCharacter(currentPlayer);
             	logicManger.setPlayer(currentPlayer);
+            	logicManger.updateLogic();
+            	hudRenderer.setCharacter(currentPlayer);
             	
             	SoundManager.playSEF("hotel-bell-334109.mp3", 0.3);
             	
-            }
-            
-            for (Monster m : monsters) {
-            	m.setTarget(currentPlayer);
-            }
-            
+            	for (Monster m : monsters) {
+                	m.setTarget(currentPlayer);
+                	m.update();
+                }
+                
+              
+            } 
             
         });
 

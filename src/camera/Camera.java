@@ -5,11 +5,9 @@ import entities.Character;
 public class Camera {
     private double x, y;
     private final double screenWidth;
-    private final double screenHeight;
-
+    
     public Camera(double screenWidth, double screenHeight) {
         this.screenWidth = screenWidth;
-        this.screenHeight = screenHeight;
     }
 
     public void update(Character player) {

@@ -291,7 +291,7 @@ public class SamuraiMelee extends Character{
                 lastFrameTime = now;
                 
                 if (onGround) {
-                	SoundManager.playSEF("st3-footstep-sfx-323056.mp3", 1, 625);
+                	SoundManager.playSEF("st3-footstep-sfx-323056.mp3", 1, 350);
                 }
                   	
             }
