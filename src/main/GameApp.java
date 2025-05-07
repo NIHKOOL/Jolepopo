@@ -6,8 +6,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class GameApp extends Application {
 
+public class GameApp extends Application {
+	
     public static final int WIDTH = 1244;
     public static final int HEIGHT = 700;
 

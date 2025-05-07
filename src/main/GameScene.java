@@ -2,11 +2,8 @@ package main;
 
 import camera.Camera;
 import config.GameConfig;
-import entities.Monster;
-import entities.SamuraiArcher;
-import entities.SamuraiMelee;
+import entities.*;
 import entities.Character;
-import entities.Minotaur;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -27,37 +24,34 @@ public class GameScene extends AnimationTimer {
     private final GraphicsContext gc;
     private final HUDRenderer hudRenderer;
     private Character currentPlayer;
-    private PlayerTeamManager teamManager;
+    private final PlayerTeamManager teamManager;
     private final Camera camera;
     private final Image background;
     private final ArrayList<Monster> monsters = new ArrayList<>();
 
     private boolean moveLeft = false;
     private boolean moveRight = false;
-    
-    private GameLogicManager logicManger;
 
+    private final GameLogicManager logicManger;
+
+    
     public GameScene(Canvas canvas) {
         this.canvas = canvas;
         this.gc = canvas.getGraphicsContext2D();
         this.camera = new Camera(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
-        
+
         List<Character> team = new ArrayList<>();
         team.add(new SamuraiMelee(100, 0));
         team.add(new SamuraiArcher(100, 0));
-        
+
         this.teamManager = new PlayerTeamManager(team);
         this.currentPlayer = teamManager.getCurrentCharacter();
         this.logicManger = new GameLogicManager(currentPlayer, monsters);
-        this.background = Assets.loadImage("BG.png");
+        this.background = Assets.loadImage("map/BG_1.png");
         this.hudRenderer = new HUDRenderer(currentPlayer);
-        
-        
-        
-        
-        SoundManager.playBGM("10. Fighting.mp3");
-        //SoundManager.playSEF("Into.m4a");
-        
+
+        SoundManager.playBGM("musics/10. Fighting.mp3", 0.1);
+
         monsters.add(new Minotaur(600, GameConfig.GROUND_LEVEL - 30, currentPlayer));
         monsters.add(new Minotaur(1600, GameConfig.GROUND_LEVEL - 30, currentPlayer));
         monsters.add(new Minotaur(2600, GameConfig.GROUND_LEVEL - 30, currentPlayer));
@@ -70,27 +64,9 @@ public class GameScene extends AnimationTimer {
             if (code == KeyCode.D) moveRight = true;
             if (code == KeyCode.SHIFT) currentPlayer.dash();
             if (code == KeyCode.SPACE || code == KeyCode.W) currentPlayer.jump();
-            if (code == KeyCode.K) currentPlayer.attack();
-            if (code == KeyCode.L) currentPlayer.defend();
-            if (code == KeyCode.TAB) {
-            	
-            	double oldX = currentPlayer.getX();
-            	double oldY = currentPlayer.getY();
-            	
-            	teamManager.switchToNext();
-            	currentPlayer = teamManager.getCurrentCharacter();
-            	
-            	currentPlayer.setPosition(oldX, oldY+100);
-            	
-            	hudRenderer.setCharacter(currentPlayer);
-            	logicManger.setPlayer(currentPlayer);
-            }
-            
-            for (Monster m : monsters) {
-            	m.setTarget(currentPlayer);
-            }
-            
-            
+            if (code == KeyCode.K) currentPlayer.abilityOne();
+            if (code == KeyCode.L) currentPlayer.abilityTwo();
+            if (code == KeyCode.TAB) switchCharacter();
         });
 
         scene.setOnKeyReleased(e -> {
@@ -100,7 +76,26 @@ public class GameScene extends AnimationTimer {
         });
 
         this.start();
-        
+    }
+
+    private void switchCharacter() {
+        double oldX = currentPlayer.getX();
+        double oldY = currentPlayer.getY();
+
+        teamManager.switchToNext();
+        currentPlayer = teamManager.getCurrentCharacter();
+        currentPlayer.setPosition(oldX, oldY + 100);
+
+        logicManger.setPlayer(currentPlayer);
+        logicManger.updateLogic();
+        hudRenderer.setCharacter(currentPlayer);
+
+        SoundManager.playSEF("effects/hotel-bell-334109.mp3", 0.3);
+
+        for (Monster m : monsters) {
+            m.setTarget(currentPlayer);
+            m.update();
+        }
     }
 
     @Override
@@ -113,10 +108,7 @@ public class GameScene extends AnimationTimer {
         currentPlayer.update(moveLeft, moveRight);
         camera.update(currentPlayer);
         logicManger.updateLogic();
-
         System.out.println("SystemTIME : " + System.currentTimeMillis() + " | X : " + currentPlayer.getX() + " | Y : " + currentPlayer.getY());
-        
-        
     }
 
     private void render() {
@@ -136,5 +128,4 @@ public class GameScene extends AnimationTimer {
         gc.drawImage(background, bgX, 0);
         gc.drawImage(background, bgX + background.getWidth(), 0);
     }
-
 }
