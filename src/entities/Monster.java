@@ -21,23 +21,20 @@ public abstract class Monster {
 
     public abstract void update();
     public abstract void render(GraphicsContext gc, Camera camera);
-    public abstract Rectangle2D getHitbox();
-    
-    public void takeDamage(int d) {
-        currentHealth -= d;
-        if (currentHealth < 0) currentHealth = 0;
-    }
 
-    public boolean isDead() {
-        return currentHealth <= 0;
+    public void takeDamage(int damage) {
+        currentHealth -= damage;
+        if (currentHealth < 0) currentHealth = 0;
     }
 
     public void setTarget(Character player) {
         this.player = player;
-        System.out.println("[Monster.setTarget] Target set to: " + player.getX() + ", " + player.getY());
     }
 
-    public double getX() { return x; }
-    public double getY() { return y; }
-    protected Character getPlayer() { return player; }
+    public double getX() { return x;}
+    public double getY() { return y;}
+    public abstract Rectangle2D getHitbox();
+    public boolean isDead() { return currentHealth <= 0; }
+    protected Character getPlayer() { return player;}
+    
 }
