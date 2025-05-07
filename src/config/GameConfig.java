@@ -13,12 +13,13 @@ public class GameConfig {
     public static final long DASH_COOLDOWN = 1000;
     public static final int DASH_MANA_COST = 30;
     public static final double MANA_REGEN = 0.2;
-
+    
     // Special abilities
     public static final int BIG_ARROW_MANA_COST = 100;
+    public static final long SHOOTING_FRAME_INTERVAL = 50;
 
     // Player stats
-    public static final int PLAYER_MAX_HEALTH = 200;
+    public static final int PLAYER_MAX_HEALTH = 100;
     public static final int PLAYER_MAX_MANA = 100;
 
     // Physics

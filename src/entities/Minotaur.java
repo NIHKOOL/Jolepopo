@@ -63,9 +63,14 @@ public class Minotaur extends Monster {
             attacking = true;
             currentAttackFrame = 0;
             lastAttackTime = now;
-            player.takeDamage(10);
+            if (player instanceof SamuraiMelee) {
+            	player.takeDamage(10);
+            } else if (player instanceof SamuraiArcher) {
+            	player.takeDamage(20);
+            }
         }
     }
+    
 
     private void updateAttackAnimation() {
         if (System.currentTimeMillis() - lastFrameTime > 150) {

@@ -45,7 +45,7 @@ public class GameLogicManager {
         if (player instanceof SamuraiArcher archer) {
             List<Arrow> arrows = archer.getArrows();
             List<BigArrow> bigArrows = archer.getBigArrows();
-
+            
             for (Arrow arrow : arrows) {
                 Rectangle2D arrowBox = arrow.getHitbox();
                 for (Monster m : monsters) {
@@ -63,6 +63,7 @@ public class GameLogicManager {
                     if (box.intersects(m.getHitbox())) {
                         m.takeDamage(50);
                         ba.deactive();
+                        SoundManager.playSEF("effects/hit-swing-sword-small-2-95566.mp3", 2, 100);
                     }
                 }
             }
@@ -71,7 +72,7 @@ public class GameLogicManager {
         }
 
         // Remove dead monsters
-        monsters.removeIf(Monster::isDead);
+        monsters.removeIf(m -> m.isDead());
 
         // Player death check
         if (player.isDead()) {

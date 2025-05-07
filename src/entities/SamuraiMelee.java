@@ -88,8 +88,8 @@ public class SamuraiMelee extends Character {
     @Override
     public void update(boolean left, boolean right) {
         long now = System.currentTimeMillis();
-        updateAttack(now);
-        updateDefend(now);
+        updateAbilityOne(now);
+        updateAbilityTwo(now);
         updateDash(now);
         updateMovement(now, left, right);
         updateJump(now);
@@ -138,7 +138,7 @@ public class SamuraiMelee extends Character {
         }
     }
 
-    private void updateAttack(long now) {
+    private void updateAbilityOne(long now) {
         if (attacking && now - lastAttackFrameTime > GameConfig.ATTACK_FRAME_INTERVAL) {
             currentAttackFrame++;
             lastAttackFrameTime = now;
@@ -219,7 +219,7 @@ public class SamuraiMelee extends Character {
         SoundManager.playSEF("effects/metal-clang-284809.mp3", 0.8);
     }
 
-    private void updateDefend(long now) {
+    private void updateAbilityTwo(long now) {
         if (defending && now - lastDefendFrameTime > GameConfig.DEFEND_FRAME_INTERVAL) {
             currentDefendFrame++;
             lastDefendFrameTime = now;
