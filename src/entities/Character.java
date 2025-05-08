@@ -12,7 +12,7 @@ public abstract class Character {
     protected double currentMana;
     protected boolean attacking = false;
     protected boolean dead = false;
-
+    
  
     public abstract void update(boolean left, boolean right);
     public abstract void render(GraphicsContext gc, Camera camera);
@@ -25,7 +25,13 @@ public abstract class Character {
     
     public abstract Rectangle2D getAttackBox();
     public abstract void setPosition(double x, double y);
-
+    protected void applyMapBounds(double characterWidth) {
+    	if (x < 0) x = 0;
+    	if (x > GameConfig.MAP_WIDTH) {
+    		x = GameConfig.MAP_WIDTH;
+    	}
+    }
+    
     public double getX() { return x;}
     public double getY() { return y;}
     public int getCurrentHealth() { return currentHealth;}

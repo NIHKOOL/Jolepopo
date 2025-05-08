@@ -258,6 +258,9 @@ public class SamuraiCommander extends Character {
                 x += GameConfig.PLAYER_SPEED + 4;
                 facingRight = true;
             }
+            
+            applyMapBounds(walkFrames[0].getWidth() * 2);
+            
             if (now - lastFrameTime > 150 && (left || right)) {
                 currentFrame = (currentFrame + 1) % walkFrames.length;
                 lastFrameTime = now;

@@ -34,7 +34,7 @@ public class SamuraiMelee extends Character {
     private long lastJumpFrameTime = 0;
 
     private final Image[] walkFrames, dashFrames, jumpFrames, attackFrames, defendFrames;
-
+    
     private int tempHealth = 0;
     private long tempHealthStartTime = 0;
     private static final int TEMP_HEAL_AMOUNT = 10;
@@ -92,6 +92,7 @@ public class SamuraiMelee extends Character {
         updateAbilityTwo(now);
         updateDash(now);
         updateMovement(now, left, right);
+        	
         updateJump(now);
         regenMana();
         if (now - tempHealthStartTime > TEMP_HEAL_DURATION) tempHealth = 0;
@@ -248,6 +249,9 @@ public class SamuraiMelee extends Character {
                 x += GameConfig.PLAYER_SPEED;
                 facingRight = true;
             }
+            
+            applyMapBounds(walkFrames[0].getWidth() * 2);
+            
             if (now - lastFrameTime > 150 && (left || right)) {
                 currentFrame = (currentFrame + 1) % walkFrames.length;
                 lastFrameTime = now;

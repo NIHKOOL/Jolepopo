@@ -190,7 +190,7 @@ public class SamuraiArcher extends Character {
 
     private void updateDash(long now) {
         if (dashing) {
-            x += (facingRight ? 1 : -1) * GameConfig.DASH_SPEED * -0.5;
+            x += (facingRight ? 1 : -1) * GameConfig.DASH_SPEED * -1;
             if (now - lastDashFrameTime > 60) {
                 dashFrame = (dashFrame + 1) % dashFrames.length;
                 lastDashFrameTime = now;
@@ -271,6 +271,9 @@ public class SamuraiArcher extends Character {
                 x += GameConfig.PLAYER_SPEED - 1;
                 facingRight = true;
             }
+            
+            applyMapBounds(walkFrames[0].getWidth() * 2);
+            
             if (now - lastFrameTime > 150 && (left || right)) {
                 currentFrame = (currentFrame + 1) % walkFrames.length;
                 lastFrameTime = now;
