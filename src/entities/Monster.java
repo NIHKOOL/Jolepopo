@@ -78,5 +78,6 @@ public abstract class Monster implements Renderable, Updatable, Damagable{
     protected Character getPlayer() { return player;}
     public double getSpeedMultipiler() { return speedMultiplier;}
     public double getDamageMultiplier() {return damageMultiplier;}
-    
+    public void setCurrentHealth(int health) { this.currentHealth = (int) health;}
+    public double getCurrentHealth() { return currentHealth;}
 }

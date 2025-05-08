@@ -46,9 +46,9 @@ public class GameScene extends AnimationTimer implements Updatable {
         this.camera = new Camera(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
 
         List<Character> team = new ArrayList<>();
-        team.add(new SamuraiMelee(100, 0));
-        team.add(new SamuraiArcher(100, 0));
-        team.add(new SamuraiCommander(100, 0, monsters));
+	        team.add(new SamuraiMelee(100, 0));
+	        team.add(new SamuraiArcher(100, 0));
+	        team.add(new SamuraiCommander(100, 0, monsters));
 
         this.teamManager = new PlayerTeamManager(team);
         this.currentPlayer = teamManager.getCurrentCharacter();
@@ -57,8 +57,11 @@ public class GameScene extends AnimationTimer implements Updatable {
         this.hudRenderer = new HUDRenderer(currentPlayer);
 
         SoundManager.playBGM("musics/10. Fighting.mp3", 0.1);
-
-        monsters.add(new GorgonBoss(600, GameConfig.GROUND_LEVEL - 280, currentPlayer));
+        
+        monsters.add(new Minotaur(300, GameConfig.GROUND_LEVEL - 20, currentPlayer));
+        Monster boss = new GorgonBoss(600, GameConfig.GROUND_LEVEL - 280, currentPlayer);
+        monsters.add(boss);
+        hudRenderer.setBoss(boss);
 
     }
 

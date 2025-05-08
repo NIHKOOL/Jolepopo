@@ -1,7 +1,9 @@
 package ui;
 
+import config.GameConfig;
 import entities.Character;
 import entities.Monster;
+import entities.GorgonBoss;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -56,19 +58,30 @@ public class HUDRenderer {
         gc.fillText(player.getCurrentHealth() + "/" + player.getMaxHealth(), hudX + 126, hudY + 42);
         gc.fillText((int) player.getCurrentMana() + "/" + player.getMaxMana(), hudX + 126, hudY + 75);
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        // Boss health bar
+        if (boss != null && !boss.isDead()) {
+        	double screenW = GameConfig.SCREEN_WIDTH;
+        	double screenH = GameConfig.SCREEN_HEIGHT;
+        	
+        	double barWidth = screenW * 0.6;
+        	double barHeight = 20;
+        	double barX = (screenW - barWidth) / 2;
+        	double barY = screenH - 40 ;
+        	
+        	double hpPercent = Math.max(0, (double) boss.getCurrentHealth() / GameConfig.BOSS_MAX_HEALTH);
+        	
+        	gc.setFill(Color.DARKGREY);
+        	gc.fillRect(barX, barY, barWidth, barHeight);
+        	
+        	gc.setFill(Color.RED);
+        	gc.fillRect(barX, barY, barWidth * hpPercent, barHeight);
+        	
+        	gc.setStroke(Color.BLACK);
+        	gc.strokeRect(barX, barY, barWidth, barHeight);
+        	
+        	gc.setFill(Color.WHITE);
+        	gc.fillText("BOSS", barX + 10, barY + 15);
+        }
         
     }
 }

@@ -67,8 +67,6 @@ public class Minotaur extends Monster implements Renderable, Updatable, Damagabl
 
     private void drawHealthBar(GraphicsContext gc, double drawX, double drawY) {
         double healthPercent = (double) currentHealth / GameConfig.MONSTER_MAX_HEALTH;
-        gc.setFill(Color.DARKRED);
-        gc.fillRect(drawX, drawY - 10, 40, 5);
         gc.setFill(Color.LIMEGREEN);
         gc.fillRect(drawX, drawY - 10, 40 * healthPercent, 5);
     }

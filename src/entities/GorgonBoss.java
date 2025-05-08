@@ -16,6 +16,7 @@ public class GorgonBoss extends Monster{
 
     public GorgonBoss(double x, double y, Character player) {
         super(x, y, player);
+        setCurrentHealth(GameConfig.BOSS_MAX_HEALTH);
         walkFrames = new Image[] {
         	Assets.loadImage("gorgon/ggWalk_0.png"),
         	Assets.loadImage("gorgon/ggWalk_1.png"),
@@ -78,8 +79,6 @@ public class GorgonBoss extends Monster{
 
     private void drawHealthBar(GraphicsContext gc, double drawX, double drawY) {
         double healthPercent = (double) currentHealth / GameConfig.MONSTER_MAX_HEALTH;
-        gc.setFill(Color.DARKRED);
-        gc.fillRect(drawX, drawY - 10, 40, 5);
         gc.setFill(Color.LIMEGREEN);
         gc.fillRect(drawX, drawY - 10, 40 * healthPercent, 5);
     }
