@@ -2,6 +2,7 @@ package logic;
 
 import java.util.List;
 
+import config.GameConfig;
 import entities.Monster;
 import entities.SamuraiArcher;
 import entities.SamuraiMelee;
@@ -35,7 +36,7 @@ public class GameLogicManager {
             Rectangle2D playerAtk = player.getAttackBox();
             for (Monster m : monsters) {
                 if (playerAtk.intersects(m.getHitbox())) {
-                    m.takeDamage(1);
+                    m.takeDamage(GameConfig.PLAYER_SWORD_DAMAGE);
                     SoundManager.playSEF("effects/hit-swing-sword-small-2-95566.mp3", 2, 100);
                 }
             }
@@ -50,7 +51,7 @@ public class GameLogicManager {
                 Rectangle2D arrowBox = arrow.getHitbox();
                 for (Monster m : monsters) {
                     if (arrowBox.intersects(m.getHitbox())) {
-                        m.takeDamage(10);
+                        m.takeDamage(GameConfig.PLAYER_ARROW_DAMAGE);
                         arrow.deactive();
                         SoundManager.playSEF("effects/hit-swing-sword-small-2-95566.mp3", 2, 100);
                     }
@@ -61,7 +62,7 @@ public class GameLogicManager {
                 Rectangle2D box = ba.getHitbox();
                 for (Monster m : monsters) {
                     if (box.intersects(m.getHitbox())) {
-                        m.takeDamage(50);
+                        m.takeDamage(GameConfig.PLAYER_BIGARROW_DAMAGE);
                         ba.deactive();
                         SoundManager.playSEF("effects/hit-swing-sword-small-2-95566.mp3", 2, 100);
                     }

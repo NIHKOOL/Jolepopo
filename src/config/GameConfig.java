@@ -24,6 +24,9 @@ public class GameConfig {
     // Player stats
     public static final int PLAYER_MAX_HEALTH = 100;
     public static final int PLAYER_MAX_MANA = 100;
+    public static final int PLAYER_SWORD_DAMAGE = 1;
+    public static final int PLAYER_ARROW_DAMAGE = 10;
+    public static final int PLAYER_BIGARROW_DAMAGE = 125;
 
     // Physics
     public static final double GRAVITY = 0.5;
@@ -39,7 +42,7 @@ public class GameConfig {
     public static final int MONSTER_MAX_HEALTH = 50;
     public static final double MONSTER_SPEED = 1.5;
     public static final long MONSTER_ATTACK_COOLDOWN = 1000;
-    public static final int BOSS_MAX_HEALTH = 500;
+    public static final int BOSS_MAX_HEALTH = 1000;
     
     // Ground level configuration
     public static final int GROUND_LEVEL = 350; 
