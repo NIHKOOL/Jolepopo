@@ -36,7 +36,7 @@ public abstract class Monster implements Renderable, Updatable, Damagable{
     public abstract void render(GraphicsContext gc, Camera camera);
 
     public void takeDamage(int damage) {
-    	int finalDamage = (int)(damage + damageMultiplier);
+    	int finalDamage = (int)(damage * damageMultiplier);
         currentHealth -= finalDamage;
         if (currentHealth < 0) currentHealth = 0;
     }
@@ -57,7 +57,7 @@ public abstract class Monster implements Renderable, Updatable, Damagable{
     public  void applyDamageDebuff(long durationMillis) {
     	debuffed = true;
     	debuffEndTime = System.currentTimeMillis() + durationMillis;
-    	damageMultiplier = 3.0;
+    	damageMultiplier = 2.0;
     }
     
     public void updateDebuffStatus() {

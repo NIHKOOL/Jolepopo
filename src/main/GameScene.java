@@ -58,9 +58,8 @@ public class GameScene extends AnimationTimer implements Updatable {
 
         SoundManager.playBGM("musics/10. Fighting.mp3", 0.1);
 
-        monsters.add(new Minotaur(600, GameConfig.GROUND_LEVEL - 30, currentPlayer));
-        monsters.add(new Minotaur(1600, GameConfig.GROUND_LEVEL - 30, currentPlayer));
-        monsters.add(new Minotaur(2600, GameConfig.GROUND_LEVEL - 30, currentPlayer));
+        monsters.add(new GorgonBoss(600, GameConfig.GROUND_LEVEL - 280, currentPlayer));
+
     }
 
     public void start(Scene scene) {
@@ -130,8 +129,8 @@ public class GameScene extends AnimationTimer implements Updatable {
 
         currentPlayer.render(gc, camera);
         hudRenderer.renderHUD(gc);
-    }
-
+    } 
+    
     private void drawBackground() {
         double bgX = -camera.getX() % background.getWidth();
         gc.drawImage(background, bgX, 0);

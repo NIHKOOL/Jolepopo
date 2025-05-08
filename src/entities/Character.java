@@ -7,6 +7,8 @@ import interfaces.Damagable;
 import interfaces.Renderable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import utils.Assets;
 
 public abstract class Character implements Renderable, Damagable, Controllable{
     protected double x, y;
@@ -15,7 +17,7 @@ public abstract class Character implements Renderable, Damagable, Controllable{
     protected double currentMana;
     protected boolean attacking = false;
     protected boolean dead = false;
-    
+    protected static final Image SHADOW_IMAGE = Assets.loadImage("shadow.png");
  
     public abstract void update(boolean left, boolean right);
     public abstract void render(GraphicsContext gc, Camera camera);
