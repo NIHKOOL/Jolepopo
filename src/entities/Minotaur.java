@@ -36,6 +36,7 @@ public class Minotaur extends Monster {
     @Override
     public void update() {
     	updateSlowStatus();
+    	updateDebuffStatus();
         Character player = getPlayer();
         if (player == null) return;
         double dx = player.getX() - this.x;
@@ -105,12 +106,6 @@ public class Minotaur extends Monster {
                 currentAttackFrame = 0;
             }
         }
-    }
-
-    @Override
-    public void takeDamage(int damage) {
-        currentHealth -= damage;
-        if (currentHealth < 0) currentHealth = 0;
     }
 
     @Override

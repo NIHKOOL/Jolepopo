@@ -17,6 +17,11 @@ public abstract class Monster {
     private long slowEndTime = 0;
     private double speedMultiplier = 1.0;
     
+    private boolean debuffed = false;
+    private long debuffEndTime = 0;
+    private double damageMultiplier = 1.0; 
+    
+    
 
     public Monster(double x, double y, Character player) {
         this.x = x;
@@ -28,7 +33,8 @@ public abstract class Monster {
     public abstract void render(GraphicsContext gc, Camera camera);
 
     public void takeDamage(int damage) {
-        currentHealth -= damage;
+    	int finalDamage = (int)(damage + damageMultiplier);
+        currentHealth -= finalDamage;
         if (currentHealth < 0) currentHealth = 0;
     }
     
@@ -45,6 +51,19 @@ public abstract class Monster {
     	}
     }
     
+    public  void applyDamageDebuff(long durationMillis) {
+    	debuffed = true;
+    	debuffEndTime = System.currentTimeMillis() + durationMillis;
+    	damageMultiplier = 3.0;
+    }
+    
+    public void updateDebuffStatus() {
+    	if (debuffed && System.currentTimeMillis() > debuffEndTime ) {
+    		debuffed = false;
+    		damageMultiplier = 1.0;
+    	}
+    }
+    
     public void setTarget(Character player) {
         this.player = player;
     }
@@ -55,5 +74,6 @@ public abstract class Monster {
     public boolean isDead() { return currentHealth <= 0; }
     protected Character getPlayer() { return player;}
     public double getSpeedMultipiler() { return speedMultiplier;}
+    public double getDamageMultiplier() {return damageMultiplier;}
     
 }

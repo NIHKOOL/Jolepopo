@@ -139,10 +139,10 @@ public class SamuraiCommander extends Character {
 
     @Override
     public void abilityOne() {
+    	attacking = true;
     	long now = System.currentTimeMillis();
         for (Monster m : monsters) {
         	double distance = Math.abs(this.x - m.getX());
-        	attacking = true;
         	if (distance < 600) {
         		m.applySlow(5000);
         		SoundManager.playSEF("effects/dizzy-ellectric-bolt-spell-1-186768.mp3", 0.7);
@@ -217,7 +217,16 @@ public class SamuraiCommander extends Character {
 
     @Override
     public void abilityTwo() {
+        defending = true;
+        long now = System.currentTimeMillis();
+        for (Monster m : monsters) {
+        	double distance = Math.abs(this.x - m.getX());
+        	if (distance < 600) {
+        		m.applyDamageDebuff(15000);
+        		SoundManager.playSEF("effects/enchanted-spell-casting-229208.mp3", 0.5);
+        	}
         
+        }
     }
 
     private void updateAbilityTwo(long now) {
