@@ -67,20 +67,21 @@ public class HUDRenderer {
         	double barHeight = 20;
         	double barX = (screenW - barWidth) / 2;
         	double barY = screenH - 40 ;
+        	double arcRadius = 30;
         	
         	double hpPercent = Math.max(0, (double) boss.getCurrentHealth() / GameConfig.BOSS_MAX_HEALTH);
         	
         	gc.setFill(Color.DARKGREY);
-        	gc.fillRect(barX, barY, barWidth, barHeight);
+        	gc.fillRoundRect(barX, barY, barWidth, barHeight, arcRadius, arcRadius);
         	
         	gc.setFill(Color.RED);
-        	gc.fillRect(barX, barY, barWidth * hpPercent, barHeight);
+        	gc.fillRoundRect(barX, barY, barWidth * hpPercent, barHeight ,arcRadius, arcRadius);
         	
         	gc.setStroke(Color.BLACK);
-        	gc.strokeRect(barX, barY, barWidth, barHeight);
+        	gc.strokeRoundRect(barX, barY, barWidth, barHeight, arcRadius, arcRadius);
         	
-        	gc.setFill(Color.WHITE);
-        	gc.fillText("BOSS", barX + 10, barY + 15);
+        	gc.setFill(Color.BLACK);
+        	gc.fillText("ARCNUM THE GORGON", barX + 320, barY + 15);
         }
         
     }
