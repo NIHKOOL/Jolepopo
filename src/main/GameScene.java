@@ -28,11 +28,14 @@ public class GameScene extends AnimationTimer implements Updatable {
     private Character currentPlayer;
     private final PlayerTeamManager teamManager;
     private final Camera camera;
-    private final Image background;
+    private Image background;
     private final ArrayList<Monster> monsters = new ArrayList<>();
 
     private boolean moveLeft = false;
     private boolean moveRight = false;
+    private boolean canChangeMap = false;
+    private int currentMapIndex = 0;
+    private final String[] backgrounds = {"map/BG_1.png", "map/BG_2.png", "map/BG_4.png"};
 
     private final GameLogicManager logicManger;
 
@@ -50,7 +53,7 @@ public class GameScene extends AnimationTimer implements Updatable {
         this.teamManager = new PlayerTeamManager(team);
         this.currentPlayer = teamManager.getCurrentCharacter();
         this.logicManger = new GameLogicManager(currentPlayer, monsters);
-        this.background = Assets.loadImage("map/BG_1.png");
+        this.background = Assets.loadImage(backgrounds[currentMapIndex]);
         this.hudRenderer = new HUDRenderer(currentPlayer);
 
         SoundManager.playBGM("musics/10. Fighting.mp3", 0.1);
@@ -70,6 +73,7 @@ public class GameScene extends AnimationTimer implements Updatable {
             if (code == KeyCode.K) currentPlayer.abilityOne();
             if (code == KeyCode.L) currentPlayer.abilityTwo();
             if (code == KeyCode.TAB) switchCharacter();
+            if (code == KeyCode.ENTER && canChangeMap) changeMap();
         });
 
         scene.setOnKeyReleased(e -> {
@@ -111,13 +115,15 @@ public class GameScene extends AnimationTimer implements Updatable {
         currentPlayer.update(moveLeft, moveRight);
         camera.update(currentPlayer);
         logicManger.updateLogic();
-        System.out.println("SystemTIME : " + System.currentTimeMillis() + " | X : " + currentPlayer.getX() + " | Y : " + currentPlayer.getY());
+        canChangeMap = currentPlayer.getX() >= GameConfig.MAP_WIDTH - 100;
+        System.out.println("[SyTime : " + System.currentTimeMillis() + "][X : " + currentPlayer.getX() + 
+        					"][Y : " + currentPlayer.getY() + "] " + canChangeMap);
     }
 
     private void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         drawBackground();
-
+        
         for (Monster m : monsters) {
             m.render(gc, camera);
         }
@@ -130,5 +136,15 @@ public class GameScene extends AnimationTimer implements Updatable {
         double bgX = -camera.getX() % background.getWidth();
         gc.drawImage(background, bgX, 0);
         gc.drawImage(background, bgX + background.getWidth(), 0);
+    }
+    
+    private void changeMap() {
+    	currentMapIndex = (currentMapIndex + 1) % backgrounds.length;
+    	background = Assets.loadImage(backgrounds[currentMapIndex]);
+    	currentPlayer.setPosition(100, GameConfig.GROUND_LEVEL);
+    	
+    	monsters.clear();
+    	
+    	SoundManager.playSEF("effects/magic-spell-333896.mp3", 0.5);
     }
 }

@@ -7,7 +7,7 @@ public class GameConfig {
     public static final int SCREEN_HEIGHT = 700;
 
     // Map boundery
-    public static final int MAP_WIDTH = 10000;
+    public static final int MAP_WIDTH = 3000;
     
     // Player movement and mechanics
     public static final double PLAYER_SPEED = 5.0;
