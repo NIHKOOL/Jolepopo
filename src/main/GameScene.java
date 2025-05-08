@@ -139,12 +139,24 @@ public class GameScene extends AnimationTimer implements Updatable {
     }
     
     private void changeMap() {
+    	if (currentMapIndex >= backgrounds.length - 1) {
+    		System.out.println("CONGRATE YOU JUST GO IN LAST");
+    		return;
+    	}
     	currentMapIndex = (currentMapIndex + 1) % backgrounds.length;
     	background = Assets.loadImage(backgrounds[currentMapIndex]);
     	currentPlayer.setPosition(100, GameConfig.GROUND_LEVEL);
     	
     	monsters.clear();
     	
-    	SoundManager.playSEF("effects/magic-spell-333896.mp3", 0.5);
+    	SoundManager.playSEF("effects/magic-spell-333896.mp3", 0.5); 
+    	
+    	if (currentMapIndex == 1) {
+    		SoundManager.stopBGM();
+    		SoundManager.playBGM("musics/1-08 - Ominous.mp3", 0.8);
+    	} else if (currentMapIndex == 2) {
+    		SoundManager.stopBGM();
+    		SoundManager.playBGM("musics/1.01 The Unknown Journey Continues.mp3", 0.2); 
+    	}
     }
 }

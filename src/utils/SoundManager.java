@@ -28,6 +28,7 @@ public class SoundManager {
     public static void stopBGM() {
         if (bgmPlayer != null) {
             bgmPlayer.stop();
+            bgmPlayer = null;
         }
         
     }
