@@ -1,8 +1,10 @@
 package entities.projectiles;
 
+import interfaces.Renderable;
+import interfaces.Updatable;
 import utils.Assets;
 
-public class BigArrow extends Arrow {
+public class BigArrow extends Arrow implements Renderable, Updatable{
 
     public BigArrow(double x, double y, boolean facingRight) {
         super(x, y, facingRight);

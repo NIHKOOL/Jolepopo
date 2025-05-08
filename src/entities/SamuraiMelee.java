@@ -2,6 +2,10 @@ package entities;
 
 import camera.Camera;
 import config.GameConfig;
+import interfaces.AbilityCaster;
+import interfaces.Controllable;
+import interfaces.Damagable;
+import interfaces.Renderable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -9,7 +13,7 @@ import javafx.scene.paint.Color;
 import utils.Assets;
 import utils.SoundManager;
 
-public class SamuraiMelee extends Character {
+public class SamuraiMelee extends Character implements AbilityCaster, Renderable, Controllable, Damagable {
     private double velocityY = 0;
     private boolean onGround = true;
 

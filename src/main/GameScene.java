@@ -4,6 +4,8 @@ import camera.Camera;
 import config.GameConfig;
 import entities.*;
 import entities.Character;
+import interfaces.Renderable;
+import interfaces.Updatable;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -19,7 +21,7 @@ import utils.SoundManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameScene extends AnimationTimer {
+public class GameScene extends AnimationTimer implements Updatable {
     private final Canvas canvas;
     private final GraphicsContext gc;
     private final HUDRenderer hudRenderer;
@@ -105,7 +107,7 @@ public class GameScene extends AnimationTimer {
         render();
     }
 
-    private void update() {
+    public void update() {
         currentPlayer.update(moveLeft, moveRight);
         camera.update(currentPlayer);
         logicManger.updateLogic();

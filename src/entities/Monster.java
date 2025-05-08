@@ -2,10 +2,13 @@ package entities;
 
 import camera.Camera;
 import config.GameConfig;
+import interfaces.Damagable;
+import interfaces.Renderable;
+import interfaces.Updatable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 
-public abstract class Monster {
+public abstract class Monster implements Renderable, Updatable, Damagable{
     protected double x, y;
     protected int currentHealth = GameConfig.MONSTER_MAX_HEALTH;
     protected boolean attacking = false;

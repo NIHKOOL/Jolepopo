@@ -4,6 +4,10 @@ import java.util.List;
 
 import camera.Camera;
 import config.GameConfig;
+import interfaces.AbilityCaster;
+import interfaces.Controllable;
+import interfaces.Damagable;
+import interfaces.Renderable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -12,7 +16,7 @@ import logic.GameLogicManager;
 import utils.Assets;
 import utils.SoundManager;
 
-public class SamuraiCommander extends Character {
+public class SamuraiCommander extends Character implements AbilityCaster, Renderable, Controllable, Damagable {
     private double velocityY = 0;
     private boolean onGround = true;
 

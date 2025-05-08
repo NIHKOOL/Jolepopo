@@ -2,10 +2,13 @@ package entities;
 
 import camera.Camera;
 import config.GameConfig;
+import interfaces.Controllable;
+import interfaces.Damagable;
+import interfaces.Renderable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 
-public abstract class Character {
+public abstract class Character implements Renderable, Damagable, Controllable{
     protected double x, y;
     protected boolean facingRight = true;
     protected int currentHealth;
