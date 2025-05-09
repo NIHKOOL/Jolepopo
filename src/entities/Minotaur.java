@@ -63,6 +63,15 @@ public class Minotaur extends Monster implements Renderable, Updatable, Damagabl
 
         if (facingRight) gc.drawImage(frame, drawX, drawY, drawWidth, drawHeight);
         else gc.drawImage(frame, 0, 0, frame.getWidth(), frame.getHeight(), drawX + drawWidth, drawY, -drawWidth, drawHeight);
+        
+      //Debug
+        Rectangle2D hitbox = getHitbox();
+        gc.setStroke(Color.WHITE);
+        gc.setLineWidth(2);
+        gc.strokeRect(hitbox.getMinX() - camera.getX(), 
+        			  hitbox.getMinY() - camera.getY(),
+        			  hitbox.getWidth(), 
+        			  hitbox.getHeight());
     }
 
     private void drawHealthBar(GraphicsContext gc, double drawX, double drawY) {

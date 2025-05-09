@@ -71,17 +71,21 @@ public class GorgonBoss extends Monster{
         double drawX = x - camera.getX();
         double drawY = y - camera.getY() - (frame.getHeight() - baseHeight);
         double drawWidth = frame.getWidth() * 2, drawHeight = frame.getHeight() * 2;
-        drawHealthBar(gc, drawX, drawY);
 
         if (facingRight) gc.drawImage(frame, drawX, drawY, drawWidth, drawHeight);
         else gc.drawImage(frame, 0, 0, frame.getWidth(), frame.getHeight(), drawX + drawWidth, drawY, -drawWidth, drawHeight);
+        
+        //Debug
+        Rectangle2D hitbox = getHitbox();
+        gc.setStroke(Color.WHITE);
+        gc.setLineWidth(2);
+        gc.strokeRect(hitbox.getMinX() - camera.getX(), 
+        			  hitbox.getMinY() - camera.getY(),
+        			  hitbox.getWidth(), 
+        			  hitbox.getHeight());
     }
 
-    private void drawHealthBar(GraphicsContext gc, double drawX, double drawY) {
-        double healthPercent = (double) currentHealth / GameConfig.MONSTER_MAX_HEALTH;
-        gc.setFill(Color.LIMEGREEN);
-        gc.fillRect(drawX, drawY - 10, 40 * healthPercent, 5);
-    }
+
 
     private void moveTowardPlayer(double dx) {
         x += dx > 0 
@@ -124,7 +128,13 @@ public class GorgonBoss extends Monster{
     @Override
     public Rectangle2D getHitbox() {
         Image frame = walkFrames[0];
-        return new Rectangle2D(x, y, frame.getWidth() * 2, frame.getHeight() * 2);
+        
+        double hitboxWidth = frame.getWidth() * 0.6;
+        double hitboxheight = frame.getHeight() * 2;
+        double hitboxX = x + 200;
+        double hitboxY = y;
+        
+        return new Rectangle2D(hitboxX, hitboxY, hitboxWidth, hitboxheight);
     }
 
     @Override
