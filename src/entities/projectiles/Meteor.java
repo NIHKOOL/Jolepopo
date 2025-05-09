@@ -11,7 +11,7 @@ import utils.Assets;
 public class Meteor implements Updatable, Renderable{
 	private double x,y;
 	private boolean active = true;
-	private final Image sprite = Assets.loadImage(null);
+	private final Image sprite = Assets.loadImage("pixil-frame-0.png");
 	private static final double SPEED = 8;
 	
 	public Meteor(double x, double y) {

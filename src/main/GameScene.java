@@ -4,7 +4,7 @@ import camera.Camera;
 import config.GameConfig;
 import entities.*;
 import entities.Character;
-import interfaces.Renderable;
+import entities.projectiles.Meteor;
 import interfaces.Updatable;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
@@ -36,6 +36,11 @@ public class GameScene extends AnimationTimer implements Updatable {
     private boolean canChangeMap = false;
     private int currentMapIndex = 0;
     private final String[] backgrounds = {"map/BG_1.png", "map/BG_2.png", "map/BG_4.png"};
+    
+    private final List<Meteor> meteors = new ArrayList<>();
+    private long lastMeteorSpawnTime = 0;
+    private static final long METEOR_SPAWN_INTERVAL = 800;
+    private boolean enableMeteorShower = false;
 
     private final GameLogicManager logicManger;
 
@@ -117,6 +122,7 @@ public class GameScene extends AnimationTimer implements Updatable {
         currentPlayer.update(moveLeft, moveRight);
         camera.update(currentPlayer);
         logicManger.updateLogic();
+        enableMeteorShower();
         canChangeMap = currentPlayer.getX() >= GameConfig.MAP_WIDTH - 100;
         System.out.println("[SyTime : " + System.currentTimeMillis() + "][X : " + currentPlayer.getX() + 
         					"][Y : " + currentPlayer.getY() + "] " + canChangeMap);
@@ -132,12 +138,27 @@ public class GameScene extends AnimationTimer implements Updatable {
 
         currentPlayer.render(gc, camera);
         hudRenderer.renderHUD(gc);
+        meteors.forEach(m -> m.render(gc, camera));
     } 
     
     private void drawBackground() {
         double bgX = -camera.getX() % background.getWidth();
         gc.drawImage(background, bgX, 0);
         gc.drawImage(background, bgX + background.getWidth(), 0);
+    }
+    
+    private void enableMeteorShower() {
+    	if (enableMeteorShower) {
+	    	long now = System.currentTimeMillis();
+	    	if (now - lastMeteorSpawnTime > METEOR_SPAWN_INTERVAL) {
+	    		double spawnX = Math.random() * GameConfig.MAP_WIDTH;
+	    		meteors.add(new Meteor(spawnX, -100));
+	    		lastMeteorSpawnTime = now;
+	    	}
+	    	
+	    	meteors.forEach(Meteor::update);
+	    	meteors.removeIf(m -> !m.isActive());
+    	}
     }
     
     private void changeMap() {
@@ -158,7 +179,8 @@ public class GameScene extends AnimationTimer implements Updatable {
     		SoundManager.playBGM("musics/1-08 - Ominous.mp3", 0.8);
     	} else if (currentMapIndex == 2) {
     		SoundManager.stopBGM();
+    		enableMeteorShower = true;
     		SoundManager.playBGM("musics/1.01 The Unknown Journey Continues.mp3", 0.2); 
-    	}
+    	} 
     }
 }
