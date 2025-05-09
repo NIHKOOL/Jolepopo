@@ -64,7 +64,7 @@ public class GameScene extends AnimationTimer implements Updatable {
         SoundManager.playBGM("musics/10. Fighting.mp3", 0.1);
       
         // First map spawn
-        monsters.add(new Minotaur(300, GameConfig.GROUND_LEVEL - 20, currentPlayer));   
+        monsters.add(new Skeleton(600, GameConfig.GROUND_LEVEL + 20, currentPlayer));   
 
     }
 

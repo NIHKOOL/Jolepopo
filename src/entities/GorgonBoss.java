@@ -10,7 +10,7 @@ import utils.Assets;
 import utils.SoundManager;
 import interfaces.*;
 
-public class GorgonBoss extends Monster implements AbilityCaster, Renderable, Updatable{
+public class GorgonBoss extends Monster implements Renderable, Updatable{
 	private int currentWalkFrame = 0, currentAttackFrame = 0;
     private long lastAttackTime = 0, lastFrameTime = 0;
     private boolean attacking = false, facingRight = false;
@@ -117,19 +117,6 @@ public class GorgonBoss extends Monster implements AbilityCaster, Renderable, Up
         			  hitbox.getWidth(), 
         			  hitbox.getHeight());
     }
-
-
-    @Override
-	public void abilityOne() {
-	
-		
-	}
-
-	@Override
-	public void abilityTwo() {
-		
-		
-	}
 
     private void moveTowardPlayer(double dx) {
         x += dx > 0 
