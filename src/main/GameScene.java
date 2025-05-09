@@ -7,6 +7,7 @@ import entities.Character;
 import entities.projectiles.Meteor;
 import interfaces.Updatable;
 import javafx.animation.AnimationTimer;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -39,7 +40,6 @@ public class GameScene extends AnimationTimer implements Updatable {
     
     private final List<Meteor> meteors = new ArrayList<>();
     private long lastMeteorSpawnTime = 0;
-    private static final long METEOR_SPAWN_INTERVAL = 800;
     private boolean enableMeteorShower = false;
 
     private final GameLogicManager logicManger;
@@ -62,11 +62,9 @@ public class GameScene extends AnimationTimer implements Updatable {
         this.hudRenderer = new HUDRenderer(currentPlayer);
 
         SoundManager.playBGM("musics/10. Fighting.mp3", 0.1);
-        
-        monsters.add(new Minotaur(300, GameConfig.GROUND_LEVEL - 20, currentPlayer));
-        Monster boss = new GorgonBoss(600, GameConfig.GROUND_LEVEL - 280, currentPlayer);
-        monsters.add(boss);
-        hudRenderer.setBoss(boss);
+      
+        // First map spawn
+        monsters.add(new Minotaur(300, GameConfig.GROUND_LEVEL - 20, currentPlayer));   
 
     }
 
@@ -150,13 +148,22 @@ public class GameScene extends AnimationTimer implements Updatable {
     private void enableMeteorShower() {
     	if (enableMeteorShower) {
 	    	long now = System.currentTimeMillis();
-	    	if (now - lastMeteorSpawnTime > METEOR_SPAWN_INTERVAL) {
+	    	if (now - lastMeteorSpawnTime > GameConfig.METEOR_SPAWN_INTERVAL) {
 	    		double spawnX = Math.random() * GameConfig.MAP_WIDTH;
 	    		meteors.add(new Meteor(spawnX, -100));
 	    		lastMeteorSpawnTime = now;
 	    	}
 	    	
 	    	meteors.forEach(Meteor::update);
+	    	
+	    	Rectangle2D playerHitBox = new Rectangle2D(currentPlayer.getX(), currentPlayer.getY(), 60, 120);
+	    	for (Meteor m : meteors) {
+	    		if (m.getHitBox().intersects(playerHitBox)) {
+	    			currentPlayer.takeDamage(5);
+	    			m.deactivate();
+	    		}
+	    	}
+	    		
 	    	meteors.removeIf(m -> !m.isActive());
     	}
     }
@@ -179,6 +186,9 @@ public class GameScene extends AnimationTimer implements Updatable {
     		SoundManager.playBGM("musics/1-08 - Ominous.mp3", 0.8);
     	} else if (currentMapIndex == 2) {
     		SoundManager.stopBGM();
+    		Monster boss = new GorgonBoss(2000, GameConfig.GROUND_LEVEL - 280, currentPlayer);
+    		monsters.add(boss);
+    		hudRenderer.setBoss(boss);
     		enableMeteorShower = true;
     		SoundManager.playBGM("musics/1.01 The Unknown Journey Continues.mp3", 0.2); 
     	} 

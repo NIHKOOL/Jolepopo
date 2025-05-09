@@ -4,6 +4,7 @@ import camera.Camera;
 import config.GameConfig;
 import interfaces.Renderable;
 import interfaces.Updatable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import utils.Assets;
@@ -28,8 +29,16 @@ public class Meteor implements Updatable, Renderable{
 		gc.drawImage(sprite, x - camera.getX(), y - camera.getY());
 	}
 	
+	public Rectangle2D getHitBox() {
+		return new Rectangle2D(x, y, sprite.getWidth(), sprite.getHeight());
+	}
+	
 	public boolean isActive() {
 		return active;
+	}
+	
+	public void deactivate() {
+		active = false;
 	}
 	
 }
