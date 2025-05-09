@@ -20,7 +20,7 @@ public abstract class Character implements Renderable, Damagable, Controllable, 
     protected boolean dead = false;
     protected static final Image SHADOW_IMAGE = Assets.loadImage("shadow.png");
  
-    public abstract void update(boolean left, boolean right);
+    public abstract void update(boolean left, boolean right, boolean isScrollable);
     public abstract void render(GraphicsContext gc, Camera camera);
     
     public abstract void dash();
@@ -31,11 +31,10 @@ public abstract class Character implements Renderable, Damagable, Controllable, 
     
     public abstract Rectangle2D getAttackBox();
     public abstract void setPosition(double x, double y);
-    protected void applyMapBounds(double characterWidth) {
+    protected void applyMapBounds(double characterWidth, boolean isScrollable) {
     	if (x < 0) x = 0;
-    	if (x > GameConfig.MAP_WIDTH) {
-    		x = GameConfig.MAP_WIDTH;
-    	}
+    	double maxX = isScrollable ? GameConfig.MAP_WIDTH : GameConfig.SCREEN_WIDTH - characterWidth;
+    	if (x > maxX) x = maxX;
     }
     
     public double getX() { return x;}

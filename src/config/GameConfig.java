@@ -8,6 +8,7 @@ public class GameConfig {
 
     // Map
     public static final int MAP_WIDTH = 5000;
+    public static final int MAP_LOCK_WIDTH = 900;
     public static final long METEOR_SPAWN_INTERVAL = 400;
     
     // Player movement and mechanics
@@ -25,7 +26,7 @@ public class GameConfig {
     // Player stats
     public static final int PLAYER_MAX_HEALTH = 100;
     public static final int PLAYER_MAX_MANA = 100;
-    public static final int PLAYER_SWORD_DAMAGE = 1;
+    public static final int PLAYER_SWORD_DAMAGE = 3;
     public static final int PLAYER_ARROW_DAMAGE = 10;
     public static final int PLAYER_BIGARROW_DAMAGE = 125;
 

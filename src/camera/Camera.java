@@ -1,5 +1,6 @@
 package camera;
 
+import config.GameConfig;
 import entities.Character;
 
 public class Camera {
@@ -10,12 +11,15 @@ public class Camera {
         this.screenWidth = screenWidth;
     }
 
-    public void update(Character player) {
-        x = player.getX() - screenWidth / 2.0;
+    public void update(Character player, boolean isScrollable) {
+        if (isScrollable) {
+        	x = Math.max(0, Math.min(player.getX() - screenWidth / 2.0, GameConfig.MAP_WIDTH - screenWidth));
+        	if (x < 0) x = 0;
+        } else {
+        	x = 0;
+        }
+        
         y = 0;
-
-        if (x < 0) x = 0;
-        if (y < 0) y = 0;
     }
 
     public double getX() { return x;}

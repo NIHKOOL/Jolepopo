@@ -112,12 +112,12 @@ public class SamuraiArcher extends Character implements AbilityCaster, Renderabl
     }
 
     @Override
-    public void update(boolean left, boolean right) {
+    public void update(boolean left, boolean right, boolean isScrollable) {
         long now = System.currentTimeMillis();
         updateAbilityOne(now);
         updateAbilityTwo(now);
         updateDash(now);
-        updateMovement(now, left, right);
+        updateMovement(now, left, right, isScrollable);
         updateJump(now);
         regenMana();
         arrows.forEach(Arrow::update);
@@ -265,7 +265,7 @@ public class SamuraiArcher extends Character implements AbilityCaster, Renderabl
         return new Rectangle2D(x + offsetX, y, attackWidth, attackHeight);
     }
 
-    private void updateMovement(long now, boolean left, boolean right) {
+    private void updateMovement(long now, boolean left, boolean right, boolean isScrollable) {
         if (!dashing) {
             if (left) {
                 x -= GameConfig.PLAYER_SPEED - 1;
@@ -276,7 +276,7 @@ public class SamuraiArcher extends Character implements AbilityCaster, Renderabl
                 facingRight = true;
             }
             
-            applyMapBounds(walkFrames[0].getWidth() * 2);
+            applyMapBounds(walkFrames[0].getWidth() * 2, isScrollable);
             
             if (now - lastFrameTime > 150 && (left || right)) {
                 currentFrame = (currentFrame + 1) % walkFrames.length;

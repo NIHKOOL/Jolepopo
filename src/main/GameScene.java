@@ -35,8 +35,9 @@ public class GameScene extends AnimationTimer implements Updatable {
     private boolean moveLeft = false;
     private boolean moveRight = false;
     private boolean canChangeMap = false;
+    private boolean isScrollable = true;
     private int currentMapIndex = 0;
-    private final String[] backgrounds = {"map/BG_1.png", "map/BG_2.png", "map/BG_4.png"};
+    private final String[] backgrounds = {"map/BG_1.png", "map/restMap.png", "map/BG_2.png", "map/restMap.png", "map/BG_4.png"};
     
     private final List<Meteor> meteors = new ArrayList<>();
     private long lastMeteorSpawnTime = 0;
@@ -122,11 +123,15 @@ public class GameScene extends AnimationTimer implements Updatable {
     }
 
     public void update() {
-        currentPlayer.update(moveLeft, moveRight);
-        camera.update(currentPlayer);
+        currentPlayer.update(moveLeft, moveRight, isScrollable);
+        camera.update(currentPlayer, isScrollable);
         logicManger.updateLogic();
         enableMeteorShower();
-        canChangeMap = currentPlayer.getX() >= GameConfig.MAP_WIDTH - 100;
+        if (currentMapIndex == 1 || currentMapIndex == 3) {
+        	canChangeMap = currentPlayer.getX() >= GameConfig.MAP_LOCK_WIDTH;
+        } else {
+        	canChangeMap = currentPlayer.getX() >= GameConfig.MAP_WIDTH - 100;
+        }
         System.out.println("[SyTime : " + System.currentTimeMillis() + "][X : " + currentPlayer.getX() + 
         					"][Y : " + currentPlayer.getY() + "] " + canChangeMap);
     }
@@ -145,9 +150,13 @@ public class GameScene extends AnimationTimer implements Updatable {
     } 
     
     private void drawBackground() {
-        double bgX = -camera.getX() % background.getWidth();
-        gc.drawImage(background, bgX, 0);
-        gc.drawImage(background, bgX + background.getWidth(), 0);
+        if (currentMapIndex == 1 || currentMapIndex == 3) {
+        	gc.drawImage(background, 0, 0);
+        } else {
+        	double bgX = -camera.getX() % background.getWidth();
+            gc.drawImage(background, bgX, 0);
+            gc.drawImage(background, bgX + background.getWidth(), 0);
+        }
     }
     
     private void enableMeteorShower() {
@@ -178,31 +187,46 @@ public class GameScene extends AnimationTimer implements Updatable {
     		System.out.println("CONGRATE YOU JUST GO IN LAST");
     		return;
     	}
+    	
     	currentMapIndex = (currentMapIndex + 1) % backgrounds.length;
+    	isScrollable = !(currentMapIndex == 1 || currentMapIndex == 3);
     	background = Assets.loadImage(backgrounds[currentMapIndex]);
-    	currentPlayer.setPosition(100, GameConfig.GROUND_LEVEL);
     	
-    	monsters.clear();
+    	if (!isScrollable) {
+    		currentPlayer.setPosition(GameConfig.SCREEN_WIDTH / 2.0, GameConfig.GROUND_LEVEL);
+    	} else {
+    		currentPlayer.setPosition(100, GameConfig.GROUND_LEVEL);
+    	}
     	
+    	monsters.clear();  	
     	SoundManager.playSEF("effects/magic-spell-333896.mp3", 0.5); 
     	
     	if (currentMapIndex == 1) {
     		SoundManager.stopBGM();
     		
+    	} else if (currentMapIndex == 2) {
+    		SoundManager.stopBGM();
+    		SoundManager.playBGM("musics/1-08 - Ominous.mp3", 0.8);
     		int[] skeletonX = {-5000, -4500, -3000, 2000, 3000, 4000, 5000};
     		int[] skeletonWarriorX = {-7000, 7000, -6000, 2500, 600};
     		
     		for (int x : skeletonX) { monsters.add(new Skeleton(x, GameConfig.GROUND_LEVEL + 20, currentPlayer));}
     		for (int x : skeletonWarriorX) { monsters.add(new SkeletonWarrior(x, GameConfig.GROUND_LEVEL + 20, currentPlayer));}
     		
-    		SoundManager.playBGM("musics/1-08 - Ominous.mp3", 0.8);
-    	} else if (currentMapIndex == 2) {
+    	} else if (currentMapIndex == 3) {
     		SoundManager.stopBGM();
+    		
+    		
+    		 
+    	} else if (currentMapIndex == 4) {
+    		SoundManager.stopBGM();
+    		SoundManager.playBGM("musics/1.01 The Unknown Journey Continues.mp3", 0.2);
     		Monster boss = new GorgonBoss(2000, GameConfig.GROUND_LEVEL - 280, currentPlayer);
     		monsters.add(boss);
     		hudRenderer.setBoss(boss);
     		enableMeteorShower = true;
-    		SoundManager.playBGM("musics/1.01 The Unknown Journey Continues.mp3", 0.2); 
+    		
     	} 
     }
+    
 }

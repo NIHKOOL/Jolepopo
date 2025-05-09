@@ -81,9 +81,11 @@ public class Minotaur extends Monster implements Renderable, Updatable, Damagabl
     }
 
     private void moveTowardPlayer(double dx) {
-        x += dx > 0 
-        		? GameConfig.MONSTER_SPEED * getSpeedMultipiler()
-        		: -GameConfig.MONSTER_SPEED * getSpeedMultipiler();
+    	if (dx > 0) {
+    	    x += GameConfig.MONSTER_SPEED * getSpeedMultipiler();
+    	} else {
+    	    x -= GameConfig.MONSTER_SPEED * getSpeedMultipiler();
+    	}
         if (System.currentTimeMillis() - lastFrameTime > 200) {
             currentWalkFrame = (currentWalkFrame + 1) % walkFrames.length;
             lastFrameTime = System.currentTimeMillis();

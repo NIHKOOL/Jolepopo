@@ -81,9 +81,11 @@ public class Skeleton extends Monster{
     }
 
     private void moveTowardPlayer(double dx) {
-        x += dx > 0 
-        		? GameConfig.MONSTER_SPEED * 4 * getSpeedMultipiler()
-        		: -GameConfig.MONSTER_SPEED * 4 * getSpeedMultipiler();
+    	if (dx > 0) {
+    	    x += GameConfig.MONSTER_SPEED * 4 * getSpeedMultipiler();
+    	} else {
+    	    x -= GameConfig.MONSTER_SPEED * 4 * getSpeedMultipiler();
+    	}
         if (System.currentTimeMillis() - lastFrameTime > 200) {
             currentWalkFrame = (currentWalkFrame + 1) % walkFrames.length;
             lastFrameTime = System.currentTimeMillis();
