@@ -37,7 +37,7 @@ public class GameLogicManager {
             Rectangle2D playerAtk = player.getAttackBox();
             for (Monster m : monsters) {
                 if (playerAtk.intersects(m.getHitbox())) {
-                    m.takeDamage(GameConfig.PLAYER_SWORD_DAMAGE);
+                    m.takeDamage((int) (GameConfig.PLAYER_SWORD_DAMAGE * GameConfig.PLAYER_DAMAGE_MULTIPLIER));
                     SoundManager.playSEF("effects/hit-swing-sword-small-2-95566.mp3", 2, 100);
                 }
             }
@@ -52,7 +52,7 @@ public class GameLogicManager {
                 Rectangle2D arrowBox = arrow.getHitbox();
                 for (Monster m : monsters) {
                     if (arrowBox.intersects(m.getHitbox())) {
-                        m.takeDamage(GameConfig.PLAYER_ARROW_DAMAGE);
+                        m.takeDamage((int) (GameConfig.PLAYER_ARROW_DAMAGE * GameConfig.PLAYER_DAMAGE_MULTIPLIER));
                         arrow.deactive();
                         SoundManager.playSEF("effects/hit-swing-sword-small-2-95566.mp3", 2, 100);
                     }
@@ -63,7 +63,7 @@ public class GameLogicManager {
                 Rectangle2D box = ba.getHitbox();
                 for (Monster m : monsters) {
                     if (box.intersects(m.getHitbox())) {
-                        m.takeDamage(GameConfig.PLAYER_BIGARROW_DAMAGE);
+                        m.takeDamage((int) (GameConfig.PLAYER_BIGARROW_DAMAGE * GameConfig.PLAYER_DAMAGE_MULTIPLIER));
                         ba.deactive();
                         SoundManager.playSEF("effects/hit-swing-sword-small-2-95566.mp3", 2, 100);
                     }

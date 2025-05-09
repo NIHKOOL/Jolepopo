@@ -43,6 +43,7 @@ public class GameScene extends AnimationTimer implements Updatable {
     private Bonfire bonfire;
     private Bonfire currentBonfire;
     private boolean nearBonfire;
+    private boolean bonfireMenuOpen = false;
     
     private final List<Meteor> meteors = new ArrayList<>();
     private long lastMeteorSpawnTime = 0;
@@ -82,6 +83,16 @@ public class GameScene extends AnimationTimer implements Updatable {
     public void start(Scene scene) {
         scene.setOnKeyPressed(e -> {
             KeyCode code = e.getCode();
+            if (bonfireMenuOpen) {
+                if (code == KeyCode.DIGIT1) {
+                    GameConfig.MANA_REGEN += 0.3;
+                    bonfireMenuOpen = false;
+                } else if (code == KeyCode.DIGIT2) {
+                    GameConfig.PLAYER_DAMAGE_MULTIPLIER += 0.5; 
+                    bonfireMenuOpen = false;
+                }
+                return;
+            }
             if (code == KeyCode.A) moveLeft = true;
             if (code == KeyCode.D) moveRight = true;
             if (code == KeyCode.SHIFT) currentPlayer.dash();
@@ -91,6 +102,7 @@ public class GameScene extends AnimationTimer implements Updatable {
             if (code == KeyCode.TAB) switchCharacter();
             if (code == KeyCode.ENTER && canChangeMap) changeMap();
             if (code == KeyCode.H && nearBonfire) restBonfire();
+            if (code == KeyCode.P && nearBonfire) { bonfireMenuOpen = true;}
         });
 
         scene.setOnKeyReleased(e -> {
@@ -179,7 +191,25 @@ public class GameScene extends AnimationTimer implements Updatable {
         if (nearBonfire) {
         	gc.setFill(Color.WHITE);
         	gc.fillText("Press H to rest", canvas.getWidth() / 2 - 40, canvas.getHeight() - 100);
+        	gc.fillText("Press P to enhance", canvas.getWidth() / 2 + 200, canvas.getHeight() - 100);
         }
+        
+        if (canChangeMap && currentMapIndex != 4) {
+        	gc.setFill(Color.WHITE);
+        	gc.fillText("Press ENTER to travel", canvas.getWidth() / 2 - 50, canvas.getHeight() - 70);
+        }
+        
+        if (bonfireMenuOpen) {
+        	gc.setFill(Color.BLACK);
+            gc.fillRect(canvas.getWidth() / 2 - 100, canvas.getHeight() / 2 - 60, 180, 100);
+
+            gc.setFill(Color.WHITE);
+            gc.fillText("1: ++Boost Mana Regen", canvas.getWidth() / 2 - 80, canvas.getHeight() / 2 - 30);
+            gc.fillText("[ " + GameConfig.MANA_REGEN + " >>> " + (GameConfig.MANA_REGEN + 0.3) + " ]", canvas.getWidth() / 2 - 60, canvas.getHeight() / 2 - 15);
+            gc.fillText("2: ++Boost DMG Multiplier", canvas.getWidth() / 2 - 80, canvas.getHeight() / 2);
+            gc.fillText("[ x" + GameConfig.PLAYER_DAMAGE_MULTIPLIER + " >>> " + (GameConfig.PLAYER_DAMAGE_MULTIPLIER + 0.5) + " ]", canvas.getWidth() / 2 - 60, canvas.getHeight() / 2 + 15);
+        }
+     
     } 
     
     private void drawBackground() {
@@ -262,6 +292,15 @@ public class GameScene extends AnimationTimer implements Updatable {
     		Monster boss = new GorgonBoss(2000, GameConfig.GROUND_LEVEL - 280, currentPlayer);
     		monsters.add(boss);
     		hudRenderer.setBoss(boss);
+    		int[] skeletonX = {-10000, -5000, 8000};
+    		int[] skeletonWarriorX = {10000, 12000};
+    		
+    		for (int x : skeletonX) { monsters.add(new Skeleton(x, GameConfig.GROUND_LEVEL + 20, currentPlayer));}
+    		for (int x : skeletonWarriorX) { monsters.add(new SkeletonWarrior(x, GameConfig.GROUND_LEVEL + 20, currentPlayer));}
+    		
+    		int[] minotaurX = { -12000,-1000, 2000 , 4000, 5000};
+    		for (int x : minotaurX) { monsters.add(new Minotaur(x, GameConfig.GROUND_LEVEL - 37, currentPlayer));}
+    		
     		enableMeteorShower = true;
     		
     	} 
