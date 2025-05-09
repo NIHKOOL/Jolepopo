@@ -7,7 +7,7 @@ public class GameConfig {
     public static final int SCREEN_HEIGHT = 700;
 
     // Map
-    public static final int MAP_WIDTH = 3000;
+    public static final int MAP_WIDTH = 5000;
     public static final long METEOR_SPAWN_INTERVAL = 400;
     
     // Player movement and mechanics
@@ -19,7 +19,7 @@ public class GameConfig {
     public static final double MANA_REGEN = 0.2;
     
     // Special abilities
-    public static final int BIG_ARROW_MANA_COST = 100;
+    public static final int BIG_ARROW_MANA_COST = 60;
     public static final long SHOOTING_FRAME_INTERVAL = 50;
 
     // Player stats
@@ -40,10 +40,10 @@ public class GameConfig {
     public static final long DEFEND_FRAME_INTERVAL = 150;
 
     // Monster stats
-    public static final int MONSTER_MAX_HEALTH = 50;
+    public static final int MONSTER_MAX_HEALTH = 150;
     public static final double MONSTER_SPEED = 1.5;
     public static final long MONSTER_ATTACK_COOLDOWN = 1000;
-    public static final int BOSS_MAX_HEALTH = 500;
+    public static final int BOSS_MAX_HEALTH = 1000;
     public static final int SKELETON_MAX_HEALTH = 10;
     
     // Ground level configuration

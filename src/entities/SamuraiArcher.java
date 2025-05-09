@@ -288,7 +288,7 @@ public class SamuraiArcher extends Character implements AbilityCaster, Renderabl
 
     private void regenMana() {
         if (!dashing && currentMana < GameConfig.PLAYER_MAX_MANA) {
-            currentMana += GameConfig.MANA_REGEN;
+            currentMana += GameConfig.MANA_REGEN * 2;
             currentMana = Math.min(currentMana, GameConfig.PLAYER_MAX_MANA);
         }
     }
