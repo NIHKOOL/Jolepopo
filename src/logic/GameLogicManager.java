@@ -7,6 +7,7 @@ import entities.Monster;
 import entities.SamuraiArcher;
 import entities.SamuraiMelee;
 import entities.Character;
+import entities.GorgonBoss;
 import javafx.geometry.Rectangle2D;
 import utils.SoundManager;
 import entities.projectiles.Arrow;
@@ -73,8 +74,19 @@ public class GameLogicManager {
         }
 
         // Remove dead monsters
-        monsters.removeIf(m -> m.isDead());
-
+        monsters.removeIf(m -> {
+        	if (m.isDead()) {
+        		if (m instanceof GorgonBoss) {
+        			SoundManager.playSEF("effects/monster-warrior-roar-195877.mp3", 0.5);
+        		}
+        		return true;
+        	}
+        	return false;
+        });
+        	
+        
+        
+        
         // Player death check
         if (player.isDead()) {
             System.out.println(" ##-{ YOU DIED }-## ");

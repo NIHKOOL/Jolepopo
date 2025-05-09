@@ -42,7 +42,7 @@ public class GameConfig {
     public static final int MONSTER_MAX_HEALTH = 50;
     public static final double MONSTER_SPEED = 1.5;
     public static final long MONSTER_ATTACK_COOLDOWN = 1000;
-    public static final int BOSS_MAX_HEALTH = 1000;
+    public static final int BOSS_MAX_HEALTH = 500;
     
     // Ground level configuration
     public static final int GROUND_LEVEL = 350; 

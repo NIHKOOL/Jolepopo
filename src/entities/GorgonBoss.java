@@ -7,6 +7,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import utils.Assets;
+import utils.SoundManager;
 
 public class GorgonBoss extends Monster{
 	private int currentWalkFrame = 0, currentAttackFrame = 0;
@@ -62,6 +63,7 @@ public class GorgonBoss extends Monster{
 
         if (Math.abs(dx) > 85) moveTowardPlayer(dx);
         else tryAttack(player);
+        
     }
     
     @Override
@@ -136,7 +138,7 @@ public class GorgonBoss extends Monster{
         
         return new Rectangle2D(hitboxX, hitboxY, hitboxWidth, hitboxheight);
     }
-
+    
     @Override
     public boolean isDead() { return currentHealth <= 0; }
     @Override

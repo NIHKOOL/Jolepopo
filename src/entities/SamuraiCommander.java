@@ -12,7 +12,6 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import logic.GameLogicManager;
 import utils.Assets;
 import utils.SoundManager;
 
@@ -26,12 +25,10 @@ public class SamuraiCommander extends Character implements AbilityCaster, Render
     private int dashFrame = 0;
     private long lastDashFrameTime = 0;
 
-    private long lastAttackTime = 0;
     private int currentAttackFrame = 0;
     private long lastAttackFrameTime = 0;
 
     private boolean defending = false;
-    private long lastDefendTime = 0;
     private int currentDefendFrame = 0;
     private long lastDefendFrameTime = 0;
 
@@ -144,7 +141,7 @@ public class SamuraiCommander extends Character implements AbilityCaster, Render
     @Override
     public void abilityOne() {
     	attacking = true;
-    	long now = System.currentTimeMillis();
+    	System.currentTimeMillis();
         for (Monster m : monsters) {
         	double distance = Math.abs(this.x - m.getX());
         	if (distance < 600) {
@@ -222,7 +219,7 @@ public class SamuraiCommander extends Character implements AbilityCaster, Render
     @Override
     public void abilityTwo() {
         defending = true;
-        long now = System.currentTimeMillis();
+        System.currentTimeMillis();
         for (Monster m : monsters) {
         	double distance = Math.abs(this.x - m.getX());
         	if (distance < 600) {
