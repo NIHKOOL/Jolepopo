@@ -36,6 +36,9 @@ public abstract class Character implements Renderable, Damagable, Controllable, 
     	double maxX = isScrollable ? GameConfig.MAP_WIDTH : GameConfig.SCREEN_WIDTH - characterWidth;
     	if (x > maxX) x = maxX;
     }
+    public void setHealthToMax() {
+    	this.currentHealth = GameConfig.PLAYER_MAX_HEALTH;
+    }
     
     public double getX() { return x;}
     public double getY() { return y;}

@@ -14,6 +14,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
 import logic.GameLogicManager;
 import logic.PlayerTeamManager;
 import ui.HUDRenderer;
@@ -40,6 +41,8 @@ public class GameScene extends AnimationTimer implements Updatable {
     private int currentMapIndex = 0;
     private final String[] backgrounds = {"map/BG_1.png", "map/terrace.png", "map/BG_2.png", "map/terrace.png", "map/BG_4.png"};
     private Bonfire bonfire;
+    private Bonfire currentBonfire;
+    private boolean nearBonfire;
     
     private final List<Meteor> meteors = new ArrayList<>();
     private long lastMeteorSpawnTime = 0;
@@ -87,6 +90,7 @@ public class GameScene extends AnimationTimer implements Updatable {
             if (code == KeyCode.L) currentPlayer.abilityTwo();
             if (code == KeyCode.TAB) switchCharacter();
             if (code == KeyCode.ENTER && canChangeMap) changeMap();
+            if (code == KeyCode.H && nearBonfire) restBonfire();
         });
 
         scene.setOnKeyReleased(e -> {
@@ -98,6 +102,16 @@ public class GameScene extends AnimationTimer implements Updatable {
         this.start();
     }
 
+    private void restBonfire() {
+    	if (currentPlayer instanceof SamuraiMelee) {
+    		((SamuraiMelee) currentPlayer).setHealthToMax();
+    	} else if (currentPlayer instanceof SamuraiArcher) {
+    		((SamuraiArcher) currentPlayer).setHealthToMax();
+    	} else if (currentPlayer instanceof SamuraiCommander) {
+    		((SamuraiCommander) currentPlayer).setHealthToMax();
+    	}
+    }
+    
     private void switchCharacter() {
         double oldX = currentPlayer.getX();
         double oldY = currentPlayer.getY();
@@ -136,7 +150,17 @@ public class GameScene extends AnimationTimer implements Updatable {
         }
         System.out.println("[SyTime : " + System.currentTimeMillis() + "][X : " + currentPlayer.getX() + 
         					"][Y : " + currentPlayer.getY() + "] " + canChangeMap);
+        
         if (bonfire != null) bonfire.update();
+        if (currentBonfire != null && (currentMapIndex == 1 || currentMapIndex == 3)) {
+        	Rectangle2D playerBox = new Rectangle2D(currentPlayer.getX(), currentPlayer.getY(), 60, 120);
+        	if (playerBox.intersects(currentBonfire.getHitbox())) {
+        		nearBonfire = true;
+        	} else {
+        		nearBonfire = false;
+        	}
+        }
+        
     }
 
     private void render() {
@@ -151,6 +175,11 @@ public class GameScene extends AnimationTimer implements Updatable {
         if (bonfire != null) bonfire.render(gc, camera);
         hudRenderer.renderHUD(gc);
         meteors.forEach(m -> m.render(gc, camera));
+        
+        if (nearBonfire) {
+        	gc.setFill(Color.WHITE);
+        	gc.fillText("Press H to rest", canvas.getWidth() / 2 - 40, canvas.getHeight() - 100);
+        }
     } 
     
     private void drawBackground() {
@@ -188,7 +217,7 @@ public class GameScene extends AnimationTimer implements Updatable {
     
     private void changeMap() {
     	if (currentMapIndex >= backgrounds.length - 1) {
-    		System.out.println("CONGRATE YOU JUST GO IN LAST");
+    		System.out.println("CONGRATE LAST MAP");
     		return;
     	}
     	
@@ -206,8 +235,10 @@ public class GameScene extends AnimationTimer implements Updatable {
     		SoundManager.playBGM("musics/vampire-189047.mp3", 0.2);
     		SoundManager.playBGM("musics/campfire-crackling-fireplace-sound-119594.mp3", 0.6);
     		bonfire = new Bonfire(GameConfig.SCREEN_WIDTH / 2 - 50, GameConfig.GROUND_LEVEL - 100);
+    		currentBonfire = bonfire;
     		
     	} else if (currentMapIndex == 2) {
+    		bonfire = null;
     		SoundManager.stopBGM();
     		SoundManager.playBGM("musics/1-08 - Ominous.mp3", 0.8);
     		int[] skeletonX = {-5000, -4500, -3000, 2000, 3000, 4000, 5000};
@@ -215,15 +246,17 @@ public class GameScene extends AnimationTimer implements Updatable {
     		
     		for (int x : skeletonX) { monsters.add(new Skeleton(x, GameConfig.GROUND_LEVEL + 20, currentPlayer));}
     		for (int x : skeletonWarriorX) { monsters.add(new SkeletonWarrior(x, GameConfig.GROUND_LEVEL + 20, currentPlayer));}
-    		bonfire = null;
+    		
     		
     	} else if (currentMapIndex == 3) {
     		SoundManager.stopBGM();
     		SoundManager.playBGM("musics/vampire-189047.mp3", 0.2);
     		SoundManager.playBGM("musics/campfire-crackling-fireplace-sound-119594.mp3", 0.6);
     		bonfire = new Bonfire(GameConfig.SCREEN_WIDTH / 2 - 50, GameConfig.GROUND_LEVEL - 100); 
+    		currentBonfire = bonfire;
     		
     	} else if (currentMapIndex == 4) {
+    		bonfire = null;
     		SoundManager.stopBGM();
     		SoundManager.playBGM("musics/1.01 The Unknown Journey Continues.mp3", 0.2);
     		Monster boss = new GorgonBoss(2000, GameConfig.GROUND_LEVEL - 280, currentPlayer);

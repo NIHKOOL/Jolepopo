@@ -35,8 +35,8 @@ public class GameConfig {
     public static final double JUMP_STRENGTH = -15;
 
     // Combat timings
-    public static final long ATTACK_COOLDOWN = 500;
-    public static final long DEFEND_DURATION = 1000;
+    public static final long ATTACK_COOLDOWN = 300;
+    public static final long DEFEND_DURATION = 1500;
     public static final long ATTACK_FRAME_INTERVAL = 100;
     public static final long DEFEND_FRAME_INTERVAL = 150;
 

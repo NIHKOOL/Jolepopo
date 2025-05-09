@@ -109,13 +109,13 @@ public class GorgonBoss extends Monster implements Renderable, Updatable{
         
         
         //Debug
-        Rectangle2D hitbox = getHitbox();
-        gc.setStroke(Color.WHITE);
-        gc.setLineWidth(2);
-        gc.strokeRect(hitbox.getMinX() - camera.getX(), 
-        			  hitbox.getMinY() - camera.getY(),
-        			  hitbox.getWidth(), 
-        			  hitbox.getHeight());
+//        Rectangle2D hitbox = getHitbox();
+//        gc.setStroke(Color.WHITE);
+//        gc.setLineWidth(2);
+//        gc.strokeRect(hitbox.getMinX() - camera.getX(), 
+//        			  hitbox.getMinY() - camera.getY(),
+//        			  hitbox.getWidth(), 
+//        			  hitbox.getHeight());
     }
 
     private void moveTowardPlayer(double dx) {

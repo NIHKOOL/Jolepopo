@@ -65,13 +65,13 @@ public class Skeleton extends Monster{
         else gc.drawImage(frame, 0, 0, frame.getWidth(), frame.getHeight(), drawX + drawWidth, drawY, -drawWidth, drawHeight);
         
       //Debug
-        Rectangle2D hitbox = getHitbox();
-        gc.setStroke(Color.WHITE);
-        gc.setLineWidth(2);
-        gc.strokeRect(hitbox.getMinX() - camera.getX(), 
-        			  hitbox.getMinY() - camera.getY(),
-        			  hitbox.getWidth(), 
-        			  hitbox.getHeight());
+//        Rectangle2D hitbox = getHitbox();
+//        gc.setStroke(Color.WHITE);
+//        gc.setLineWidth(2);
+//        gc.strokeRect(hitbox.getMinX() - camera.getX(), 
+//        			  hitbox.getMinY() - camera.getY(),
+//        			  hitbox.getWidth(), 
+//        			  hitbox.getHeight());
     }
 
     protected void drawHealthBar(GraphicsContext gc, double drawX, double drawY) {
