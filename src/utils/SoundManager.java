@@ -1,7 +1,9 @@
 package utils;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javafx.scene.media.Media;
@@ -12,7 +14,8 @@ public class SoundManager {
     private static MediaPlayer bgmPlayer;
     private static MediaPlayer sefPlayer;
     private static final Map<String, Long> soundCooldowns = new HashMap<>();
-
+    private static final List<MediaPlayer> bgmPlayersList = new ArrayList<>(); 
+    
     public static void playBGM(String filename, double volume) {
         URL resource = SoundManager.class.getResource("/" + filename);
         if (resource == null) {
@@ -23,14 +26,15 @@ public class SoundManager {
         bgmPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         bgmPlayer.setVolume(volume);
         bgmPlayer.play();
+        bgmPlayersList.add(bgmPlayer);
+        
     }
 
     public static void stopBGM() {
-        if (bgmPlayer != null) {
-            bgmPlayer.stop();
-            bgmPlayer = null;
+    	for (MediaPlayer player : bgmPlayersList) {
+            player.stop();
         }
-        
+        bgmPlayersList.clear();
     }
 
     public static void playSEF(String filename, double volume) {

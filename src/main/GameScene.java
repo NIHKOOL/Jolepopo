@@ -37,7 +37,7 @@ public class GameScene extends AnimationTimer implements Updatable {
     private boolean canChangeMap = false;
     private boolean isScrollable = true;
     private int currentMapIndex = 0;
-    private final String[] backgrounds = {"map/BG_1.png", "map/restMap.png", "map/BG_2.png", "map/restMap.png", "map/BG_4.png"};
+    private final String[] backgrounds = {"map/BG_1.png", "map/terrace.png", "map/BG_2.png", "map/terrace.png", "map/BG_4.png"};
     
     private final List<Meteor> meteors = new ArrayList<>();
     private long lastMeteorSpawnTime = 0;
@@ -192,17 +192,15 @@ public class GameScene extends AnimationTimer implements Updatable {
     	isScrollable = !(currentMapIndex == 1 || currentMapIndex == 3);
     	background = Assets.loadImage(backgrounds[currentMapIndex]);
     	
-    	if (!isScrollable) {
-    		currentPlayer.setPosition(GameConfig.SCREEN_WIDTH / 2.0, GameConfig.GROUND_LEVEL);
-    	} else {
-    		currentPlayer.setPosition(100, GameConfig.GROUND_LEVEL);
-    	}
+    	currentPlayer.setPosition(100, GameConfig.GROUND_LEVEL);
     	
     	monsters.clear();  	
-    	SoundManager.playSEF("effects/magic-spell-333896.mp3", 0.5); 
+    	SoundManager.playSEF("effects/magic-spell-333896.mp3", 0.3); 
     	
     	if (currentMapIndex == 1) {
     		SoundManager.stopBGM();
+    		SoundManager.playBGM("musics/vampire-189047.mp3", 0.2);
+    		SoundManager.playBGM("musics/campfire-crackling-fireplace-sound-119594.mp3", 0.6);
     		
     	} else if (currentMapIndex == 2) {
     		SoundManager.stopBGM();
@@ -215,8 +213,8 @@ public class GameScene extends AnimationTimer implements Updatable {
     		
     	} else if (currentMapIndex == 3) {
     		SoundManager.stopBGM();
-    		
-    		
+    		SoundManager.playBGM("musics/vampire-189047.mp3", 0.2);
+    		SoundManager.playBGM("musics/campfire-crackling-fireplace-sound-119594.mp3", 0.6);
     		 
     	} else if (currentMapIndex == 4) {
     		SoundManager.stopBGM();
