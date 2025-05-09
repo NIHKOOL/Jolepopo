@@ -22,7 +22,7 @@ public abstract class Monster implements Renderable, Updatable, Damagable{
     
     private boolean debuffed = false;
     private long debuffEndTime = 0;
-    private double damageMultiplier = 1.0; 
+    protected double damageMultiplier = 1.0; 
     
     
 

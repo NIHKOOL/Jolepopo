@@ -82,10 +82,7 @@ public class GameLogicManager {
         		return true;
         	}
         	return false;
-        });
-        	
-        
-        
+        }); 
         
         // Player death check
         if (player.isDead()) {

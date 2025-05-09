@@ -13,7 +13,10 @@ public class GorgonBoss extends Monster{
 	private int currentWalkFrame = 0, currentAttackFrame = 0;
     private long lastAttackTime = 0, lastFrameTime = 0;
     private boolean attacking = false, facingRight = false;
-    private final Image[] walkFrames, attackFrames;
+    private final Image[] walkFrames, attackFrames, deathFrames;
+    private boolean dying = false;
+    private int currentDeathFrame = 0;
+    private long lastDeathFrameTime = 0;
 
     public GorgonBoss(double x, double y, Character player) {
         super(x, y, player);
@@ -45,10 +48,28 @@ public class GorgonBoss extends Monster{
         	Assets.loadImage("gorgon/ggAttack_8.png"), 
         	Assets.loadImage("gorgon/ggAttack_9.png"), 
         };
+        deathFrames = new Image[] {
+        	Assets.loadImage("gorgon/ggDead_0.png"),
+        	Assets.loadImage("gorgon/ggDead_0.png"),
+        	Assets.loadImage("gorgon/ggDead_1.png"),
+        	Assets.loadImage("gorgon/ggDead_1.png"),
+        	Assets.loadImage("gorgon/ggDead_2.png"),
+        	Assets.loadImage("gorgon/ggDead_2.png")
+        };
+        
     }
 
     @Override
     public void update() {
+    	
+    	if (dying) {
+        	if (System.currentTimeMillis() - lastDeathFrameTime > 200) {
+        		currentDeathFrame++;
+        		lastDeathFrameTime = System.currentTimeMillis();
+        	}
+        	return;
+        }
+    	
     	updateSlowStatus();
     	updateDebuffStatus();
         Character player = getPlayer();
@@ -68,7 +89,15 @@ public class GorgonBoss extends Monster{
     
     @Override
     public void render(GraphicsContext gc, Camera camera) {
-        Image frame = attacking ? attackFrames[currentAttackFrame] : walkFrames[currentWalkFrame];
+        Image frame;
+        
+        if (dying) {
+        	int frameIndex = Math.min(currentDeathFrame, deathFrames.length - 1);
+        	frame = deathFrames[frameIndex];
+        } else {
+        	frame = attacking ? attackFrames[currentAttackFrame] : walkFrames[currentWalkFrame];
+        }
+       
         double baseHeight = walkFrames[0].getHeight();
         double drawX = x - camera.getX();
         double drawY = y - camera.getY() - (frame.getHeight() - baseHeight);
@@ -76,6 +105,7 @@ public class GorgonBoss extends Monster{
 
         if (facingRight) gc.drawImage(frame, drawX, drawY, drawWidth, drawHeight);
         else gc.drawImage(frame, 0, 0, frame.getWidth(), frame.getHeight(), drawX + drawWidth, drawY, -drawWidth, drawHeight);
+        
         
         //Debug
         Rectangle2D hitbox = getHitbox();
@@ -106,11 +136,11 @@ public class GorgonBoss extends Monster{
             currentAttackFrame = 0;
             lastAttackTime = now;
             if (player instanceof SamuraiMelee) {
-            	player.takeDamage(10);
+            	player.takeDamage(15);
             } else if (player instanceof SamuraiArcher) {
-            	player.takeDamage(20);
+            	player.takeDamage(30);
             } else {
-            	player.takeDamage(10);
+            	player.takeDamage(20);
             }
         }
     }
@@ -126,7 +156,19 @@ public class GorgonBoss extends Monster{
             }
         }
     }
-
+    
+    @Override
+    public void takeDamage(int damage) {
+    	int finalDamage = (int)(damage * damageMultiplier);
+        currentHealth -= finalDamage;
+        if (currentHealth <= 0 && !dying) {
+        	currentHealth = 0;
+        	dying = true;
+        	currentDeathFrame = 0;
+        	lastDeathFrameTime = System.currentTimeMillis();
+        }
+    }
+    
     @Override
     public Rectangle2D getHitbox() {
         Image frame = walkFrames[0];
@@ -140,7 +182,9 @@ public class GorgonBoss extends Monster{
     }
     
     @Override
-    public boolean isDead() { return currentHealth <= 0; }
+    public boolean isDead() { 
+    	return dying && currentDeathFrame >= deathFrames.length; 
+    }
     @Override
     public double getX() { return x; }
     @Override
