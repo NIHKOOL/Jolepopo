@@ -4,6 +4,7 @@ import camera.Camera;
 import config.GameConfig;
 import entities.*;
 import entities.Character;
+import entities.environment.Bonfire;
 import entities.projectiles.Meteor;
 import interfaces.Updatable;
 import javafx.animation.AnimationTimer;
@@ -38,6 +39,7 @@ public class GameScene extends AnimationTimer implements Updatable {
     private boolean isScrollable = true;
     private int currentMapIndex = 0;
     private final String[] backgrounds = {"map/BG_1.png", "map/terrace.png", "map/BG_2.png", "map/terrace.png", "map/BG_4.png"};
+    private Bonfire bonfire;
     
     private final List<Meteor> meteors = new ArrayList<>();
     private long lastMeteorSpawnTime = 0;
@@ -201,6 +203,7 @@ public class GameScene extends AnimationTimer implements Updatable {
     		SoundManager.stopBGM();
     		SoundManager.playBGM("musics/vampire-189047.mp3", 0.2);
     		SoundManager.playBGM("musics/campfire-crackling-fireplace-sound-119594.mp3", 0.6);
+    		bonfire = new Bonfire(GameConfig.SCREEN_WIDTH / 2 - 50, GameConfig.GROUND_LEVEL - 100);
     		
     	} else if (currentMapIndex == 2) {
     		SoundManager.stopBGM();
@@ -210,12 +213,14 @@ public class GameScene extends AnimationTimer implements Updatable {
     		
     		for (int x : skeletonX) { monsters.add(new Skeleton(x, GameConfig.GROUND_LEVEL + 20, currentPlayer));}
     		for (int x : skeletonWarriorX) { monsters.add(new SkeletonWarrior(x, GameConfig.GROUND_LEVEL + 20, currentPlayer));}
+    		bonfire = null;
     		
     	} else if (currentMapIndex == 3) {
     		SoundManager.stopBGM();
     		SoundManager.playBGM("musics/vampire-189047.mp3", 0.2);
     		SoundManager.playBGM("musics/campfire-crackling-fireplace-sound-119594.mp3", 0.6);
-    		 
+    		bonfire = new Bonfire(GameConfig.SCREEN_WIDTH / 2 - 50, GameConfig.GROUND_LEVEL - 100); 
+    		
     	} else if (currentMapIndex == 4) {
     		SoundManager.stopBGM();
     		SoundManager.playBGM("musics/1.01 The Unknown Journey Continues.mp3", 0.2);
