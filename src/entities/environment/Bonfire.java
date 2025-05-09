@@ -1,6 +1,7 @@
 package entities.environment;
 
 import camera.Camera;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import utils.Assets;
@@ -84,6 +85,11 @@ public class Bonfire {
 		double drawX = x - camera.getX();
 		double drawY = y - camera.getY();
 		gc.drawImage(frame, drawX, drawY, frame.getHeight(), frame.getWidth());
+	}
+	
+	public Rectangle2D getHitbox() {
+		Image frame = frames[0];
+		return new Rectangle2D(x, y, frame.getWidth(), frame.getHeight()); 
 	}
 	
 }
