@@ -2,6 +2,7 @@ package entities;
 
 import camera.Camera;
 import config.GameConfig;
+import interfaces.AbilityCaster;
 import interfaces.Controllable;
 import interfaces.Damagable;
 import interfaces.Renderable;
@@ -10,7 +11,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import utils.Assets;
 
-public abstract class Character implements Renderable, Damagable, Controllable{
+public abstract class Character implements Renderable, Damagable, Controllable, AbilityCaster{
     protected double x, y;
     protected boolean facingRight = true;
     protected int currentHealth;

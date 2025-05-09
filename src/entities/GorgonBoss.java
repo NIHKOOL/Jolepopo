@@ -8,8 +8,9 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import utils.Assets;
 import utils.SoundManager;
+import interfaces.*;
 
-public class GorgonBoss extends Monster{
+public class GorgonBoss extends Monster implements AbilityCaster, Renderable, Updatable{
 	private int currentWalkFrame = 0, currentAttackFrame = 0;
     private long lastAttackTime = 0, lastFrameTime = 0;
     private boolean attacking = false, facingRight = false;
@@ -118,6 +119,17 @@ public class GorgonBoss extends Monster{
     }
 
 
+    @Override
+	public void abilityOne() {
+	
+		
+	}
+
+	@Override
+	public void abilityTwo() {
+		
+		
+	}
 
     private void moveTowardPlayer(double dx) {
         x += dx > 0 
