@@ -136,6 +136,7 @@ public class GameScene extends AnimationTimer implements Updatable {
         }
         System.out.println("[SyTime : " + System.currentTimeMillis() + "][X : " + currentPlayer.getX() + 
         					"][Y : " + currentPlayer.getY() + "] " + canChangeMap);
+        if (bonfire != null) bonfire.update();
     }
 
     private void render() {
@@ -147,6 +148,7 @@ public class GameScene extends AnimationTimer implements Updatable {
         }
 
         currentPlayer.render(gc, camera);
+        if (bonfire != null) bonfire.render(gc, camera);
         hudRenderer.renderHUD(gc);
         meteors.forEach(m -> m.render(gc, camera));
     } 
