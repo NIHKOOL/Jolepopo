@@ -120,8 +120,8 @@ public class GorgonBoss extends Monster implements Renderable, Updatable{
 
     private void moveTowardPlayer(double dx) {
         x += dx > 0 
-        		? GameConfig.MONSTER_SPEED * getSpeedMultipiler()
-        		: -GameConfig.MONSTER_SPEED * getSpeedMultipiler();
+        		? GameConfig.MONSTER_SPEED * 2 * getSpeedMultipiler()
+        		: -GameConfig.MONSTER_SPEED * 2 * getSpeedMultipiler();
         if (System.currentTimeMillis() - lastFrameTime > 200) {
             currentWalkFrame = (currentWalkFrame + 1) % walkFrames.length;
             lastFrameTime = System.currentTimeMillis();

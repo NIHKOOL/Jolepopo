@@ -63,8 +63,11 @@ public class GameScene extends AnimationTimer implements Updatable {
 
         SoundManager.playBGM("musics/10. Fighting.mp3", 0.1);
       
+        // For spawn
+        //monsters.add(new SkeletonWarrior(600, GameConfig.GROUND_LEVEL + 20, currentPlayer));   
+        //
         // First map spawn
-        monsters.add(new Skeleton(600, GameConfig.GROUND_LEVEL + 20, currentPlayer));   
+        
 
     }
 
@@ -183,6 +186,13 @@ public class GameScene extends AnimationTimer implements Updatable {
     	
     	if (currentMapIndex == 1) {
     		SoundManager.stopBGM();
+    		
+    		int[] skeletonX = {-5000, -4500, -3000, 2000, 3000, 4000, 5000};
+    		int[] skeletonWarriorX = {-7000, 7000, -6000, 2500, 600};
+    		
+    		for (int x : skeletonX) { monsters.add(new Skeleton(x, GameConfig.GROUND_LEVEL + 20, currentPlayer));}
+    		for (int x : skeletonWarriorX) { monsters.add(new SkeletonWarrior(x, GameConfig.GROUND_LEVEL + 20, currentPlayer));}
+    		
     		SoundManager.playBGM("musics/1-08 - Ominous.mp3", 0.8);
     	} else if (currentMapIndex == 2) {
     		SoundManager.stopBGM();

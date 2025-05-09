@@ -9,10 +9,14 @@ import javafx.scene.paint.Color;
 import utils.Assets;
 
 public class Skeleton extends Monster{
-	private int currentWalkFrame = 0, currentAttackFrame = 0;
-    private long lastAttackTime = 0, lastFrameTime = 0;
-    private boolean attacking = false, facingRight = false;
-    private final Image[] walkFrames, attackFrames;
+	protected int currentWalkFrame = 0;
+	protected int currentAttackFrame = 0;
+    protected long lastAttackTime = 0;
+	private long lastFrameTime = 0;
+    protected boolean attacking = false;
+	protected boolean facingRight = false;
+    protected Image[] walkFrames;
+	protected Image[] attackFrames;
 	
 	public Skeleton(double x, double y, Character player) {
 		super(x, y, player);
@@ -70,7 +74,7 @@ public class Skeleton extends Monster{
         			  hitbox.getHeight());
     }
 
-    private void drawHealthBar(GraphicsContext gc, double drawX, double drawY) {
+    protected void drawHealthBar(GraphicsContext gc, double drawX, double drawY) {
         double healthPercent = (double) currentHealth / GameConfig.MONSTER_MAX_HEALTH;
         gc.setFill(Color.LIMEGREEN);
         gc.fillRect(drawX, drawY - 10, 40 * healthPercent, 5);
@@ -93,11 +97,11 @@ public class Skeleton extends Monster{
             currentAttackFrame = 0;
             lastAttackTime = now;
             if (player instanceof SamuraiMelee) {
-            	player.takeDamage(10);
+            	player.takeDamage(15);
             } else if (player instanceof SamuraiArcher) {
-            	player.takeDamage(20);
+            	player.takeDamage(25);
             } else {
-            	player.takeDamage(10);
+            	player.takeDamage(20);
             }
         }
     }
