@@ -221,6 +221,7 @@ public class GameScene extends AnimationTimer implements Updatable {
     
     public void drawDebugMode() {
     	if (debugMode) {
+    		System.out.println("DebugMode / "+ "SysTime " + System.currentTimeMillis() + "ms / posX " + currentPlayer.getX() + " posY " + currentPlayer.getY() );
     		
     		if (currentPlayer instanceof SamuraiMelee) {
     			Rectangle2D hitbox = currentPlayer.getAttackBox();
