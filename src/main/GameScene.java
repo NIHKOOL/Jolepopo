@@ -5,6 +5,8 @@ import config.GameConfig;
 import entities.*;
 import entities.Character;
 import entities.environment.Bonfire;
+import entities.projectiles.Arrow;
+import entities.projectiles.BigArrow;
 import entities.projectiles.Meteor;
 import interfaces.Updatable;
 import javafx.animation.AnimationTimer;
@@ -50,6 +52,8 @@ public class GameScene extends AnimationTimer implements Updatable {
     private boolean enableMeteorShower = false;
 
     private final GameLogicManager logicManger;
+    
+    private boolean debugMode = false;
 
     
     public GameScene(Canvas canvas) {
@@ -103,6 +107,10 @@ public class GameScene extends AnimationTimer implements Updatable {
             if (code == KeyCode.ENTER && canChangeMap) changeMap();
             if (code == KeyCode.H && nearBonfire) restBonfire();
             if (code == KeyCode.P && nearBonfire) { bonfireMenuOpen = true;}
+            if (code == KeyCode.M) {
+            	debugMode = !debugMode ;
+            	System.out.println("Debug Mode : " + (debugMode ? "ON" : "OFF"));
+            }
         });
 
         scene.setOnKeyReleased(e -> {
@@ -159,10 +167,7 @@ public class GameScene extends AnimationTimer implements Updatable {
         	canChangeMap = currentPlayer.getX() >= GameConfig.MAP_LOCK_WIDTH;
         } else {
         	canChangeMap = currentPlayer.getX() >= GameConfig.MAP_WIDTH - 100;
-        }
-        System.out.println("[SyTime : " + System.currentTimeMillis() + "][X : " + currentPlayer.getX() + 
-        					"][Y : " + currentPlayer.getY() + "] " + canChangeMap);
-        
+        }   
         if (bonfire != null) bonfire.update();
         if (currentBonfire != null && (currentMapIndex == 1 || currentMapIndex == 3)) {
         	Rectangle2D playerBox = new Rectangle2D(currentPlayer.getX(), currentPlayer.getY(), 60, 120);
@@ -209,8 +214,78 @@ public class GameScene extends AnimationTimer implements Updatable {
             gc.fillText("2: ++Boost DMG Multiplier", canvas.getWidth() / 2 - 80, canvas.getHeight() / 2);
             gc.fillText("[ x" + GameConfig.PLAYER_DAMAGE_MULTIPLIER + " >>> " + (GameConfig.PLAYER_DAMAGE_MULTIPLIER + 0.5) + " ]", canvas.getWidth() / 2 - 60, canvas.getHeight() / 2 + 15);
         }
+        
+        drawDebugMode();
      
     } 
+    
+    public void drawDebugMode() {
+    	if (debugMode) {
+    		
+    		if (currentPlayer instanceof SamuraiMelee) {
+    			Rectangle2D hitbox = currentPlayer.getAttackBox();
+    	        gc.setStroke(Color.WHITE);
+    	        gc.setLineWidth(2);
+    	        gc.strokeRect(hitbox.getMinX() - camera.getX(), 
+    	        			  hitbox.getMinY() - camera.getY(),
+    	        			  hitbox.getWidth(), 
+    	        			  hitbox.getHeight());
+    			
+    		} else if (currentPlayer instanceof SamuraiArcher) {
+    			SamuraiArcher archer = (SamuraiArcher) currentPlayer;
+    			List<Arrow> arrows = archer.getArrows();
+                List<BigArrow> bigArrows = archer.getBigArrows();
+                for (Arrow a : arrows) {
+                	Rectangle2D hitbox = a.getHitbox();
+        	        gc.setStroke(Color.WHITE);
+        	        gc.setLineWidth(2);
+        	        gc.strokeRect(hitbox.getMinX() - camera.getX(), 
+        	        			  hitbox.getMinY() - camera.getY(),
+        	        			  hitbox.getWidth(), 
+        	        			  hitbox.getHeight());
+                }
+                for (Arrow ba : bigArrows) {
+                	Rectangle2D hitbox = ba.getHitbox();
+        	        gc.setStroke(Color.WHITE);
+        	        gc.setLineWidth(2);
+        	        gc.strokeRect(hitbox.getMinX() - camera.getX(), 
+        	        			  hitbox.getMinY() - camera.getY(),
+        	        			  hitbox.getWidth(), 
+        	        			  hitbox.getHeight());
+                }
+    		}
+    		
+    		
+    		for (Monster m : monsters) {
+    			Rectangle2D hitbox = m.getHitbox();
+    	        gc.setStroke(Color.WHITE);
+    	        gc.setLineWidth(2);
+    	        gc.strokeRect(hitbox.getMinX() - camera.getX(), 
+    	        			  hitbox.getMinY() - camera.getY(),
+    	        			  hitbox.getWidth(), 
+    	        			  hitbox.getHeight());
+    		}
+    		for (Meteor m : meteors) {
+    			Rectangle2D hitbox = m.getHitbox();
+    	        gc.setStroke(Color.WHITE);
+    	        gc.setLineWidth(2);
+    	        gc.strokeRect(hitbox.getMinX() - camera.getX(), 
+    	        			  hitbox.getMinY() - camera.getY(),
+    	        			  hitbox.getWidth(), 
+    	        			  hitbox.getHeight());
+    		}
+    		if (bonfire != null) {
+    			Rectangle2D hitbox = bonfire.getHitbox();
+    	        gc.setStroke(Color.WHITE);
+    	        gc.setLineWidth(2);
+    	        gc.strokeRect(hitbox.getMinX() - camera.getX(), 
+    	        			  hitbox.getMinY() - camera.getY(),
+    	        			  hitbox.getWidth(), 
+    	        			  hitbox.getHeight());
+    		}
+        	
+    	}
+    }
     
     private void drawBackground() {
         if (currentMapIndex == 1 || currentMapIndex == 3) {
@@ -235,7 +310,7 @@ public class GameScene extends AnimationTimer implements Updatable {
 	    	
 	    	Rectangle2D playerHitBox = new Rectangle2D(currentPlayer.getX(), currentPlayer.getY(), 60, 120);
 	    	for (Meteor m : meteors) {
-	    		if (m.getHitBox().intersects(playerHitBox)) {
+	    		if (m.getHitbox().intersects(playerHitBox)) {
 	    			currentPlayer.takeDamage(5);
 	    			m.deactivate();
 	    		}

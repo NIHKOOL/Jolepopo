@@ -29,7 +29,7 @@ public class Meteor implements Updatable, Renderable{
 		gc.drawImage(sprite, x - camera.getX(), y - camera.getY());
 	}
 	
-	public Rectangle2D getHitBox() {
+	public Rectangle2D getHitbox() {
 		return new Rectangle2D(x, y, sprite.getWidth(), sprite.getHeight());
 	}
 	
