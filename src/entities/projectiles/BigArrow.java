@@ -1,5 +1,6 @@
 package entities.projectiles;
 
+import config.GameConfig;
 import interfaces.Renderable;
 import interfaces.Updatable;
 import utils.Assets;
@@ -13,7 +14,6 @@ public class BigArrow extends Arrow implements Renderable, Updatable{
     }
 
     @Override
-    public int getDamage() {
-        return 50;
-    }
+    public int getDamage() { return GameConfig.PLAYER_BIGARROW_DAMAGE ;}
+    
 }  
