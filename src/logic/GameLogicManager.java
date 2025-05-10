@@ -2,10 +2,12 @@ package logic;
 
 import java.util.List;
 
+import config.GameConfig;
 import entities.Monster;
 import entities.SamuraiArcher;
 import entities.SamuraiMelee;
 import entities.Character;
+import entities.GorgonBoss;
 import javafx.geometry.Rectangle2D;
 import utils.SoundManager;
 import entities.projectiles.Arrow;
@@ -35,7 +37,7 @@ public class GameLogicManager {
             Rectangle2D playerAtk = player.getAttackBox();
             for (Monster m : monsters) {
                 if (playerAtk.intersects(m.getHitbox())) {
-                    m.takeDamage(1);
+                    m.takeDamage((int) (GameConfig.PLAYER_SWORD_DAMAGE * GameConfig.PLAYER_DAMAGE_MULTIPLIER));
                     SoundManager.playSEF("effects/hit-swing-sword-small-2-95566.mp3", 2, 100);
                 }
             }
@@ -45,12 +47,12 @@ public class GameLogicManager {
         if (player instanceof SamuraiArcher archer) {
             List<Arrow> arrows = archer.getArrows();
             List<BigArrow> bigArrows = archer.getBigArrows();
-
+            
             for (Arrow arrow : arrows) {
                 Rectangle2D arrowBox = arrow.getHitbox();
                 for (Monster m : monsters) {
                     if (arrowBox.intersects(m.getHitbox())) {
-                        m.takeDamage(10);
+                        m.takeDamage((int) (GameConfig.PLAYER_ARROW_DAMAGE * GameConfig.PLAYER_DAMAGE_MULTIPLIER));
                         arrow.deactive();
                         SoundManager.playSEF("effects/hit-swing-sword-small-2-95566.mp3", 2, 100);
                     }
@@ -61,8 +63,9 @@ public class GameLogicManager {
                 Rectangle2D box = ba.getHitbox();
                 for (Monster m : monsters) {
                     if (box.intersects(m.getHitbox())) {
-                        m.takeDamage(50);
+                        m.takeDamage((int) (GameConfig.PLAYER_BIGARROW_DAMAGE * GameConfig.PLAYER_DAMAGE_MULTIPLIER));
                         ba.deactive();
+                        SoundManager.playSEF("effects/hit-swing-sword-small-2-95566.mp3", 2, 100);
                     }
                 }
             }
@@ -71,11 +74,20 @@ public class GameLogicManager {
         }
 
         // Remove dead monsters
-        monsters.removeIf(Monster::isDead);
-
+        monsters.removeIf(m -> {
+        	if (m.isDead()) {
+        		if (m instanceof GorgonBoss) {
+        			SoundManager.playSEF("effects/monster-warrior-roar-195877.mp3", 0.5);
+        		}
+        		return true;
+        	}
+        	return false;
+        }); 
+        
         // Player death check
         if (player.isDead()) {
             System.out.println(" ##-{ YOU DIED }-## ");
         }
     }
+    
 }

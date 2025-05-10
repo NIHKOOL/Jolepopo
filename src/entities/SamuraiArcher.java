@@ -4,6 +4,10 @@ import camera.Camera;
 import config.GameConfig;
 import entities.projectiles.Arrow;
 import entities.projectiles.BigArrow;
+import interfaces.AbilityCaster;
+import interfaces.Controllable;
+import interfaces.Damagable;
+import interfaces.Renderable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -14,7 +18,7 @@ import utils.SoundManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SamuraiArcher extends Character {
+public class SamuraiArcher extends Character implements AbilityCaster, Renderable, Controllable, Damagable{
     private double velocityY = 0;
     private boolean onGround = true;
 
@@ -28,9 +32,9 @@ public class SamuraiArcher extends Character {
     private int currentAttackFrame = 0;
     private long lastAttackFrameTime = 0;
 
-    private boolean defending = false;
-    private int currentDefendFrame = 0;
-    private long lastDefendFrameTime = 0;
+    private boolean shooting = false;
+    private int currentShootingFrame = 0;
+    private long lastShootingFrameTime = 0;
 
     private int currentFrame = 0;
     private long lastFrameTime = 0;
@@ -108,12 +112,12 @@ public class SamuraiArcher extends Character {
     }
 
     @Override
-    public void update(boolean left, boolean right) {
+    public void update(boolean left, boolean right, boolean isScrollable) {
         long now = System.currentTimeMillis();
-        updateAttack(now);
-        updateDefend(now);
+        updateAbilityOne(now);
+        updateAbilityTwo(now);
         updateDash(now);
-        updateMovement(now, left, right);
+        updateMovement(now, left, right, isScrollable);
         updateJump(now);
         regenMana();
         arrows.forEach(Arrow::update);
@@ -161,11 +165,11 @@ public class SamuraiArcher extends Character {
             double arrowX = facingRight ? x + 40 : x - 40;
             arrows.add(new Arrow(arrowX, y - 20, facingRight));
             currentMana = Math.max(currentMana - 20, 0);
-            SoundManager.playSEF("effects/sword-sound-260274.mp3", 1);
+            SoundManager.playSEF("effects/bow-release-bow-and-arrow-4-101936.mp3", 10);
         }
     }
 
-    private void updateAttack(long now) {
+    private void updateAbilityOne(long now) {
         if (attacking && now - lastAttackFrameTime > GameConfig.ATTACK_FRAME_INTERVAL - 85) {
             currentAttackFrame++;
             lastAttackFrameTime = now;
@@ -190,7 +194,7 @@ public class SamuraiArcher extends Character {
 
     private void updateDash(long now) {
         if (dashing) {
-            x += (facingRight ? 1 : -1) * GameConfig.DASH_SPEED * -0.5;
+            x += (facingRight ? 1 : -1) * GameConfig.DASH_SPEED * -1;
             if (now - lastDashFrameTime > 60) {
                 dashFrame = (dashFrame + 1) % dashFrames.length;
                 lastDashFrameTime = now;
@@ -235,17 +239,21 @@ public class SamuraiArcher extends Character {
             bigArrows.add(new BigArrow(arrowX, y - 20, facingRight));
             currentMana = Math.max(currentMana - GameConfig.BIG_ARROW_MANA_COST, 0);
             lastBigArrowTime = now;
-            SoundManager.playSEF("effects/metal-clang-284809.mp3", 1);
+            SoundManager.playSEF("effects/metallic-latch-release-43678.mp3", 3);
+            
+            shooting = true;
+            currentShootingFrame = 0;
+            lastShootingFrameTime = now;
         }
     }
 
-    private void updateDefend(long now) {
-        if (defending && now - lastDefendFrameTime > GameConfig.DEFEND_FRAME_INTERVAL) {
-            currentDefendFrame++;
-            lastDefendFrameTime = now;
-            if (currentDefendFrame >= defendFrames.length) {
-                defending = false;
-                currentDefendFrame = 0;
+    private void updateAbilityTwo(long now) {
+        if (shooting && now - lastShootingFrameTime > GameConfig.SHOOTING_FRAME_INTERVAL) {
+            currentShootingFrame++;
+            lastShootingFrameTime = now;
+            if (currentShootingFrame >= defendFrames.length) {
+                shooting = false;
+                currentShootingFrame = 0;
             }
         }
     }
@@ -257,7 +265,7 @@ public class SamuraiArcher extends Character {
         return new Rectangle2D(x + offsetX, y, attackWidth, attackHeight);
     }
 
-    private void updateMovement(long now, boolean left, boolean right) {
+    private void updateMovement(long now, boolean left, boolean right, boolean isScrollable) {
         if (!dashing) {
             if (left) {
                 x -= GameConfig.PLAYER_SPEED - 1;
@@ -267,6 +275,9 @@ public class SamuraiArcher extends Character {
                 x += GameConfig.PLAYER_SPEED - 1;
                 facingRight = true;
             }
+            
+            applyMapBounds(walkFrames[0].getWidth() * 2, isScrollable);
+            
             if (now - lastFrameTime > 150 && (left || right)) {
                 currentFrame = (currentFrame + 1) % walkFrames.length;
                 lastFrameTime = now;
@@ -277,14 +288,14 @@ public class SamuraiArcher extends Character {
 
     private void regenMana() {
         if (!dashing && currentMana < GameConfig.PLAYER_MAX_MANA) {
-            currentMana += GameConfig.MANA_REGEN;
+            currentMana += GameConfig.MANA_REGEN * 2;
             currentMana = Math.min(currentMana, GameConfig.PLAYER_MAX_MANA);
         }
     }
 
     private Image getCurrentFrame() {
         if (attacking) return attackFrames[currentAttackFrame];
-        if (defending) return defendFrames[currentDefendFrame];
+        if (shooting) return defendFrames[currentShootingFrame];
         if (dashing) return dashFrames[dashFrame];
         if (!onGround) return jumpFrames[jumpFrame];
         return walkFrames[currentFrame];
@@ -312,13 +323,13 @@ public class SamuraiArcher extends Character {
     @Override
     public double getY() { return y; }
     @Override
-    public int getCurrentHealth() { return (int) (currentHealth * 0.4); }
+    public int getCurrentHealth() { return currentHealth; }
     @Override
-    public int getMaxHealth() { return (int) (GameConfig.PLAYER_MAX_HEALTH * 0.4); }
+    public int getMaxHealth() { return GameConfig.PLAYER_MAX_HEALTH ; }
     @Override
-    public double getCurrentMana() { return currentMana * 2; }
+    public double getCurrentMana() { return currentMana ; }
     @Override
-    public int getMaxMana() { return GameConfig.PLAYER_MAX_MANA * 2; }
+    public int getMaxMana() { return GameConfig.PLAYER_MAX_MANA ; }
 
     public List<Arrow> getArrows() { return arrows; }
     public List<BigArrow> getBigArrows() { return bigArrows; }

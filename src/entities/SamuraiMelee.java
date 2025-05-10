@@ -2,6 +2,10 @@ package entities;
 
 import camera.Camera;
 import config.GameConfig;
+import interfaces.AbilityCaster;
+import interfaces.Controllable;
+import interfaces.Damagable;
+import interfaces.Renderable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -9,7 +13,7 @@ import javafx.scene.paint.Color;
 import utils.Assets;
 import utils.SoundManager;
 
-public class SamuraiMelee extends Character {
+public class SamuraiMelee extends Character implements AbilityCaster, Renderable, Controllable, Damagable {
     private double velocityY = 0;
     private boolean onGround = true;
 
@@ -34,7 +38,7 @@ public class SamuraiMelee extends Character {
     private long lastJumpFrameTime = 0;
 
     private final Image[] walkFrames, dashFrames, jumpFrames, attackFrames, defendFrames;
-
+    
     private int tempHealth = 0;
     private long tempHealthStartTime = 0;
     private static final int TEMP_HEAL_AMOUNT = 10;
@@ -86,12 +90,13 @@ public class SamuraiMelee extends Character {
     }
 
     @Override
-    public void update(boolean left, boolean right) {
+    public void update(boolean left, boolean right, boolean isScrollable) {
         long now = System.currentTimeMillis();
-        updateAttack(now);
-        updateDefend(now);
+        updateAbilityOne(now);
+        updateAbilityTwo(now);
         updateDash(now);
-        updateMovement(now, left, right);
+        updateMovement(now, left, right, isScrollable);
+        	
         updateJump(now);
         regenMana();
         if (now - tempHealthStartTime > TEMP_HEAL_DURATION) tempHealth = 0;
@@ -138,7 +143,7 @@ public class SamuraiMelee extends Character {
         }
     }
 
-    private void updateAttack(long now) {
+    private void updateAbilityOne(long now) {
         if (attacking && now - lastAttackFrameTime > GameConfig.ATTACK_FRAME_INTERVAL) {
             currentAttackFrame++;
             lastAttackFrameTime = now;
@@ -219,7 +224,7 @@ public class SamuraiMelee extends Character {
         SoundManager.playSEF("effects/metal-clang-284809.mp3", 0.8);
     }
 
-    private void updateDefend(long now) {
+    private void updateAbilityTwo(long now) {
         if (defending && now - lastDefendFrameTime > GameConfig.DEFEND_FRAME_INTERVAL) {
             currentDefendFrame++;
             lastDefendFrameTime = now;
@@ -238,7 +243,7 @@ public class SamuraiMelee extends Character {
         return new Rectangle2D(x + offsetX, y, attackWidth, attackHeight);
     }
 
-    private void updateMovement(long now, boolean left, boolean right) {
+    private void updateMovement(long now, boolean left, boolean right, boolean isScrollable) {
         if (!dashing) {
             if (left) {
                 x -= GameConfig.PLAYER_SPEED;
@@ -248,6 +253,9 @@ public class SamuraiMelee extends Character {
                 x += GameConfig.PLAYER_SPEED;
                 facingRight = true;
             }
+            
+            applyMapBounds(walkFrames[0].getWidth() * 2, isScrollable);
+            
             if (now - lastFrameTime > 150 && (left || right)) {
                 currentFrame = (currentFrame + 1) % walkFrames.length;
                 lastFrameTime = now;
@@ -293,42 +301,20 @@ public class SamuraiMelee extends Character {
     }
 
     @Override
-    public boolean isAttacking() {
-        return attacking;
-    }
-
+    public boolean isAttacking() { return attacking;}
     @Override
-    public boolean isDead() {
-        return dead;
-    }
-
+    public boolean isDead() { return dead;}
     @Override
-    public double getX() {
-        return x;
-    }
-
+    public double getX() { return x;}
     @Override
-    public double getY() {
-        return y;
-    }
-
+    public double getY() { return y;}
     @Override
-    public int getCurrentHealth() {
-        return currentHealth;
-    }
-
+    public int getCurrentHealth() { return currentHealth;}
     @Override
-    public int getMaxHealth() {
-        return GameConfig.PLAYER_MAX_HEALTH;
-    }
-
+    public int getMaxHealth() { return GameConfig.PLAYER_MAX_HEALTH;}
     @Override
-    public double getCurrentMana() {
-        return currentMana;
-    }
-
+    public double getCurrentMana() { return currentMana;}
     @Override
-    public int getMaxMana() {
-        return GameConfig.PLAYER_MAX_MANA;
-    }
+    public int getMaxMana() { return GameConfig.PLAYER_MAX_MANA;}
+
 }

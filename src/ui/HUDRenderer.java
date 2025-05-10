@@ -1,6 +1,8 @@
 package ui;
 
+import config.GameConfig;
 import entities.Character;
+import entities.Monster;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -8,8 +10,10 @@ import utils.Assets;
 
 public class HUDRenderer {
     private Character player;
+    private Monster boss;
     private final Image hudFrame = Assets.loadImage("Hbar_Mbar.png");
     private final Image samuraiFace = Assets.loadImage("faceSumuraimelee.png");
+    
 
     public HUDRenderer(Character player) {
         this.player = player;
@@ -17,6 +21,10 @@ public class HUDRenderer {
 
     public void setCharacter(Character c) {
         this.player = c;
+    }
+    
+    public void setBoss (Monster boss) {
+    	this.boss = boss;
     }
 
     public void renderHUD(GraphicsContext gc) {
@@ -48,5 +56,32 @@ public class HUDRenderer {
         gc.setFill(Color.BLACK);
         gc.fillText(player.getCurrentHealth() + "/" + player.getMaxHealth(), hudX + 126, hudY + 42);
         gc.fillText((int) player.getCurrentMana() + "/" + player.getMaxMana(), hudX + 126, hudY + 75);
+        
+        // Boss health bar
+        if (boss != null && !boss.isDead()) {
+        	double screenW = GameConfig.SCREEN_WIDTH;
+        	double screenH = GameConfig.SCREEN_HEIGHT;
+        	
+        	double barWidth = screenW * 0.6;
+        	double barHeight = 20;
+        	double barX = (screenW - barWidth) / 2;
+        	double barY = screenH - 40 ;
+        	double arcRadius = 30;
+        	
+        	double hpPercent = Math.max(0, (double) boss.getCurrentHealth() / GameConfig.BOSS_MAX_HEALTH);
+        	
+        	gc.setFill(Color.DARKGREY);
+        	gc.fillRoundRect(barX, barY, barWidth, barHeight, arcRadius, arcRadius);
+        	
+        	gc.setFill(Color.RED);
+        	gc.fillRoundRect(barX, barY, barWidth * hpPercent, barHeight ,arcRadius, arcRadius);
+        	
+        	gc.setStroke(Color.BLACK);
+        	gc.strokeRoundRect(barX, barY, barWidth, barHeight, arcRadius, arcRadius);
+        	
+        	gc.setFill(Color.BLACK);
+        	gc.fillText("ARCNUM THE GORGON", barX + 320, barY + 15);
+        }
+        
     }
 }

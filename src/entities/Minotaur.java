@@ -2,13 +2,16 @@ package entities;
 
 import camera.Camera;
 import config.GameConfig;
+import interfaces.Damagable;
+import interfaces.Renderable;
+import interfaces.Updatable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import utils.Assets;
 
-public class Minotaur extends Monster {
+public class Minotaur extends Monster implements Renderable, Updatable, Damagable{
     private int currentWalkFrame = 0, currentAttackFrame = 0;
     private long lastAttackTime = 0, lastFrameTime = 0;
     private boolean attacking = false, facingRight = false;
@@ -35,6 +38,8 @@ public class Minotaur extends Monster {
 
     @Override
     public void update() {
+    	updateSlowStatus();
+    	updateDebuffStatus();
         Character player = getPlayer();
         if (player == null) return;
         double dx = player.getX() - this.x;
@@ -48,9 +53,39 @@ public class Minotaur extends Monster {
         if (Math.abs(dx) > 85) moveTowardPlayer(dx);
         else tryAttack(player);
     }
+    
+    @Override
+    public void render(GraphicsContext gc, Camera camera) {
+        Image frame = attacking ? attackFrames[currentAttackFrame] : walkFrames[currentWalkFrame];
+        double drawX = x - camera.getX(), drawY = y - camera.getY();
+        double drawWidth = frame.getWidth() * 2, drawHeight = frame.getHeight() * 2;
+        drawHealthBar(gc, drawX, drawY);
+
+        if (facingRight) gc.drawImage(frame, drawX, drawY, drawWidth, drawHeight);
+        else gc.drawImage(frame, 0, 0, frame.getWidth(), frame.getHeight(), drawX + drawWidth, drawY, -drawWidth, drawHeight);
+        
+      //Debug
+//        Rectangle2D hitbox = getHitbox();
+//        gc.setStroke(Color.WHITE);
+//        gc.setLineWidth(2);
+//        gc.strokeRect(hitbox.getMinX() - camera.getX(), 
+//        			  hitbox.getMinY() - camera.getY(),
+//        			  hitbox.getWidth(), 
+//        			  hitbox.getHeight());
+    }
+
+    private void drawHealthBar(GraphicsContext gc, double drawX, double drawY) {
+        double healthPercent = (double) currentHealth / GameConfig.MONSTER_MAX_HEALTH;
+        gc.setFill(Color.LIMEGREEN);
+        gc.fillRect(drawX, drawY - 10, 40 * healthPercent, 5);
+    }
 
     private void moveTowardPlayer(double dx) {
-        x += dx > 0 ? GameConfig.MONSTER_SPEED : -GameConfig.MONSTER_SPEED;
+    	if (dx > 0) {
+    	    x += GameConfig.MONSTER_SPEED * getSpeedMultipiler();
+    	} else {
+    	    x -= GameConfig.MONSTER_SPEED * getSpeedMultipiler();
+    	}
         if (System.currentTimeMillis() - lastFrameTime > 200) {
             currentWalkFrame = (currentWalkFrame + 1) % walkFrames.length;
             lastFrameTime = System.currentTimeMillis();
@@ -63,9 +98,16 @@ public class Minotaur extends Monster {
             attacking = true;
             currentAttackFrame = 0;
             lastAttackTime = now;
-            player.takeDamage(10);
+            if (player instanceof SamuraiMelee) {
+            	player.takeDamage(10);
+            } else if (player instanceof SamuraiArcher) {
+            	player.takeDamage(20);
+            } else {
+            	player.takeDamage(10);
+            }
         }
     }
+    
 
     private void updateAttackAnimation() {
         if (System.currentTimeMillis() - lastFrameTime > 150) {
@@ -76,31 +118,6 @@ public class Minotaur extends Monster {
                 currentAttackFrame = 0;
             }
         }
-    }
-
-    @Override
-    public void render(GraphicsContext gc, Camera camera) {
-        Image frame = attacking ? attackFrames[currentAttackFrame] : walkFrames[currentWalkFrame];
-        double drawX = x - camera.getX(), drawY = y - camera.getY();
-        double drawWidth = frame.getWidth() * 2, drawHeight = frame.getHeight() * 2;
-        drawHealthBar(gc, drawX, drawY);
-
-        if (facingRight) gc.drawImage(frame, drawX, drawY, drawWidth, drawHeight);
-        else gc.drawImage(frame, 0, 0, frame.getWidth(), frame.getHeight(), drawX + drawWidth, drawY, -drawWidth, drawHeight);
-    }
-
-    private void drawHealthBar(GraphicsContext gc, double drawX, double drawY) {
-        double healthPercent = (double) currentHealth / GameConfig.MONSTER_MAX_HEALTH;
-        gc.setFill(Color.DARKRED);
-        gc.fillRect(drawX, drawY - 10, 40, 5);
-        gc.setFill(Color.LIMEGREEN);
-        gc.fillRect(drawX, drawY - 10, 40 * healthPercent, 5);
-    }
-
-    @Override
-    public void takeDamage(int damage) {
-        currentHealth -= damage;
-        if (currentHealth < 0) currentHealth = 0;
     }
 
     @Override
