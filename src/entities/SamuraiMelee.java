@@ -301,43 +301,20 @@ public class SamuraiMelee extends Character implements AbilityCaster, Renderable
     }
 
     @Override
-    public boolean isAttacking() {
-        return attacking;
-    }
-
+    public boolean isAttacking() { return attacking;}
     @Override
-    public boolean isDead() {
-        return dead;
-    }
-
+    public boolean isDead() { return dead;}
     @Override
-    public double getX() {
-        return x;
-    }
-
+    public double getX() { return x;}
     @Override
-    public double getY() {
-        return y;
-    }
-
+    public double getY() { return y;}
     @Override
-    public int getCurrentHealth() {
-        return currentHealth;
-    }
-
+    public int getCurrentHealth() { return currentHealth;}
     @Override
-    public int getMaxHealth() {
-        return GameConfig.PLAYER_MAX_HEALTH;
-    }
-
+    public int getMaxHealth() { return GameConfig.PLAYER_MAX_HEALTH;}
     @Override
-    public double getCurrentMana() {
-        return currentMana;
-    }
-
+    public double getCurrentMana() { return currentMana;}
     @Override
-    public int getMaxMana() {
-        return GameConfig.PLAYER_MAX_MANA;
-    }
+    public int getMaxMana() { return GameConfig.PLAYER_MAX_MANA;}
 
 }

@@ -5,9 +5,7 @@ import config.GameConfig;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import utils.Assets;
-import utils.SoundManager;
 import interfaces.*;
 
 public class GorgonBoss extends Monster implements Renderable, Updatable{

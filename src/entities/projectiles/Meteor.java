@@ -33,12 +33,7 @@ public class Meteor implements Updatable, Renderable{
 		return new Rectangle2D(x, y, sprite.getWidth(), sprite.getHeight());
 	}
 	
-	public boolean isActive() {
-		return active;
-	}
-	
-	public void deactivate() {
-		active = false;
-	}
+	public boolean isActive() { return active;}
+	public void deactivate() { active = false;}
 	
 }
