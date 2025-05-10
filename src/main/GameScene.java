@@ -312,7 +312,7 @@ public class GameScene extends AnimationTimer implements Updatable {
 	    	Rectangle2D playerHitBox = new Rectangle2D(currentPlayer.getX(), currentPlayer.getY(), 60, 120);
 	    	for (Meteor m : meteors) {
 	    		if (m.getHitbox().intersects(playerHitBox)) {
-	    			currentPlayer.takeDamage(5);
+	    			currentPlayer.takeDamage(GameConfig.MEMTEOR_DAMAGE);
 	    			m.deactivate();
 	    		}
 	    	}

@@ -13,7 +13,6 @@ public class Meteor implements Updatable, Renderable{
 	private double x,y;
 	private boolean active = true;
 	private final Image sprite = Assets.loadImage("pixil-frame-0.png");
-	private static final double SPEED = 8;
 	
 	public Meteor(double x, double y) {
 		this.x = x;
@@ -21,7 +20,7 @@ public class Meteor implements Updatable, Renderable{
 	}
 	
 	public void update() {
-		y += SPEED;
+		y += GameConfig.METEOR_SPEED;
 		if (y > GameConfig.SCREEN_HEIGHT) active = false;
 	}
 	

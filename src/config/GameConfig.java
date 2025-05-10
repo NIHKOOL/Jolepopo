@@ -9,7 +9,11 @@ public class GameConfig {
     // Map
     public static final int MAP_WIDTH = 5000;
     public static final int MAP_LOCK_WIDTH = 900;
+    
+    // Meteor
     public static final long METEOR_SPAWN_INTERVAL = 400;
+    public static final double METEOR_SPEED = 8;
+    public static final int MEMTEOR_DAMAGE = 5;
     
     // Player movement and mechanics
     public static final double PLAYER_SPEED = 5.0;
