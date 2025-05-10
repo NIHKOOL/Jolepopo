@@ -1,5 +1,6 @@
 package main;
 
+import config.GameConfig;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -9,8 +10,8 @@ import javafx.stage.Stage;
 
 public class GameApp extends Application {
 	
-    public static final int WIDTH = 1244;
-    public static final int HEIGHT = 700;
+    public static final int WIDTH = GameConfig.SCREEN_WIDTH; //1244
+    public static final int HEIGHT = GameConfig.SCREEN_HEIGHT; //700
 
     @Override
     public void start(Stage stage) {

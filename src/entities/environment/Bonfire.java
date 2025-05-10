@@ -4,7 +4,6 @@ import camera.Camera;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import utils.Assets;
 
 public class Bonfire {
@@ -87,14 +86,6 @@ public class Bonfire {
 		double drawY = y - camera.getY();
 		gc.drawImage(frame, drawX, drawY, frame.getHeight(), frame.getWidth());
 		
-		//Debug
-//        Rectangle2D hitbox = getHitbox();
-//        gc.setStroke(Color.WHITE);
-//        gc.setLineWidth(2);
-//        gc.strokeRect(hitbox.getMinX() - camera.getX(), 
-//        			  hitbox.getMinY() - camera.getY(),
-//        			  hitbox.getWidth(), 
-//        			  hitbox.getHeight());
 	}
 	
 	public Rectangle2D getHitbox() {

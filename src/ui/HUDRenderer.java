@@ -3,7 +3,6 @@ package ui;
 import config.GameConfig;
 import entities.Character;
 import entities.Monster;
-import entities.GorgonBoss;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;

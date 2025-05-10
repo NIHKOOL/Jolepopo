@@ -2,10 +2,8 @@ package entities;
 
 import camera.Camera;
 import config.GameConfig;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import utils.Assets;
 
 public class SkeletonWarrior extends Skeleton{
@@ -42,14 +40,6 @@ public class SkeletonWarrior extends Skeleton{
         if (facingRight) gc.drawImage(frame, drawX, drawY, drawWidth, drawHeight);
         else gc.drawImage(frame, 0, 0, frame.getWidth(), frame.getHeight(), drawX + drawWidth, drawY, -drawWidth, drawHeight);
         
-      //Debug
-//        Rectangle2D hitbox = getHitbox();
-//        gc.setStroke(Color.WHITE);
-//        gc.setLineWidth(2);
-//        gc.strokeRect(hitbox.getMinX() - camera.getX(), 
-//        			  hitbox.getMinY() - camera.getY(),
-//        			  hitbox.getWidth(), 
-//        			  hitbox.getHeight());
     }
 
 }
