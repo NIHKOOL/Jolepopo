@@ -31,38 +31,44 @@ public class GameStopPage {
 		Pausetext.setFitHeight(200);
 
 		VBox.setMargin(Pausetext, new Insets(0, 0, 5, 0));
-		
+
 		// create resume button
 		Button resumeButton = ButtonUtils.createButton("gameover/resume.png", GameConfig.OTHER_WIDTH,
 				GameConfig.OTHER_HEIGHT);
-		resumeButton.setOnAction(e -> onResume.run());
+		resumeButton.setOnAction(e -> {
+			onResume.run();
+			SoundManager.playSEF("effects/sharp-pop-328170.mp3", 0.3);
+		});
 		ButtonUtils.addHoverEffect(resumeButton);
-		
+
 		// create restart button
 		Button restartButton = ButtonUtils.createButton("gameover/restart.png", GameConfig.OTHER_WIDTH,
 				GameConfig.OTHER_HEIGHT);
 		restartButton.setOnAction(e -> {
 			SoundManager.stopAllSounds();
 			Canvas canvas = new Canvas(1244, 700);
-        	GameScene gameScene = new GameScene(canvas,stage);
-        	
-        	StackPane newroot = new StackPane(canvas,gameScene.getTempMessage());
-        	gameScene.getTempMessage().setTranslateY(150);
-        	StackPane.setAlignment(gameScene.getTempMessage(), Pos.TOP_CENTER);
-            Scene scene = new Scene(newroot);
-            
-            stage.setScene(scene);
-            gameScene.start(scene);
-            
-            gameScene.showTemporaryMessage("Map 1 : The Castle");
+			GameScene gameScene = new GameScene(canvas, stage);
+
+			StackPane newroot = new StackPane(canvas, gameScene.getTempMessage());
+			gameScene.getTempMessage().setTranslateY(150);
+			StackPane.setAlignment(gameScene.getTempMessage(), Pos.TOP_CENTER);
+			Scene scene = new Scene(newroot);
+			
+			SoundManager.playSEF("effects/sharp-pop-328170.mp3", 0.3);
+			
+			stage.setScene(scene);
+			gameScene.start(scene);
+
+			gameScene.showTemporaryMessage("Map 1 : The Castle");
 		});
 		ButtonUtils.addHoverEffect(restartButton);
-		
+
 		// create menu button
 		Button menuButton = ButtonUtils.createButton("gameover/menu.png", GameConfig.OTHER_WIDTH,
 				GameConfig.OTHER_HEIGHT);
 		menuButton.setOnAction(e -> {
 			SoundManager.stopAllSounds();
+			SoundManager.playSEF("effects/sharp-pop-328170.mp3", 0.3);
 			GameMenu newpage = new GameMenu(stage);
 			stage.setScene(newpage.getScene());
 		});
@@ -89,14 +95,14 @@ public class GameStopPage {
 		backgroundImageView.setPreserveRatio(false);
 		backgroundImageView.fitWidthProperty().bind(root.widthProperty());
 		backgroundImageView.fitHeightProperty().bind(root.heightProperty());
-		
+
 		overlay.getChildren().addAll(Pausetext, resumeButton, restartButton, menuButton);
-		
+
 		root.getChildren().add(backgroundImageView);
-		root.getChildren().add(overlay); 
-		
-		Scene scene = new Scene(root, 1244, 700); 
-		
+		root.getChildren().add(overlay);
+
+		Scene scene = new Scene(root, 1244, 700);
+
 		scene.setOnKeyPressed(e -> {
 			if (e.getCode() == KeyCode.E) {
 				onResume.run();
@@ -106,7 +112,7 @@ public class GameStopPage {
 		return scene;
 
 	}
-	
+
 	public Boolean getRestarted() {
 		return restarted;
 	}
@@ -116,4 +122,3 @@ public class GameStopPage {
 	}
 
 }
-
