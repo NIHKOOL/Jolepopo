@@ -1,6 +1,6 @@
 package interfaces;
 
-public interface Damagable {
+public interface Damageable {
 	void takeDamage(int amount);
 	boolean isDead();
 }

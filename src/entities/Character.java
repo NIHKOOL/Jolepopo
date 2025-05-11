@@ -4,14 +4,14 @@ import camera.Camera;
 import config.GameConfig;
 import interfaces.AbilityCaster;
 import interfaces.Controllable;
-import interfaces.Damagable;
+import interfaces.Damageable;
 import interfaces.Renderable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import utils.Assets;
 
-public abstract class Character implements Renderable, Damagable, Controllable, AbilityCaster {
+public abstract class Character implements Renderable, Damageable, Controllable, AbilityCaster {
 	protected double x, y;
 	protected boolean facingRight = true;
 	protected int currentHealth;

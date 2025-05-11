@@ -141,6 +141,7 @@ public class HowToPlayPage {
 			button.setCursor(Cursor.DEFAULT);
 		});
 	}
+	
 	public Scene getScene() {
 		return scene;
 	}

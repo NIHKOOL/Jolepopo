@@ -2,16 +2,13 @@ package entities;
 
 import camera.Camera;
 import config.GameConfig;
-import interfaces.Damagable;
-import interfaces.Renderable;
-import interfaces.Updatable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import utils.Assets;
 
-public class Minotaur extends Monster implements Renderable, Updatable, Damagable{
+public class Minotaur extends Monster {
     private int currentWalkFrame = 0, currentAttackFrame = 0;
     private long lastAttackTime = 0, lastFrameTime = 0;
     private boolean attacking = false, facingRight = false;

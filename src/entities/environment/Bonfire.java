@@ -1,12 +1,14 @@
 package entities.environment;
 
 import camera.Camera;
+import interfaces.Renderable;
+import interfaces.Updatable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import utils.Assets;
 
-public class Bonfire {
+public class Bonfire implements Updatable, Renderable{
 	private final Image[] frames;
 	private int currentFrame = 0;
 	private long lastFrameTime = 0;

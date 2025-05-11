@@ -45,7 +45,6 @@ public class GameScene extends AnimationTimer implements Updatable{
     private final Text tempMessage = new Text();
     private Scene scene;
     private final Stage stage;
-
     private boolean moveLeft = false;
     private boolean moveRight = false;
     private boolean canChangeMap = false;
@@ -55,16 +54,13 @@ public class GameScene extends AnimationTimer implements Updatable{
     private Bonfire bonfire;
     private Bonfire currentBonfire;
     private boolean nearBonfire;
-    private boolean bonfireMenuOpen = false;
-    
+    private boolean bonfireMenuOpen = false;  
     private final List<Meteor> meteors = new ArrayList<>();
     private long lastMeteorSpawnTime = 0;
     private boolean enableMeteorShower = false;
-    
     private final GameLogicManager logicManger;
-    
     private boolean debugMode = false;
-
+    private GorgonBoss boss;
     
     public GameScene(Canvas canvas,Stage stage) {
         this.canvas = canvas;
@@ -203,6 +199,13 @@ public class GameScene extends AnimationTimer implements Updatable{
         	} else {
         		nearBonfire = false;
         	}
+        }
+        
+        if (boss != null && boss.isDead()) {
+        	monsters.clear();          
+            meteors.clear();           
+            boss = null;         
+            System.out.println("Boss defeated. All monsters and meteors cleared.");
         }
     }
 
@@ -390,9 +393,11 @@ public class GameScene extends AnimationTimer implements Updatable{
     		SoundManager.stopAllSounds();
     		showTemporaryMessage("Map 3 : The Boss");
     		SoundManager.playBGM("musics/1.01 The Unknown Journey Continues.mp3", 0.2);
-    		Monster boss = new GorgonBoss(2000, GameConfig.GROUND_LEVEL - 280, currentPlayer);
+    		
+    		boss = new GorgonBoss(2000, GameConfig.GROUND_LEVEL - 280, currentPlayer);
     		monsters.add(boss);
     		hudRenderer.setBoss(boss);
+    		
     		int[] skeletonX = {-10000, -5000, 8000};
     		int[] skeletonWarriorX = {10000, 12000};
     		

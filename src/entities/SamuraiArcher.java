@@ -4,10 +4,6 @@ import camera.Camera;
 import config.GameConfig;
 import entities.projectiles.Arrow;
 import entities.projectiles.BigArrow;
-import interfaces.AbilityCaster;
-import interfaces.Controllable;
-import interfaces.Damagable;
-import interfaces.Renderable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -18,7 +14,7 @@ import utils.SoundManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SamuraiArcher extends Character implements AbilityCaster, Renderable, Controllable, Damagable{
+public class SamuraiArcher extends Character {
     private double velocityY = 0;
     private boolean onGround = true;
 
