@@ -60,6 +60,7 @@ public class GameConfig {
     public static final int BOSS_DMG_COMMANDER = 20;
     
     public static final int SKELETON_MAX_HEALTH = 10;
+    public static final int SKELETON_WAR_MAX_HEALTH = 20;
     public static final double SKELETON_SPEED = 6;
     public static final int SKELETON_DMG_MELEE = 15;
     public static final int SKELETON_DMG_ARCHER = 25;
