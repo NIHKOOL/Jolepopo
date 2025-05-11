@@ -156,6 +156,8 @@ public class GameScene extends AnimationTimer implements Updatable{
     }
 
     private void switchCharacter() {
+    	
+    	
         double oldX = currentPlayer.getX();
         double oldY = currentPlayer.getY();
 
@@ -173,6 +175,8 @@ public class GameScene extends AnimationTimer implements Updatable{
             m.setTarget(currentPlayer);
             m.update();
         }
+        
+        clearAllProjectiles();
     }
 
     @Override
@@ -347,6 +351,14 @@ public class GameScene extends AnimationTimer implements Updatable{
     	}
     }
     
+    private void clearAllProjectiles() {
+        for (Character c : teamManager.getTeam()) {
+            if (c instanceof SamuraiArcher) {
+                ((SamuraiArcher) c).clearProjectiles();
+            }
+        }
+    }
+    
     private void changeMap() {
     	if (currentMapIndex >= backgrounds.length - 1) {
     		System.out.println("CONGRATE YOU JUST GO IN LAST");
@@ -410,6 +422,8 @@ public class GameScene extends AnimationTimer implements Updatable{
     		enableMeteorShower = true;
     		
     	} 
+    	
+    	clearAllProjectiles();
     }
     
     public void showTemporaryMessage(String message) {

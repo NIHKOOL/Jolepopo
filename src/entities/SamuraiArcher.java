@@ -303,7 +303,12 @@ public class SamuraiArcher extends Character {
         if (currentHealth < 0) currentHealth = 0;
         if (currentHealth == 0) dead = true;
     }
-
+    
+    public void clearProjectiles() {
+        arrows.clear();
+        bigArrows.clear();
+    }
+    
     @Override
     public void setPosition(double x, double y) {
         this.x = x;
