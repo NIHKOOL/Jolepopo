@@ -85,7 +85,6 @@ public class Bonfire {
 		double drawX = x - camera.getX();
 		double drawY = y - camera.getY();
 		gc.drawImage(frame, drawX, drawY, frame.getHeight(), frame.getWidth());
-		
 	}
 	
 	public Rectangle2D getHitbox() {

@@ -1,7 +1,6 @@
 package entities.projectiles;
 
 import camera.Camera;
-import config.GameConfig;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -52,5 +51,5 @@ public class Arrow implements Updatable, Renderable {
     public void deactive() { active = false; }
     public double getX() { return x;}
     public double getY() { return y;}
-    public int getDamage() { return GameConfig.PLAYER_ARROW_DAMAGE;}
+    public int getDamage() { return 10;}
 } 
