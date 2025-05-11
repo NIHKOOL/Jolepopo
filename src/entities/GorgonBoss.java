@@ -6,6 +6,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import utils.Assets;
+import utils.SoundManager;
 import interfaces.*;
 
 public class GorgonBoss extends Monster implements Renderable, Updatable {
@@ -122,6 +123,9 @@ public class GorgonBoss extends Monster implements Renderable, Updatable {
 			attacking = true;
 			currentAttackFrame = 0;
 			lastAttackTime = now;
+			if (!player.isDead()) {
+				SoundManager.playSEF("effects/weretiger-yarik-roar-5-321201.mp3", 0.8);
+			}
 			if (player instanceof SamuraiMelee) {
 				player.takeDamage(GameConfig.BOSS_DMG_MELEE);
 			} else if (player instanceof SamuraiArcher) {
