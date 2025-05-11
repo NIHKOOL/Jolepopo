@@ -207,7 +207,8 @@ public class GameScene extends AnimationTimer implements Updatable{
         
         if (boss != null && boss.isDead()) {
         	monsters.clear();          
-            meteors.clear();           
+            meteors.clear();   
+            enableMeteorShower = false;
             boss = null;         
             System.out.println("Boss defeated. All monsters and meteors cleared.");
         }

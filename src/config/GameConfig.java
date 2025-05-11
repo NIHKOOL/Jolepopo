@@ -46,6 +46,12 @@ public class GameConfig {
     public static final double MONSTER_SPEED = 1.5;
     public static final long MONSTER_ATTACK_COOLDOWN = 1000;
     
+    public static final int MINOTAUR_MAX_HEALTH = MONSTER_MAX_HEALTH;
+    public static final double MINOTAUR_SPEED = MONSTER_SPEED;
+    public static final int MINOTAUR_DMG_MELEE = 10;
+    public static final int MINOTAUR_DMG_ARCHER = 20;
+    public static final int MINOTAUR_DMG_COMMANDER = 10;
+    
     public static final int BOSS_MAX_HEALTH = 1000;
     public static final int BOSS_SPEED = 3;
     public static final int BOSS_DMG_MELEE = 15;
