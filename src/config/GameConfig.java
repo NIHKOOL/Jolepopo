@@ -27,9 +27,12 @@ public class GameConfig {
     // Player stats
     public static final int PLAYER_MAX_HEALTH = 100;
     public static final int PLAYER_MAX_MANA = 100;
+    
     public static final int PLAYER_SWORD_DAMAGE = 3;
     public static final int PLAYER_ARROW_DAMAGE = 10;
+    public static final int PlAYER_ARROW_SPEED = 8;
     public static final int PLAYER_BIGARROW_DAMAGE = 125;
+    public static final int PLAYER_BIGARROW_SPEED = 30;
     public static final long BIG_ARROW_COOLDOWN = 1500;
     public static final int TEMP_HEAL_AMOUNT = 10;
 	public static final long TEMP_HEAL_DURATION = 1000;

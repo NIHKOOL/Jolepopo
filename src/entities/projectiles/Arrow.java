@@ -1,6 +1,7 @@
 package entities.projectiles;
 
 import camera.Camera;
+import config.GameConfig;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -19,7 +20,7 @@ public class Arrow implements Updatable, Renderable {
 		this.x = x;
 		this.y = y;
 		this.facingRight = facingRight;
-		this.speed = 8;
+		this.speed = GameConfig.PlAYER_ARROW_SPEED;
 		this.arrowImage = Assets.loadImage("samuraiArcher/Arrow.png");
 		this.active = true;
 	}
@@ -64,6 +65,6 @@ public class Arrow implements Updatable, Renderable {
 	}
 
 	public int getDamage() {
-		return 10;
+		return GameConfig.PLAYER_ARROW_DAMAGE;
 	}
 }
