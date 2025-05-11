@@ -22,24 +22,25 @@ public class GameLogicManager {
 	private Character player;
 	private List<Monster> monsters;
 	private Stage stage;
-	private boolean gameOverShown = false;
+	private boolean gameOverShown;
 	private Supplier<Integer> mapIndexSupplier;
 
 	public GameLogicManager(Character player, List<Monster> monsters, Stage stage) {
 		this.player = player;
 		this.monsters = monsters;
 		this.stage = stage;
+		this.gameOverShown = false;
 	}
 
 	public void setPlayer(Character c) {
 		this.player = c;
 	}
-	
+
 	public void setMapIndexSupplier(Supplier<Integer> supplier) {
 		this.mapIndexSupplier = supplier;
 	}
 
-	// เรียกใช้เมื่อจำเป็น
+	// When need
 	private int getCurrentMapIndex() {
 		return mapIndexSupplier != null ? mapIndexSupplier.get() : -1;
 	}
@@ -113,8 +114,8 @@ public class GameLogicManager {
 		if (player.isDead() && !gameOverShown) {
 			Platform.runLater(() -> {
 				SoundManager.stopAllSounds();
-				
-				GameOverPage gameOverOverlay = new GameOverPage(stage,mapIndex);
+
+				GameOverPage gameOverOverlay = new GameOverPage(stage, mapIndex);
 				stage.setScene(gameOverOverlay.getScene());
 				gameOverShown = true;
 			});
