@@ -110,7 +110,7 @@ public class GameLogicManager {
 				} else if (m instanceof Minotaur) {
 					SoundManager.playSEF("effects/horror-sound-monster-snort-189930.mp3", 0.5);
 				} else if (m instanceof Skeleton || m instanceof SkeletonWarrior) {
-					SoundManager.playSEF("effects/bone-break-sound-269658.mp3", 0.7);
+					SoundManager.playSEF("effects/bone-break-sound-269658.mp3", 0.4);
 				}
 				return true;
 			}

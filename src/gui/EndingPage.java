@@ -24,6 +24,7 @@ public class EndingPage {
     
     public EndingPage(Stage stage) {
     	SoundManager.stopAllSounds();
+    	SoundManager.playBGM("effects/11. Victory's Fanfare.mp3", 0.3);
         Text animatedLabel = new Text();
         
         // botton create
@@ -41,6 +42,7 @@ public class EndingPage {
 		
         nextButton.setOnAction(e -> {
         	SoundManager.stopAllSounds();
+        	SoundManager.playSEF("effects/sharp-pop-328170.mp3", 0.3);
 			GameMenu newpage = new GameMenu(stage);
 			stage.setScene(newpage.getScene());
 			// You can switch to your game scene here
@@ -97,6 +99,7 @@ public class EndingPage {
     private void addHoverEffect(Button button) {
         button.setOnMouseEntered(e -> {
             button.setStyle("-fx-background-color: #beb9b9;");
+            SoundManager.playSEF("effects/pop-cartoon-328167.mp3", 0.5);
             button.setCursor(Cursor.HAND);
         });
         button.setOnMouseExited(e -> {

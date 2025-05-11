@@ -103,10 +103,12 @@ public class GameScene extends AnimationTimer implements Updatable {
 			if (bonfireMenuOpen && isUpgradable) {
 				if (code == KeyCode.DIGIT1) {
 					GameConfig.MANA_REGEN += 0.3;
+					SoundManager.playSEF("effects/metal-punch-142334.mp3", 0.7);
 					isUpgradable = false;
 					bonfireMenuOpen = false;
 				} else if (code == KeyCode.DIGIT2) {
 					GameConfig.PLAYER_DAMAGE_MULTIPLIER += 0.5;
+					SoundManager.playSEF("effects/metal-punch-142334.mp3", 0.7);
 					isUpgradable = false;
 					bonfireMenuOpen = false;
 				}
