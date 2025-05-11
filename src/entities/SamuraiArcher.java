@@ -15,39 +15,54 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SamuraiArcher extends Character {
-    private double velocityY = 0;
-    private boolean onGround = true;
-
-    private boolean dashing = false;
-    private long dashStartTime = 0;
-    private long lastDashTime = 0;
-    private int dashFrame = 0;
-    private long lastDashFrameTime = 0;
-
-    private long lastAttackTime = 0;
-    private int currentAttackFrame = 0;
-    private long lastAttackFrameTime = 0;
-
-    private boolean shooting = false;
-    private int currentShootingFrame = 0;
-    private long lastShootingFrameTime = 0;
-
-    private int currentFrame = 0;
-    private long lastFrameTime = 0;
-    private int jumpFrame = 0;
-    private long lastJumpFrameTime = 0;
-
+    private double velocityY;
+    private boolean onGround;
+    private boolean dashing;
+    private long dashStartTime;
+    private long lastDashTime;
+    private int dashFrame;
+    private long lastDashFrameTime;
+    private long lastAttackTime;
+    private int currentAttackFrame;
+    private long lastAttackFrameTime;
+    private boolean shooting;
+    private int currentShootingFrame;
+    private long lastShootingFrameTime;
+    private int currentFrame;
+    private long lastFrameTime;
+    private int jumpFrame;
+    private long lastJumpFrameTime;
     private final Image[] walkFrames, dashFrames, jumpFrames, attackFrames, defendFrames;
+    
     private final List<Arrow> arrows = new ArrayList<>();
     private final List<BigArrow> bigArrows = new ArrayList<>();
-    private long lastBigArrowTime = 0;
-    private static final long BIG_ARROW_COOLDOWN = 1500;
+    private long lastBigArrowTime;
+    private static long bigArrowCooldown;
 
     public SamuraiArcher(double x, double y) {
         this.x = x;
         this.y = y;
         this.currentHealth = GameConfig.PLAYER_MAX_HEALTH;
         this.currentMana = GameConfig.PLAYER_MAX_MANA;
+        this.velocityY = 0;
+        this.onGround = true;
+        this.dashing = false;
+        this.dashStartTime = 0;
+        this.lastDashTime = 0;
+        this.dashFrame = 0;
+        this.lastDashFrameTime = 0;
+        this.lastAttackTime = 0;
+        this.currentAttackFrame = 0;
+        this.lastAttackFrameTime = 0;
+        this.shooting = false;
+        this.currentShootingFrame = 0;
+        this.lastShootingFrameTime = 0;
+        this.currentFrame = 0;
+        this.lastFrameTime = 0;
+        this.jumpFrame = 0;
+        this.lastJumpFrameTime = 0;
+        this.lastBigArrowTime = 0;
+        SamuraiArcher.bigArrowCooldown = GameConfig.BIG_ARROW_COOLDOWN;
 
         walkFrames = new Image[] {
             Assets.loadImage("samuraiArcher/arWalk_1.png"), 
@@ -230,7 +245,7 @@ public class SamuraiArcher extends Character {
     @Override
     public void abilityTwo() {
         long now = System.currentTimeMillis();
-        if (now - lastBigArrowTime >= BIG_ARROW_COOLDOWN && currentMana >= GameConfig.BIG_ARROW_MANA_COST) {
+        if (now - lastBigArrowTime >= bigArrowCooldown && currentMana >= GameConfig.BIG_ARROW_MANA_COST) {
             double arrowX = facingRight ? x + 40 : x - 40;
             bigArrows.add(new BigArrow(arrowX, y - 20, facingRight));
             currentMana = Math.max(currentMana - GameConfig.BIG_ARROW_MANA_COST, 0);

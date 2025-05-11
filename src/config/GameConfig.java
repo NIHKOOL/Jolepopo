@@ -30,6 +30,7 @@ public class GameConfig {
     public static final int PLAYER_SWORD_DAMAGE = 3;
     public static final int PLAYER_ARROW_DAMAGE = 10;
     public static final int PLAYER_BIGARROW_DAMAGE = 125;
+    public static final long BIG_ARROW_COOLDOWN = 1500;
 
     // Physics
     public static final double GRAVITY = 0.5;
