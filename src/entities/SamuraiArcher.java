@@ -32,7 +32,7 @@ public class SamuraiArcher extends Character {
 	private long lastFrameTime;
 	private int jumpFrame;
 	private long lastJumpFrameTime;
-	private final Image[] walkFrames, dashFrames, jumpFrames, attackFrames, defendFrames;
+	private final Image[] walkFrames, dashFrames, jumpFrames, attackFrames, bigAttackFrames;
 
 	private final List<Arrow> arrows = new ArrayList<>();
 	private final List<BigArrow> bigArrows = new ArrayList<>();
@@ -88,7 +88,7 @@ public class SamuraiArcher extends Character {
 				Assets.loadImage("samuraiArcher/arShoot_11.png"), Assets.loadImage("samuraiArcher/arShoot_12.png"),
 				Assets.loadImage("samuraiArcher/arShoot_13.png") };
 
-		defendFrames = new Image[] { Assets.loadImage("samuraiArcher/arShoot_5.png"),
+		bigAttackFrames = new Image[] { Assets.loadImage("samuraiArcher/arShoot_5.png"),
 				Assets.loadImage("samuraiArcher/arShoot_6.png"), Assets.loadImage("samuraiArcher/arShoot_7.png"),
 				Assets.loadImage("samuraiArcher/arShoot_8.png"), Assets.loadImage("samuraiArcher/arShoot_9.png"),
 				Assets.loadImage("samuraiArcher/arShoot_10.png"), Assets.loadImage("samuraiArcher/arShoot_11.png"),
@@ -238,7 +238,7 @@ public class SamuraiArcher extends Character {
 		if (shooting && now - lastShootingFrameTime > GameConfig.SHOOTING_FRAME_INTERVAL) {
 			currentShootingFrame++;
 			lastShootingFrameTime = now;
-			if (currentShootingFrame >= defendFrames.length) {
+			if (currentShootingFrame >= bigAttackFrames.length) {
 				shooting = false;
 				currentShootingFrame = 0;
 			}
@@ -285,7 +285,7 @@ public class SamuraiArcher extends Character {
 		if (attacking)
 			return attackFrames[currentAttackFrame];
 		if (shooting)
-			return defendFrames[currentShootingFrame];
+			return bigAttackFrames[currentShootingFrame];
 		if (dashing)
 			return dashFrames[dashFrame];
 		if (!onGround)
