@@ -41,10 +41,11 @@ public class GameConfig {
     public static final long ATTACK_FRAME_INTERVAL = 100;
     public static final long DEFEND_FRAME_INTERVAL = 150;
 
-    // Monster stats
+    // Monster status
     public static final int MONSTER_MAX_HEALTH = 150;
     public static final double MONSTER_SPEED = 1.5;
     public static final long MONSTER_ATTACK_COOLDOWN = 1000;
+    public static final int MONSTER_ATTACK_RANGE = 85;
     
     public static final int MINOTAUR_MAX_HEALTH = MONSTER_MAX_HEALTH;
     public static final double MINOTAUR_SPEED = MONSTER_SPEED;
@@ -59,7 +60,11 @@ public class GameConfig {
     public static final int BOSS_DMG_COMMANDER = 20;
     
     public static final int SKELETON_MAX_HEALTH = 10;
-    public static final int MONSTER_ATTACK_RANGE = 85;
+    public static final double SKELETON_SPEED = 6;
+    public static final int SKELETON_DMG_MELEE = 15;
+    public static final int SKELETON_DMG_ARCHER = 25;
+    public static final int SKELETON_DMG_COMMANDER = 20;
+    
     
     // Ground level configuration
     public static final int GROUND_LEVEL = 350; 
