@@ -9,79 +9,78 @@ import javafx.scene.paint.Color;
 import utils.Assets;
 
 public class HUDRenderer {
-    private Character player;
-    private Monster boss;
-    private final Image hudFrame = Assets.loadImage("Hbar_Mbar.png");
-    private final Image samuraiFace = Assets.loadImage("faceSumuraimelee.png");
-    
+	private Character player;
+	private Monster boss;
+	private final Image hudFrame = Assets.loadImage("Hbar_Mbar.png");
+	private final Image samuraiFace = Assets.loadImage("faceSumuraimelee.png");
 
-    public HUDRenderer(Character player) {
-        this.player = player;
-    }
+	public HUDRenderer(Character player) {
+		this.player = player;
+	}
 
-    public void setCharacter(Character c) {
-        this.player = c;
-    }
-    
-    public void setBoss (Monster boss) {
-    	this.boss = boss;
-    }
+	public void setCharacter(Character c) {
+		this.player = c;
+	}
 
-    public void renderHUD(GraphicsContext gc) {
-        double hudX = 20, hudY = 20;
-        double healthPercent = (double) player.getCurrentHealth() / player.getMaxHealth();
-        double manaPercent = (double) player.getCurrentMana() / player.getMaxMana();
+	public void setBoss(Monster boss) {
+		this.boss = boss;
+	}
 
-        // Background fill
-        gc.setFill(Color.BLACK);
-        gc.fillRect(hudX + 30, hudY + 25, 80, 60);
+	public void renderHUD(GraphicsContext gc) {
+		double hudX = 20, hudY = 20;
+		double healthPercent = (double) player.getCurrentHealth() / player.getMaxHealth();
+		double manaPercent = (double) player.getCurrentMana() / player.getMaxMana();
 
-        // Health bar
-        gc.setFill(Color.LIGHTGRAY);
-        gc.fillRect(hudX + 121, hudY + 30, 215, 16);
-        gc.setFill(Color.RED);
-        gc.fillRect(hudX + 121, hudY + 30, 215 * healthPercent, 16);
+		// Background fill
+		gc.setFill(Color.BLACK);
+		gc.fillRect(hudX + 30, hudY + 25, 80, 60);
 
-        // Mana bar
-        gc.setFill(Color.GRAY);
-        gc.fillRect(hudX + 121, hudY + 63, 215, 16);
-        gc.setFill(Color.AQUA);
-        gc.fillRect(hudX + 121, hudY + 63, 215 * manaPercent, 16);
+		// Health bar
+		gc.setFill(Color.LIGHTGRAY);
+		gc.fillRect(hudX + 121, hudY + 30, 215, 16);
+		gc.setFill(Color.RED);
+		gc.fillRect(hudX + 121, hudY + 30, 215 * healthPercent, 16);
 
-        // HUD graphics
-        gc.drawImage(samuraiFace, hudX + 40, hudY + 20);
-        gc.drawImage(hudFrame, hudX, hudY);
+		// Mana bar
+		gc.setFill(Color.GRAY);
+		gc.fillRect(hudX + 121, hudY + 63, 215, 16);
+		gc.setFill(Color.AQUA);
+		gc.fillRect(hudX + 121, hudY + 63, 215 * manaPercent, 16);
 
-        // Text info
-        gc.setFill(Color.BLACK);
-        gc.fillText(player.getCurrentHealth() + "/" + player.getMaxHealth(), hudX + 126, hudY + 42);
-        gc.fillText((int) player.getCurrentMana() + "/" + player.getMaxMana(), hudX + 126, hudY + 75);
-        
-        // Boss health bar
-        if (boss != null && !boss.isDead()) {
-        	double screenW = GameConfig.SCREEN_WIDTH;
-        	double screenH = GameConfig.SCREEN_HEIGHT;
-        	
-        	double barWidth = screenW * 0.6;
-        	double barHeight = 20;
-        	double barX = (screenW - barWidth) / 2;
-        	double barY = screenH - 40 ;
-        	double arcRadius = 30;
-        	
-        	double hpPercent = Math.max(0, (double) boss.getCurrentHealth() / GameConfig.BOSS_MAX_HEALTH);
-        	
-        	gc.setFill(Color.DARKGREY);
-        	gc.fillRoundRect(barX, barY, barWidth, barHeight, arcRadius, arcRadius);
-        	
-        	gc.setFill(Color.RED);
-        	gc.fillRoundRect(barX, barY, barWidth * hpPercent, barHeight ,arcRadius, arcRadius);
-        	
-        	gc.setStroke(Color.BLACK);
-        	gc.strokeRoundRect(barX, barY, barWidth, barHeight, arcRadius, arcRadius);
-        	
-        	gc.setFill(Color.BLACK);
-        	gc.fillText("ARCNUM THE GORGON", barX + 320, barY + 15);
-        }
-        
-    }
+		// HUD graphics
+		gc.drawImage(samuraiFace, hudX + 40, hudY + 20);
+		gc.drawImage(hudFrame, hudX, hudY);
+
+		// Text info
+		gc.setFill(Color.BLACK);
+		gc.fillText(player.getCurrentHealth() + "/" + player.getMaxHealth(), hudX + 126, hudY + 42);
+		gc.fillText((int) player.getCurrentMana() + "/" + player.getMaxMana(), hudX + 126, hudY + 75);
+
+		// Boss health bar
+		if (boss != null && !boss.isDead()) {
+			double screenW = GameConfig.SCREEN_WIDTH;
+			double screenH = GameConfig.SCREEN_HEIGHT;
+
+			double barWidth = screenW * 0.6;
+			double barHeight = 20;
+			double barX = (screenW - barWidth) / 2;
+			double barY = screenH - 40;
+			double arcRadius = 30;
+
+			double hpPercent = Math.max(0, (double) boss.getCurrentHealth() / GameConfig.BOSS_MAX_HEALTH);
+
+			gc.setFill(Color.DARKGREY);
+			gc.fillRoundRect(barX, barY, barWidth, barHeight, arcRadius, arcRadius);
+
+			gc.setFill(Color.RED);
+			gc.fillRoundRect(barX, barY, barWidth * hpPercent, barHeight, arcRadius, arcRadius);
+
+			gc.setStroke(Color.BLACK);
+			gc.strokeRoundRect(barX, barY, barWidth, barHeight, arcRadius, arcRadius);
+
+			gc.setFill(Color.BLACK);
+			gc.fillText("ARCNUM THE GORGON", barX + 320, barY + 15);
+		}
+
+	}
 }
