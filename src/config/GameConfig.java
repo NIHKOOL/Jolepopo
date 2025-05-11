@@ -27,9 +27,15 @@ public class GameConfig {
     // Player stats
     public static final int PLAYER_MAX_HEALTH = 100;
     public static final int PLAYER_MAX_MANA = 100;
+    
     public static final int PLAYER_SWORD_DAMAGE = 3;
     public static final int PLAYER_ARROW_DAMAGE = 10;
+    public static final int PlAYER_ARROW_SPEED = 8;
     public static final int PLAYER_BIGARROW_DAMAGE = 125;
+    public static final int PLAYER_BIGARROW_SPEED = 30;
+    public static final long BIG_ARROW_COOLDOWN = 1500;
+    public static final int TEMP_HEAL_AMOUNT = 10;
+	public static final long TEMP_HEAL_DURATION = 1000;
 
     // Physics
     public static final double GRAVITY = 0.5;
@@ -41,15 +47,39 @@ public class GameConfig {
     public static final long ATTACK_FRAME_INTERVAL = 100;
     public static final long DEFEND_FRAME_INTERVAL = 150;
 
-    // Monster stats
+    // Monster status
     public static final int MONSTER_MAX_HEALTH = 150;
     public static final double MONSTER_SPEED = 1.5;
     public static final long MONSTER_ATTACK_COOLDOWN = 1000;
+    public static final int MONSTER_ATTACK_RANGE = 85;
+    
+    public static final int MINOTAUR_MAX_HEALTH = MONSTER_MAX_HEALTH;
+    public static final double MINOTAUR_SPEED = MONSTER_SPEED;
+    public static final int MINOTAUR_DMG_MELEE = 10;
+    public static final int MINOTAUR_DMG_ARCHER = 20;
+    public static final int MINOTAUR_DMG_COMMANDER = 10;
+    
     public static final int BOSS_MAX_HEALTH = 1000;
+    public static final int BOSS_SPEED = 3;
+    public static final int BOSS_DMG_MELEE = 15;
+    public static final int BOSS_DMG_ARCHER = 30;
+    public static final int BOSS_DMG_COMMANDER = 20;
+    
     public static final int SKELETON_MAX_HEALTH = 10;
+    public static final int SKELETON_WAR_MAX_HEALTH = 20;
+    public static final double SKELETON_SPEED = 6;
+    public static final int SKELETON_DMG_MELEE = 15;
+    public static final int SKELETON_DMG_ARCHER = 25;
+    public static final int SKELETON_DMG_COMMANDER = 20;
     
     // Ground level configuration
     public static final int GROUND_LEVEL = 350; 
+    
+    // Button size
+    public static final int MENU_WIDTH = 250;
+    public static final int MENU_HEIGHT = 60;
+    public static final int OTHER_WIDTH = 250;
+    public static final int OTHER_HEIGHT = 80;
 
     private GameConfig() {}
     

@@ -4,14 +4,12 @@ import camera.Camera;
 import config.GameConfig;
 import interfaces.AbilityCaster;
 import interfaces.Controllable;
-import interfaces.Damagable;
+import interfaces.Damageable;
 import interfaces.Renderable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import utils.Assets;
 
-public abstract class Character implements Renderable, Damagable, Controllable, AbilityCaster {
+public abstract class Character implements Renderable, Damageable, Controllable, AbilityCaster {
 	protected double x, y;
 	protected boolean facingRight = true;
 	protected int currentHealth;
@@ -19,7 +17,6 @@ public abstract class Character implements Renderable, Damagable, Controllable, 
 	protected boolean attacking = false;
 	protected boolean dead = false;
 	protected boolean win = false;
-	protected static final Image SHADOW_IMAGE = Assets.loadImage("shadow.png");
 
 	public abstract void update(boolean left, boolean right, boolean isScrollable);
 
@@ -114,7 +111,5 @@ public abstract class Character implements Renderable, Damagable, Controllable, 
 	public void setWin(boolean win) {
 		this.win = win;
 	}
-	
 
-	
 }

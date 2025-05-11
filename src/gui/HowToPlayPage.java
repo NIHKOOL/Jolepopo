@@ -1,8 +1,8 @@
 package gui;
 
 import javafx.scene.paint.Color;
+import config.GameConfig;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -14,14 +14,16 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import utils.ButtonUtils;
 
 public class HowToPlayPage {
 	private Scene scene;
 
 	public HowToPlayPage(Stage stage, Scene mainMenuScene) {
+		//create background
 		Image backgroundImage = new Image("gamemenu/night.png");
 		ImageView backgroundImageView = new ImageView(backgroundImage);
-		backgroundImageView.setPreserveRatio(false); // Stretch to fit
+		backgroundImageView.setPreserveRatio(false);
 		backgroundImageView.setFitWidth(800);
 		backgroundImageView.setFitHeight(600);
 
@@ -63,45 +65,39 @@ public class HowToPlayPage {
 		
 		// fifth Hbox
 		HBox hbox05 = new HBox(10);
-		ImageView TAB = createimageview("letter/TAB.jpg");
-		TAB.setFitWidth(90);
-		Text character = createtext("Press TAB to Switch character");
+		ImageView E = createimageview("letter/E.png");
+		Text pause = createtext("Press E to pause");
 		hbox05.setAlignment(Pos.CENTER);
-		hbox05.getChildren().addAll(TAB, character);
+		hbox05.getChildren().addAll(E, pause);
 		
 		// sixth Hbox
 		HBox hbox06 = new HBox(10);
-		ImageView ENTER = createimageview("letter/ENTER.png");
-		ENTER.setFitWidth(75);
-		Text changemap = createtext("Press ENTER to Change Map when kill all monsters \nand walk to the end of the map");
+		ImageView TAB = createimageview("letter/TAB.jpg");
+		TAB.setFitWidth(90);
+		Text character = createtext("Press TAB to Switch character");
 		hbox06.setAlignment(Pos.CENTER);
-		hbox06.getChildren().addAll(ENTER, changemap);
+		hbox06.getChildren().addAll(TAB, character);
 		
 		// seventh Hbox
 		HBox hbox07 = new HBox(10);
-		ImageView E = createimageview("letter/E.png");
-		Text pause = createtext("Press E to pause");
+		ImageView ENTER = createimageview("letter/ENTER.png");
+		ENTER.setFitWidth(75);
+		Text changemap = createtext("Press ENTER to Change Map when kill all monsters \nand walk to the end of the map");
 		hbox07.setAlignment(Pos.CENTER);
-		hbox07.getChildren().addAll(E, pause);
+		hbox07.getChildren().addAll(ENTER, changemap);
 		
 		// Create content layout
 		VBox page2Layout = new VBox(15);
 		page2Layout.setAlignment(Pos.CENTER);
 		
 		// Button action
-		Image back_image = new Image("gamemenu/back.png"); // place in resources or same folder
-		ImageView imgView01 = new ImageView(back_image);
-		imgView01.setFitWidth(250); // optional resizing
-		imgView01.setFitHeight(60);
-
-		Button backbutton = new Button();
-		backbutton.setGraphic(imgView01);
-		backbutton.setStyle("-fx-background-color: transparent;");
-
-		addHoverEffect(backbutton);
-		backbutton.setOnAction(e -> stage.setScene(mainMenuScene));
+		Button backButton = ButtonUtils.createButton("gamemenu/back.png", GameConfig.MENU_WIDTH,
+				GameConfig.MENU_HEIGHT);
 		
-		page2Layout.getChildren().addAll(titleLabel, hbox01, hbox02, hbox03, hbox04, hbox07, hbox05, hbox06, backbutton);
+		ButtonUtils.addHoverEffect(backButton);
+		backButton.setOnAction(e -> stage.setScene(mainMenuScene));
+		
+		page2Layout.getChildren().addAll(titleLabel, hbox01, hbox02, hbox03, hbox04, hbox05, hbox06, hbox07, backButton);
 
 		// Use StackPane to layer background and content
 		StackPane root = new StackPane();
@@ -131,16 +127,6 @@ public class HowToPlayPage {
 		return text;
 	}
 	
-	private void addHoverEffect(Button button) {
-		button.setOnMouseEntered(e -> {
-			button.setStyle("-fx-background-color: #beb9b9;");
-			button.setCursor(Cursor.HAND);
-		});
-		button.setOnMouseExited(e -> {
-			button.setStyle("-fx-background-color: transparent;");
-			button.setCursor(Cursor.DEFAULT);
-		});
-	}
 	public Scene getScene() {
 		return scene;
 	}
