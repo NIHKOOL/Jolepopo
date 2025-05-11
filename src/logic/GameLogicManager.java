@@ -7,8 +7,11 @@ import config.GameConfig;
 import entities.Monster;
 import entities.SamuraiArcher;
 import entities.SamuraiMelee;
+import entities.Skeleton;
+import entities.SkeletonWarrior;
 import entities.Character;
 import entities.GorgonBoss;
+import entities.Minotaur;
 import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Stage;
@@ -104,6 +107,10 @@ public class GameLogicManager {
 						EndingPage endingscene = new EndingPage(this.stage);
 						stage.setScene(endingscene.getScene());
 					});
+				} else if (m instanceof Minotaur) {
+					SoundManager.playSEF("effects/horror-sound-monster-snort-189930.mp3", 0.5);
+				} else if (m instanceof Skeleton || m instanceof SkeletonWarrior) {
+					SoundManager.playSEF("effects/bone-break-sound-269658.mp3", 0.4);
 				}
 				return true;
 			}

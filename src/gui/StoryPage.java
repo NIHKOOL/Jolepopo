@@ -47,6 +47,8 @@ public class StoryPage {
 
 			stage.setScene(scene);
 			gameScene.start(scene);
+			
+			SoundManager.playSEF("effects/sharp-pop-328170.mp3", 0.3);
 
 			gameScene.showTemporaryMessage("Map 1 : The Castle");
 		});

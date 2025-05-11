@@ -61,6 +61,7 @@ public class GameScene extends AnimationTimer implements Updatable {
 	private final GameLogicManager logicManger;
 	private boolean debugMode = false;
 	private GorgonBoss boss;
+	private boolean isUpgradable = false;
 
 	public GameScene(Canvas canvas, Stage stage) {
 		this.canvas = canvas;
@@ -99,12 +100,16 @@ public class GameScene extends AnimationTimer implements Updatable {
 		this.scene = scene;
 		scene.setOnKeyPressed(e -> {
 			KeyCode code = e.getCode();
-			if (bonfireMenuOpen) {
+			if (bonfireMenuOpen && isUpgradable) {
 				if (code == KeyCode.DIGIT1) {
 					GameConfig.MANA_REGEN += 0.3;
+					SoundManager.playSEF("effects/metal-punch-142334.mp3", 0.7);
+					isUpgradable = false;
 					bonfireMenuOpen = false;
 				} else if (code == KeyCode.DIGIT2) {
 					GameConfig.PLAYER_DAMAGE_MULTIPLIER += 0.5;
+					SoundManager.playSEF("effects/metal-punch-142334.mp3", 0.7);
+					isUpgradable = false;
 					bonfireMenuOpen = false;
 				}
 				return;
@@ -129,8 +134,8 @@ public class GameScene extends AnimationTimer implements Updatable {
 				goToStopScene();
 			if (code == KeyCode.H && nearBonfire)
 				restBonfire();
-			if (code == KeyCode.P && nearBonfire) {
-				bonfireMenuOpen = true;
+			if (code == KeyCode.P && nearBonfire ) {
+				bonfireMenuOpen = !bonfireMenuOpen;
 			}
 			if (code == KeyCode.M) {
 				debugMode = !debugMode;
@@ -255,7 +260,7 @@ public class GameScene extends AnimationTimer implements Updatable {
 			gc.fillText("Press ENTER to travel", canvas.getWidth() / 2 - 50, canvas.getHeight() - 70);
 		}
 
-		if (bonfireMenuOpen) {
+		if (bonfireMenuOpen && isUpgradable) {
 			gc.setFill(Color.BLACK);
 			gc.fillRect(canvas.getWidth() / 2 - 100, canvas.getHeight() / 2 - 60, 180, 100);
 
@@ -380,11 +385,12 @@ public class GameScene extends AnimationTimer implements Updatable {
 		currentPlayer.setPosition(100, GameConfig.GROUND_LEVEL);
 
 		monsters.clear();
-		SoundManager.playSEF("effects/magic-spell-333896.mp3", 0.5);
 
 		if (currentMapIndex == 1) {
 			SoundManager.stopAllSounds();
+			SoundManager.playSEF("effects/magic-spell-333896.mp3", 0.3); 
 			showTemporaryMessage("Recovery Zone");
+			isUpgradable = true;
 			SoundManager.playBGM("musics/vampire-189047.mp3", 0.2);
 			SoundManager.playBGM("musics/campfire-crackling-fireplace-sound-119594.mp3", 0.6);
 			bonfire = new Bonfire(GameConfig.SCREEN_WIDTH / 2 - 180, GameConfig.GROUND_LEVEL - 100);
@@ -393,6 +399,7 @@ public class GameScene extends AnimationTimer implements Updatable {
 		} else if (currentMapIndex == 2) {
 			bonfire = null;
 			SoundManager.stopAllSounds();
+			SoundManager.playSEF("effects/magic-spell-333896.mp3", 0.3); 
 			showTemporaryMessage("Map 2 : The Forest");
 			SoundManager.playBGM("musics/1-08 - Ominous.mp3", 0.8);
 			int[] skeletonX = { -5000, -4500, -3000, 2000, 3000, 4000, 5000 };
@@ -407,7 +414,9 @@ public class GameScene extends AnimationTimer implements Updatable {
 
 		} else if (currentMapIndex == 3) {
 			SoundManager.stopAllSounds();
+			SoundManager.playSEF("effects/magic-spell-333896.mp3", 0.3); 
 			showTemporaryMessage("Recovery Zone");
+			isUpgradable = true;
 			SoundManager.playBGM("musics/vampire-189047.mp3", 0.2);
 			SoundManager.playBGM("musics/campfire-crackling-fireplace-sound-119594.mp3", 0.6);
 			bonfire = new Bonfire(GameConfig.SCREEN_WIDTH / 2 - 180, GameConfig.GROUND_LEVEL - 100);
@@ -416,6 +425,7 @@ public class GameScene extends AnimationTimer implements Updatable {
 		} else if (currentMapIndex == 4) {
 			bonfire = null;
 			SoundManager.stopAllSounds();
+			SoundManager.playSEF("effects/magic-spell-333896.mp3", 0.3); 
 			showTemporaryMessage("Map 3 : The Boss");
 			SoundManager.playBGM("musics/1.01 The Unknown Journey Continues.mp3", 0.2);
 

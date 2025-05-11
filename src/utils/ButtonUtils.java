@@ -10,6 +10,7 @@ public class ButtonUtils {
 		button.setOnMouseEntered(e -> {
 			button.setStyle("-fx-background-color: #beb9b9;");
 			button.setCursor(Cursor.HAND);
+			SoundManager.playSEF("effects/pop-cartoon-328167.mp3", 0.5);
 		});
 		button.setOnMouseExited(e -> {
 			button.setStyle("-fx-background-color: transparent;");
