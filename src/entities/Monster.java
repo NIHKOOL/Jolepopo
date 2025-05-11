@@ -10,24 +10,30 @@ import javafx.scene.canvas.GraphicsContext;
 
 public abstract class Monster implements Renderable, Updatable, Damageable {
 	protected double x, y;
-	protected int currentHealth = GameConfig.MONSTER_MAX_HEALTH;
-	protected boolean attacking = false;
-	protected boolean facingRight = false;
-
+	protected int currentHealth;
+	protected boolean attacking;
+	protected boolean facingRight;
 	protected Character player;
-
-	private boolean slowed = false;
-	private long slowEndTime = 0;
-	private double speedMultiplier = 1.0;
-
-	private boolean debuffed = false;
-	private long debuffEndTime = 0;
-	protected double damageMultiplier = 1.0;
+	private boolean slowed;
+	private long slowEndTime;
+	private double speedMultiplier;
+	private boolean debuffed;
+	private long debuffEndTime;
+	protected double damageMultiplier;
 
 	public Monster(double x, double y, Character player) {
 		this.x = x;
 		this.y = y;
 		this.player = player;
+		this.currentHealth = GameConfig.MONSTER_MAX_HEALTH;
+		this.attacking = false;
+		this.facingRight = false;
+		this.slowed = false;
+		this.slowEndTime = 0;
+		this.speedMultiplier = 1.0;
+		this.debuffed = false;
+		this.debuffEndTime = 0;
+		this.damageMultiplier = 1.0;
 	}
 
 	public abstract void update();
