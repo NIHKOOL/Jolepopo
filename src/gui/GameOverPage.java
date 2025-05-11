@@ -1,8 +1,8 @@
 package gui;
 
+import config.GameConfig;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import logic.GameScene;
+import utils.ButtonUtils;
 import utils.SoundManager;
 
 public class GameOverPage {
@@ -31,7 +32,8 @@ public class GameOverPage {
 		ImageView Deathsymbol = new ImageView("gameover/Dealth symbol.png");
 		Deathsymbol.setFitWidth(200);
 		Deathsymbol.setFitHeight(210);
-
+		
+		// create death text
 		ImageView Deathtext = new ImageView("gameover/gameover_text.png");
 		Deathtext.setFitWidth(400);
 		Deathtext.setFitHeight(75);
@@ -40,44 +42,35 @@ public class GameOverPage {
 		VBox.setMargin(Deathtext, new Insets(0));
 		
 		// create restart button
-		Image restartImage = new Image("gameover/restart.png");
-		ImageView restartIcon = new ImageView(restartImage);
-		restartIcon.setFitWidth(200);
-		restartIcon.setFitHeight(80);
-		Button restartButton = new Button();
-		restartButton.setGraphic(restartIcon);
-		restartButton.setStyle("-fx-background-color: transparent;");
+		Button restartButton = ButtonUtils.createButton("gameover/restart.png", GameConfig.OTHER_WIDTH,
+				GameConfig.OTHER_HEIGHT);
+
 		restartButton.setOnAction(e -> {
 			SoundManager.stopAllSounds();
 			Canvas canvas = new Canvas(1244, 700);
-        	GameScene gameScene = new GameScene(canvas,stage);
-        	
-        	StackPane root = new StackPane(canvas,gameScene.getTempMessage());
-        	gameScene.getTempMessage().setTranslateY(150);
-        	StackPane.setAlignment(gameScene.getTempMessage(), Pos.TOP_CENTER);
-            Scene scene = new Scene(root);
-            
-            stage.setScene(scene);
-            gameScene.start(scene);
-            
-            gameScene.showTemporaryMessage("Map 1 : The Castle");
+			GameScene gameScene = new GameScene(canvas, stage);
+
+			StackPane root = new StackPane(canvas, gameScene.getTempMessage());
+			gameScene.getTempMessage().setTranslateY(150);
+			StackPane.setAlignment(gameScene.getTempMessage(), Pos.TOP_CENTER);
+			Scene scene = new Scene(root);
+
+			stage.setScene(scene);
+			gameScene.start(scene);
+
+			gameScene.showTemporaryMessage("Map 1 : The Castle");
 		});
-		addHoverEffect(restartButton);
+		ButtonUtils.addHoverEffect(restartButton);
 
 		// create quit button
-		Image quitImage = new Image("gameover/menu.png");
-		ImageView quitIcon = new ImageView(quitImage);
-		quitIcon.setFitWidth(200);
-		quitIcon.setFitHeight(80);
-		Button quitButton = new Button();
-		quitButton.setGraphic(quitIcon);
-		quitButton.setStyle("-fx-background-color: transparent;");
-		quitButton.setOnAction(e -> {
+		Button menuButton = ButtonUtils.createButton("gameover/menu.png", GameConfig.OTHER_WIDTH,
+				GameConfig.OTHER_HEIGHT);
+		menuButton.setOnAction(e -> {
 			SoundManager.stopAllSounds();
 			GameMenu newpage = new GameMenu(stage);
 			stage.setScene(newpage.getScene());
 		});
-		addHoverEffect(quitButton);
+		ButtonUtils.addHoverEffect(menuButton);
 
 		// create background
 		Image backgroundImage;
@@ -97,7 +90,7 @@ public class GameOverPage {
 
 		VBox buttonBox = new VBox(10);
 		buttonBox.setAlignment(Pos.CENTER);
-		buttonBox.getChildren().addAll(restartButton, quitButton);
+		buttonBox.getChildren().addAll(restartButton, menuButton);
 
 		overlay.getChildren().addAll(Deathsymbol, Deathtext, buttonBox);
 
@@ -105,17 +98,6 @@ public class GameOverPage {
 		root.getChildren().add(overlay); 
 
 		scene = new Scene(root, 1244, 700); 
-	}
-
-	private void addHoverEffect(Button button) {
-		button.setOnMouseEntered(e -> {
-			button.setStyle("-fx-background-color: #beb9b9;");
-			button.setCursor(Cursor.HAND);
-		});
-		button.setOnMouseExited(e -> {
-			button.setStyle("-fx-background-color: transparent;");
-			button.setCursor(Cursor.DEFAULT);
-		});
 	}
 
 	public Scene getScene() {

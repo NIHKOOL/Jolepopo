@@ -72,9 +72,14 @@ public class GameConfig {
     public static final int SKELETON_DMG_ARCHER = 25;
     public static final int SKELETON_DMG_COMMANDER = 20;
     
-    
     // Ground level configuration
     public static final int GROUND_LEVEL = 350; 
+    
+    // Button size
+    public static final int MENU_WIDTH = 250;
+    public static final int MENU_HEIGHT = 60;
+    public static final int OTHER_WIDTH = 250;
+    public static final int OTHER_HEIGHT = 80;
 
     private GameConfig() {}
     
