@@ -31,6 +31,8 @@ public class GameConfig {
     public static final int PLAYER_ARROW_DAMAGE = 10;
     public static final int PLAYER_BIGARROW_DAMAGE = 125;
     public static final long BIG_ARROW_COOLDOWN = 1500;
+    public static final int TEMP_HEAL_AMOUNT = 10;
+	public static final long TEMP_HEAL_DURATION = 1000;
 
     // Physics
     public static final double GRAVITY = 0.5;

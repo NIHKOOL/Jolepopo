@@ -10,36 +10,59 @@ import utils.Assets;
 import utils.SoundManager;
 
 public class SamuraiMelee extends Character {
-	private double velocityY = 0;
-	private boolean onGround = true;
-	private boolean dashing = false;
-	private long dashStartTime = 0;
-	private long lastDashTime = 0;
-	private int dashFrame = 0;
-	private long lastDashFrameTime = 0;
-	private long lastAttackTime = 0;
-	private int currentAttackFrame = 0;
-	private long lastAttackFrameTime = 0;
-	private boolean defending = false;
-	private long lastDefendTime = 0;
-	private int currentDefendFrame = 0;
-	private long lastDefendFrameTime = 0;
-	private int currentFrame = 0;
-	private long lastFrameTime = 0;
-	private int jumpFrame = 0;
-	private long lastJumpFrameTime = 0;
+	private double velocityY;
+	private boolean onGround;
+	private boolean dashing;
+	private long dashStartTime;
+	private long lastDashTime;
+	private int dashFrame;
+	private long lastDashFrameTime;
+	private long lastAttackTime;
+	private int currentAttackFrame;
+	private long lastAttackFrameTime;
+	private boolean defending;
+	private long lastDefendTime;
+	private int currentDefendFrame;
+	private long lastDefendFrameTime;
+	private int currentFrame;
+	private long lastFrameTime;
+	private int jumpFrame;
+	private long lastJumpFrameTime;
 	private final Image[] walkFrames, dashFrames, jumpFrames, attackFrames, defendFrames;
 	
-	private int tempHealth = 0;
-	private long tempHealthStartTime = 0;
-	private static final int TEMP_HEAL_AMOUNT = 10;
-	private static final long TEMP_HEAL_DURATION = 1000;
+	private int tempHealth;
+	private long tempHealthStartTime;
+	private int tempHealAmount;
+	private long tempHealDuration;
 
 	public SamuraiMelee(double x, double y) {
 		this.x = x;
 		this.y = y;
 		this.currentHealth = GameConfig.PLAYER_MAX_HEALTH;
 		this.currentMana = GameConfig.PLAYER_MAX_MANA;
+		this.velocityY = 0;
+		this.onGround = true;
+		this.dashing = false;
+		this.dashStartTime = 0;
+		this.lastDashTime = 0;
+		this.dashFrame = 0;
+		this.lastDashFrameTime = 0;
+		this.lastAttackTime = 0;
+		this.currentAttackFrame = 0;
+		this.lastAttackFrameTime = 0;
+		this.defending = false;
+		this.lastDefendTime = 0;
+		this.currentDefendFrame = 0;
+		this.lastDefendFrameTime = 0;
+		this.currentFrame = 0;
+		this.lastFrameTime = 0;
+		this.jumpFrame = 0;
+		this.lastJumpFrameTime = 0;
+		this.tempHealth = 0;
+		this.tempHealthStartTime = 0;
+		this.tempHealAmount = GameConfig.TEMP_HEAL_AMOUNT;
+		this.tempHealDuration = GameConfig.TEMP_HEAL_DURATION;
+		
 
 		walkFrames = new Image[] { Assets.loadImage("samuraiMelee/RealKnight.png"),
 				Assets.loadImage("samuraiMelee/Walk02.png"), Assets.loadImage("samuraiMelee/Walk03.png"),
@@ -71,7 +94,7 @@ public class SamuraiMelee extends Character {
 		updateMovement(now, left, right, isScrollable);
 		updateJump(now);
 		regenMana();
-		if (now - tempHealthStartTime > TEMP_HEAL_DURATION)
+		if (now - tempHealthStartTime > tempHealDuration)
 			tempHealth = 0;
 	}
 
@@ -189,8 +212,8 @@ public class SamuraiMelee extends Character {
 			lastDefendTime = now;
 		}
 
-		if (now - tempHealthStartTime >= TEMP_HEAL_DURATION) {
-			tempHealth = TEMP_HEAL_AMOUNT;
+		if (now - tempHealthStartTime >= tempHealDuration) {
+			tempHealth = tempHealAmount;
 			tempHealthStartTime = now;
 		}
 
