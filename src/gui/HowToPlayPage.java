@@ -15,6 +15,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import utils.ButtonUtils;
+import utils.SoundManager;
 
 public class HowToPlayPage {
 	private Scene scene;
@@ -95,7 +96,10 @@ public class HowToPlayPage {
 				GameConfig.MENU_HEIGHT);
 		
 		ButtonUtils.addHoverEffect(backButton);
-		backButton.setOnAction(e -> stage.setScene(mainMenuScene));
+		backButton.setOnAction(e -> {
+			stage.setScene(mainMenuScene);
+			SoundManager.playSEF("effects/sharp-pop-328170.mp3", 0.3);
+		});
 		
 		page2Layout.getChildren().addAll(titleLabel, hbox01, hbox02, hbox03, hbox04, hbox05, hbox06, hbox07, backButton);
 
