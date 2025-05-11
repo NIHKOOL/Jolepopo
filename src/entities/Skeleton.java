@@ -7,6 +7,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import utils.Assets;
+import utils.SoundManager;
 
 public class Skeleton extends Monster {
 	protected int currentWalkFrame, currentAttackFrame;
@@ -92,6 +93,9 @@ public class Skeleton extends Monster {
 			attacking = true;
 			currentAttackFrame = 0;
 			lastAttackTime = now;
+			if (!player.isDead()) {
+				SoundManager.playSEF("effects/knife-demo-309903.mp3", 0.5);
+			}
 			if (player instanceof SamuraiMelee) {
 				player.takeDamage(GameConfig.SKELETON_DMG_MELEE);
 			} else if (player instanceof SamuraiArcher) {

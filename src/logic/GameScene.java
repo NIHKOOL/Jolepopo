@@ -86,7 +86,7 @@ public class GameScene extends AnimationTimer implements Updatable {
 		for (int x : minotaurX) {
 			monsters.add(new Minotaur(x, GameConfig.GROUND_LEVEL - 37, currentPlayer));
 		}
-
+		monsters.add(new Skeleton(500, GameConfig.GROUND_LEVEL - 37, currentPlayer));
 		tempMessage.setFont(Font.font("Impact", FontWeight.BOLD, 50));
 		tempMessage.setFill(Color.WHITE);
 		tempMessage.setStroke(Color.BLACK);
@@ -380,10 +380,10 @@ public class GameScene extends AnimationTimer implements Updatable {
 		currentPlayer.setPosition(100, GameConfig.GROUND_LEVEL);
 
 		monsters.clear();
-		SoundManager.playSEF("effects/magic-spell-333896.mp3", 0.5);
 
 		if (currentMapIndex == 1) {
 			SoundManager.stopAllSounds();
+			SoundManager.playSEF("effects/magic-spell-333896.mp3", 0.3); 
 			showTemporaryMessage("Recovery Zone");
 			SoundManager.playBGM("musics/vampire-189047.mp3", 0.2);
 			SoundManager.playBGM("musics/campfire-crackling-fireplace-sound-119594.mp3", 0.6);
@@ -393,6 +393,7 @@ public class GameScene extends AnimationTimer implements Updatable {
 		} else if (currentMapIndex == 2) {
 			bonfire = null;
 			SoundManager.stopAllSounds();
+			SoundManager.playSEF("effects/magic-spell-333896.mp3", 0.3); 
 			showTemporaryMessage("Map 2 : The Forest");
 			SoundManager.playBGM("musics/1-08 - Ominous.mp3", 0.8);
 			int[] skeletonX = { -5000, -4500, -3000, 2000, 3000, 4000, 5000 };
@@ -407,6 +408,7 @@ public class GameScene extends AnimationTimer implements Updatable {
 
 		} else if (currentMapIndex == 3) {
 			SoundManager.stopAllSounds();
+			SoundManager.playSEF("effects/magic-spell-333896.mp3", 0.3); 
 			showTemporaryMessage("Recovery Zone");
 			SoundManager.playBGM("musics/vampire-189047.mp3", 0.2);
 			SoundManager.playBGM("musics/campfire-crackling-fireplace-sound-119594.mp3", 0.6);
@@ -416,6 +418,7 @@ public class GameScene extends AnimationTimer implements Updatable {
 		} else if (currentMapIndex == 4) {
 			bonfire = null;
 			SoundManager.stopAllSounds();
+			SoundManager.playSEF("effects/magic-spell-333896.mp3", 0.3); 
 			showTemporaryMessage("Map 3 : The Boss");
 			SoundManager.playBGM("musics/1.01 The Unknown Journey Continues.mp3", 0.2);
 

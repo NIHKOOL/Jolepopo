@@ -7,6 +7,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import utils.Assets;
+import utils.SoundManager;
 
 public class Minotaur extends Monster {
 	private int currentWalkFrame, currentAttackFrame;
@@ -51,6 +52,7 @@ public class Minotaur extends Monster {
 			moveTowardPlayer(dx);
 		else
 			tryAttack(player);
+		
 	}
 
 	@Override
@@ -91,6 +93,9 @@ public class Minotaur extends Monster {
 			attacking = true;
 			currentAttackFrame = 0;
 			lastAttackTime = now;
+			if (!player.isDead()) {
+				SoundManager.playSEF("effects/draw-a-sword-327726.mp3", 0.7);
+			}
 			if (player instanceof SamuraiMelee) {
 				player.takeDamage(GameConfig.MINOTAUR_DMG_MELEE);
 			} else if (player instanceof SamuraiArcher) {
