@@ -20,19 +20,19 @@ public class Minotaur extends Monster implements Renderable, Updatable, Damagabl
     public Minotaur(double x, double y, Character player) {
         super(x, y, player);
         walkFrames = new Image[] {
-            Assets.loadImage("minotaur/monster_walk01.png"), 
-            Assets.loadImage("minotaur/monster_walk02.png"),
-            Assets.loadImage("minotaur/monster_walk03.png"), 
-            Assets.loadImage("minotaur/monster_walk04.png"),
-            Assets.loadImage("minotaur/monster_walk05.png")
+            Assets.loadImage("minotaur/Monster_walk01.png"), 
+            Assets.loadImage("minotaur/Monster_walk02.png"),
+            Assets.loadImage("minotaur/Monster_walk03.png"), 
+            Assets.loadImage("minotaur/Monster_walk04.png"),
+            Assets.loadImage("minotaur/Monster_walk05.png")
         };
         attackFrames = new Image[] {
-            Assets.loadImage("minotaur/monster_attack01.png"), 
-            Assets.loadImage("minotaur/monster_attack01.png"),
-            Assets.loadImage("minotaur/monster_attack02.png"), 
-            Assets.loadImage("minotaur/monster_attack02.png"),
-            Assets.loadImage("minotaur/monster_attack03.png"), 
-            Assets.loadImage("minotaur/monster_attack03.png")
+            Assets.loadImage("minotaur/Monster_attack01.png"), 
+            Assets.loadImage("minotaur/Monster_attack01.png"),
+            Assets.loadImage("minotaur/Monster_attack02.png"), 
+            Assets.loadImage("minotaur/Monster_attack02.png"),
+            Assets.loadImage("minotaur/Monster_attack03.png"), 
+            Assets.loadImage("minotaur/Monster_attack03.png")
         };
     }
 

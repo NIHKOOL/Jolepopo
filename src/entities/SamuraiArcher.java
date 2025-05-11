@@ -278,7 +278,7 @@ public class SamuraiArcher extends Character implements AbilityCaster, Renderabl
             
             applyMapBounds(walkFrames[0].getWidth() * 2, isScrollable);
             
-            if (now - lastFrameTime > 150 && (left || right)) {
+            if (now - lastFrameTime > 150 && (left || right) && !(isDead()) && !(isWin())) {
                 currentFrame = (currentFrame + 1) % walkFrames.length;
                 lastFrameTime = now;
                 if (onGround) SoundManager.playSEF("effects/st3-footstep-sfx-323056.mp3", 1, 625);

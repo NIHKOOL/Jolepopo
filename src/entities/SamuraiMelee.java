@@ -52,14 +52,14 @@ public class SamuraiMelee extends Character implements AbilityCaster, Renderable
 
         walkFrames = new Image[] {
             Assets.loadImage("samuraiMelee/RealKnight.png"), 
-            Assets.loadImage("samuraiMelee/walk02.png"), 
-            Assets.loadImage("samuraiMelee/walk03.png"),
-            Assets.loadImage("samuraiMelee/walk04.png"), 
-            Assets.loadImage("samuraiMelee/walk05.png"), 
-            Assets.loadImage("samuraiMelee/walk06.png"),
-            Assets.loadImage("samuraiMelee/walk07.png"), 
-            Assets.loadImage("samuraiMelee/walk08.png"), 
-            Assets.loadImage("samuraiMelee/walk09.png")
+            Assets.loadImage("samuraiMelee/Walk02.png"), 
+            Assets.loadImage("samuraiMelee/Walk03.png"),
+            Assets.loadImage("samuraiMelee/Walk04.png"), 
+            Assets.loadImage("samuraiMelee/Walk05.png"), 
+            Assets.loadImage("samuraiMelee/Walk06.png"),
+            Assets.loadImage("samuraiMelee/Walk07.png"), 
+            Assets.loadImage("samuraiMelee/Walk08.png"), 
+            Assets.loadImage("samuraiMelee/Walk09.png")
         };
 
         dashFrames = new Image[] {
@@ -70,11 +70,11 @@ public class SamuraiMelee extends Character implements AbilityCaster, Renderable
         };
 
         jumpFrames = new Image[] {
-            Assets.loadImage("samuraiMelee/jump01.png"), 
-            Assets.loadImage("samuraiMelee/jump02.png"), 
-            Assets.loadImage("samuraiMelee/jump03.png"),
-            Assets.loadImage("samuraiMelee/jump04.png"), 
-            Assets.loadImage("samuraiMelee/jump05.png")
+            Assets.loadImage("samuraiMelee/Jump01.png"), 
+            Assets.loadImage("samuraiMelee/Jump02.png"), 
+            Assets.loadImage("samuraiMelee/Jump03.png"),
+            Assets.loadImage("samuraiMelee/Jump04.png"), 
+            Assets.loadImage("samuraiMelee/Jump05.png")
         };
 
         attackFrames = new Image[] {
@@ -256,7 +256,7 @@ public class SamuraiMelee extends Character implements AbilityCaster, Renderable
             
             applyMapBounds(walkFrames[0].getWidth() * 2, isScrollable);
             
-            if (now - lastFrameTime > 150 && (left || right)) {
+			if (now - lastFrameTime > 150 && (left || right) && !(isDead()) && !(isWin())) {
                 currentFrame = (currentFrame + 1) % walkFrames.length;
                 lastFrameTime = now;
                 if (onGround) {

@@ -262,7 +262,7 @@ public class SamuraiCommander extends Character implements AbilityCaster, Render
             
             applyMapBounds(walkFrames[0].getWidth() * 2, isScrollable);
             
-            if (now - lastFrameTime > 150 && (left || right)) {
+            if (now - lastFrameTime > 150 && (left || right) && !(isDead()) && !(isWin())) {
                 currentFrame = (currentFrame + 1) % walkFrames.length;
                 lastFrameTime = now;
                 if (onGround) {
