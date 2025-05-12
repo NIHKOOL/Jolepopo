@@ -35,7 +35,7 @@ public class GameStopPage {
 		// create resume button
 		Button resumeButton = ButtonUtils.createButton("gameover/resume.png", GameConfig.OTHER_WIDTH,
 				GameConfig.OTHER_HEIGHT);
-		resumeButton.setOnAction(e -> {
+		resumeButton.setOnAction(_ -> {
 			onResume.run();
 			SoundManager.playSEF("effects/sharp-pop-328170.mp3", 0.3);
 		});
@@ -44,7 +44,7 @@ public class GameStopPage {
 		// create restart button
 		Button restartButton = ButtonUtils.createButton("gameover/restart.png", GameConfig.OTHER_WIDTH,
 				GameConfig.OTHER_HEIGHT);
-		restartButton.setOnAction(e -> {
+		restartButton.setOnAction(_ -> {
 			SoundManager.stopAllSounds();
 			Canvas canvas = new Canvas(1244, 700);
 			GameScene gameScene = new GameScene(canvas, stage);
@@ -66,7 +66,7 @@ public class GameStopPage {
 		// create menu button
 		Button menuButton = ButtonUtils.createButton("gameover/menu.png", GameConfig.OTHER_WIDTH,
 				GameConfig.OTHER_HEIGHT);
-		menuButton.setOnAction(e -> {
+		menuButton.setOnAction(_ -> {
 			SoundManager.stopAllSounds();
 			SoundManager.playSEF("effects/sharp-pop-328170.mp3", 0.3);
 			GameMenu newpage = new GameMenu(stage);

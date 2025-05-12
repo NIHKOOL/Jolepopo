@@ -45,7 +45,7 @@ public class GameOverPage {
 		Button restartButton = ButtonUtils.createButton("gameover/restart.png", GameConfig.OTHER_WIDTH,
 				GameConfig.OTHER_HEIGHT);
 
-		restartButton.setOnAction(e -> {
+		restartButton.setOnAction(_ -> {
 			SoundManager.stopAllSounds();
 			Canvas canvas = new Canvas(1244, 700);
 			GameScene gameScene = new GameScene(canvas, stage);
@@ -65,7 +65,7 @@ public class GameOverPage {
 		// create quit button
 		Button menuButton = ButtonUtils.createButton("gameover/menu.png", GameConfig.OTHER_WIDTH,
 				GameConfig.OTHER_HEIGHT);
-		menuButton.setOnAction(e -> {
+		menuButton.setOnAction(_ -> {
 			SoundManager.stopAllSounds();
 			GameMenu newpage = new GameMenu(stage);
 			stage.setScene(newpage.getScene());

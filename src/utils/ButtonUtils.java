@@ -7,12 +7,12 @@ import javafx.scene.image.ImageView;
 
 public class ButtonUtils {
 	public static void addHoverEffect(Button button) {
-		button.setOnMouseEntered(e -> {
+		button.setOnMouseEntered(_ -> {
 			button.setStyle("-fx-background-color: #beb9b9;");
 			button.setCursor(Cursor.HAND);
 			SoundManager.playSEF("effects/pop-cartoon-328167.mp3", 0.5);
 		});
-		button.setOnMouseExited(e -> {
+		button.setOnMouseExited(_ -> {
 			button.setStyle("-fx-background-color: transparent;");
 			button.setCursor(Cursor.DEFAULT);
 		});

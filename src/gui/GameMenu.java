@@ -44,20 +44,20 @@ public class GameMenu {
 		SoundManager.playBGM("musics/Menupage_sound.mp3", 0.3);
 
 		// set button actions
-		startButton.setOnAction(e -> {
+		startButton.setOnAction(_ -> {
 			SoundManager.stopBGM();
 			StoryPage secondPage = new StoryPage(primaryStage);
 			primaryStage.setScene(secondPage.getScene());
 			SoundManager.playSEF("effects/sharp-pop-328170.mp3", 0.3);
 		});
 		
-		howtoplayButton.setOnAction(e -> {
+		howtoplayButton.setOnAction(_ -> {
 			HowToPlayPage optionPage = new HowToPlayPage(primaryStage, Scene);
 			primaryStage.setScene(optionPage.getScene());
 			SoundManager.playSEF("effects/sharp-pop-328170.mp3", 0.3);
 		});
 
-		quitbutton.setOnAction(e -> {
+		quitbutton.setOnAction(_ -> {
 			primaryStage.close();
 		});
 
