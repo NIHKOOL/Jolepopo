@@ -85,7 +85,8 @@ public class GameScene extends AnimationTimer implements Updatable {
 
 		int[] minotaurX = { -2500, -2000, -1000, 2000, 3000, 3500, 5000 };
 		for (int x : minotaurX) {
-			monsters.add(new Minotaur(x, GameConfig.GROUND_LEVEL - 37, currentPlayer));
+			Monster m = new Minotaur(x, GameConfig.GROUND_LEVEL - 37, currentPlayer);
+			monsters.add(m);
 		}
 
 		tempMessage.setFont(Font.font("Impact", FontWeight.BOLD, 50));

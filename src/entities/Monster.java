@@ -7,6 +7,7 @@ import interfaces.Renderable;
 import interfaces.Updatable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 public abstract class Monster implements Renderable, Updatable, Damageable {
 	protected double x, y;
@@ -20,6 +21,9 @@ public abstract class Monster implements Renderable, Updatable, Damageable {
 	private boolean debuffed;
 	private long debuffEndTime;
 	protected double damageMultiplier;
+	private long lastFrameTime;
+	private int currentWalkFrame;
+	private Image[] walkFrames;
 
 	public Monster(double x, double y, Character player) {
 		this.x = x;
@@ -40,6 +44,18 @@ public abstract class Monster implements Renderable, Updatable, Damageable {
 
 	public abstract void render(GraphicsContext gc, Camera camera);
 
+	public void moveTowardPlayer(double dx) {
+		if (dx > 0) {
+			x += GameConfig.MONSTER_SPEED * getSpeedMultipiler();
+		} else {
+			x -= GameConfig.MONSTER_SPEED * getSpeedMultipiler();
+		}
+		if (System.currentTimeMillis() - lastFrameTime > 200) {
+			currentWalkFrame = (currentWalkFrame + 1) % walkFrames.length;
+			lastFrameTime = System.currentTimeMillis();
+		}
+	}
+	
 	public void takeDamage(int damage) {
 		int finalDamage = (int) (damage * damageMultiplier);
 		currentHealth -= finalDamage;
