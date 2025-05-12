@@ -463,11 +463,11 @@ public class GameScene extends AnimationTimer implements Updatable {
 		tempMessage.setVisible(true);
 
 		PauseTransition pause = new PauseTransition(Duration.millis(100));
-		pause.setOnFinished(e -> {
+		pause.setOnFinished(_ -> {
 			FadeTransition fade = new FadeTransition(Duration.seconds(5), tempMessage);
 			fade.setFromValue(1.0);
 			fade.setToValue(0.0);
-			fade.setOnFinished(ev -> tempMessage.setVisible(false));
+			fade.setOnFinished(_ -> tempMessage.setVisible(false));
 			fade.play();
 		});
 		pause.play();
