@@ -59,7 +59,7 @@ public class GameConfig {
     public static final int MINOTAUR_DMG_ARCHER = 20;
     public static final int MINOTAUR_DMG_COMMANDER = 10;
     
-    public static final int BOSS_MAX_HEALTH = 1000;
+    public static final int BOSS_MAX_HEALTH = 3500;
     public static final int BOSS_SPEED = 3;
     public static final int BOSS_DMG_MELEE = 15;
     public static final int BOSS_DMG_ARCHER = 30;

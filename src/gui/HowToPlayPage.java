@@ -108,7 +108,7 @@ public class HowToPlayPage {
 		root.getChildren().addAll(backgroundImageView, page2Layout);
 
 		// Create scene
-		scene = new Scene(root, 1244, 700);
+		scene = new Scene(root, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
 
 		// Optional: resize background when window resizes
 		backgroundImageView.fitWidthProperty().bind(scene.widthProperty());

@@ -1,4 +1,5 @@
 package gui;
+import config.GameConfig;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Cursor;
@@ -55,14 +56,14 @@ public class EndingPage {
 
         // วางข้อความตรงกลางจริงๆ โดยไม่ใช้ VBox
         StackPane centerTextPane = new StackPane(animatedLabel);
-        centerTextPane.setPrefSize(1244, 700);  // ขนาดเท่ากับหน้าจอ
+        centerTextPane.setPrefSize(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);  // ขนาดเท่ากับหน้าจอ
         centerTextPane.setStyle("-fx-alignment: center;");
 
         StackPane root = new StackPane();
         root.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
         root.getChildren().addAll(centerTextPane, buttonPane);
 
-        scene = new Scene(root, 1244, 700);
+        scene = new Scene(root, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
 		
         SoundManager.playBGM("musics/Keyboard_typing.mp3",1);
         

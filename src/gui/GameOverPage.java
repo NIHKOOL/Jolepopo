@@ -47,7 +47,7 @@ public class GameOverPage {
 
 		restartButton.setOnAction(_ -> {
 			SoundManager.stopAllSounds();
-			Canvas canvas = new Canvas(1244, 700);
+			Canvas canvas = new Canvas(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
 			GameScene gameScene = new GameScene(canvas, stage);
 
 			StackPane root = new StackPane(canvas, gameScene.getTempMessage());
@@ -97,7 +97,7 @@ public class GameOverPage {
 		root.getChildren().add(backgroundImageView);
 		root.getChildren().add(overlay); 
 
-		scene = new Scene(root, 1244, 700); 
+		scene = new Scene(root, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT); 
 	}
 
 	public Scene getScene() {

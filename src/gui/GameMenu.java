@@ -37,8 +37,8 @@ public class GameMenu {
 		Image backgroundImage = new Image("gamemenu/homepage.png");
 		ImageView backgroundImageView = new ImageView(backgroundImage);
 		backgroundImageView.setPreserveRatio(false);
-		backgroundImageView.setFitWidth(1244);
-		backgroundImageView.setFitHeight(700);
+		backgroundImageView.setFitWidth(GameConfig.SCREEN_WIDTH);
+		backgroundImageView.setFitHeight(GameConfig.SCREEN_HEIGHT);
 
 		// set sound
 		SoundManager.playBGM("musics/Menupage_sound.mp3", 0.3);
@@ -71,7 +71,7 @@ public class GameMenu {
 		root.getChildren().addAll(backgroundImageView, menuLayout);
 
 		// create Scene
-		this.Scene = new Scene(root, 1244, 700);
+		this.Scene = new Scene(root, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
 
 		// Bind background size to scene size (dynamic resizing)
 		backgroundImageView.fitWidthProperty().bind(Scene.widthProperty());

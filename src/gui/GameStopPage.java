@@ -46,7 +46,7 @@ public class GameStopPage {
 				GameConfig.OTHER_HEIGHT);
 		restartButton.setOnAction(_ -> {
 			SoundManager.stopAllSounds();
-			Canvas canvas = new Canvas(1244, 700);
+			Canvas canvas = new Canvas(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
 			GameScene gameScene = new GameScene(canvas, stage);
 
 			StackPane newroot = new StackPane(canvas, gameScene.getTempMessage());
@@ -101,7 +101,7 @@ public class GameStopPage {
 		root.getChildren().add(backgroundImageView);
 		root.getChildren().add(overlay);
 
-		Scene scene = new Scene(root, 1244, 700);
+		Scene scene = new Scene(root, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
 
 		scene.setOnKeyPressed(e -> {
 			if (e.getCode() == KeyCode.E) {
