@@ -36,7 +36,7 @@ public class StoryPage {
 		// set button actions
 		ButtonUtils.addHoverEffect(nextButton);
 
-		nextButton.setOnAction(e -> {
+		nextButton.setOnAction(_ -> {
 			Canvas canvas = new Canvas(1244, 700);
 			GameScene gameScene = new GameScene(canvas, stage);
 
@@ -90,7 +90,7 @@ public class StoryPage {
 
 		for (int i = 0; i < content.length(); i++) {
 			final int index = i;
-			KeyFrame frame = new KeyFrame(delay.multiply(i), e -> {
+			KeyFrame frame = new KeyFrame(delay.multiply(i), _ -> {
 				displayedText.append(content.charAt(index));
 				textNode.setText(displayedText.toString());
 			});
@@ -98,7 +98,7 @@ public class StoryPage {
 		}
 
 		// Show button after animation ends
-		timeline.setOnFinished(e -> {
+		timeline.setOnFinished(_ -> {
 			SoundManager.stopBGM();
 			showButtonAfter.setVisible(true);
 		});

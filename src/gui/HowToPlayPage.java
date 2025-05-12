@@ -96,7 +96,7 @@ public class HowToPlayPage {
 				GameConfig.MENU_HEIGHT);
 		
 		ButtonUtils.addHoverEffect(backButton);
-		backButton.setOnAction(e -> {
+		backButton.setOnAction(_ -> {
 			stage.setScene(mainMenuScene);
 			SoundManager.playSEF("effects/sharp-pop-328170.mp3", 0.3);
 		});

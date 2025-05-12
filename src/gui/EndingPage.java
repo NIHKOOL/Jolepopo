@@ -40,7 +40,7 @@ public class EndingPage {
 		
 		addHoverEffect(nextButton);
 		
-        nextButton.setOnAction(e -> {
+        nextButton.setOnAction(_ -> {
         	SoundManager.stopAllSounds();
         	SoundManager.playSEF("effects/sharp-pop-328170.mp3", 0.3);
 			GameMenu newpage = new GameMenu(stage);
@@ -84,7 +84,7 @@ public class EndingPage {
         
         for (int i = 0; i < content.length(); i++) {
             final int index = i;
-            KeyFrame frame = new KeyFrame(delay.multiply(i), e -> {
+            KeyFrame frame = new KeyFrame(delay.multiply(i), _ -> {
                 displayedText.append(content.charAt(index));
                 textNode.setText(displayedText.toString());
             });
@@ -92,17 +92,17 @@ public class EndingPage {
         }
         
         // Show button after animation ends
-        timeline.setOnFinished(e -> {SoundManager.stopBGM();showButtonAfter.setVisible(true);});
+        timeline.setOnFinished(_ -> {SoundManager.stopBGM();showButtonAfter.setVisible(true);});
         timeline.play();
     }
     
     private void addHoverEffect(Button button) {
-        button.setOnMouseEntered(e -> {
+        button.setOnMouseEntered(_ -> {
             button.setStyle("-fx-background-color: #beb9b9;");
             SoundManager.playSEF("effects/pop-cartoon-328167.mp3", 0.5);
             button.setCursor(Cursor.HAND);
         });
-        button.setOnMouseExited(e -> {
+        button.setOnMouseExited(_ -> {
             button.setStyle("-fx-background-color: transparent;");
             button.setCursor(Cursor.DEFAULT);
         });
