@@ -66,7 +66,7 @@ public class GameScene extends AnimationTimer implements Updatable {
 	public GameScene(Canvas canvas, Stage stage) {
 		this.canvas = canvas;
 		this.gc = canvas.getGraphicsContext2D();
-		this.camera = new Camera(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
+		this.camera = new Camera(GameConfig.SCREEN_WIDTH);
 		this.stage = stage;
 
 		List<Character> team = new ArrayList<>();

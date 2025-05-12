@@ -7,7 +7,7 @@ public class Camera {
 	private double x, y;
 	private final double screenWidth;
 
-	public Camera(double screenWidth, double screenHeight) {
+	public Camera(double screenWidth) {
 		this.screenWidth = screenWidth;
 	}
 
