@@ -1,4 +1,5 @@
 package gui;
+import config.GameConfig;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Cursor;
@@ -17,6 +18,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import utils.Assets;
 import utils.SoundManager;
 
 public class EndingPage {
@@ -28,7 +30,7 @@ public class EndingPage {
         Text animatedLabel = new Text();
         
         // botton create
-        Image exit = new Image("gamemenu/menu.png"); // place in resources or same folder
+        Image exit = Assets.loadImage("gamemenu/menu.png"); // place in resources or same folder
 		ImageView imgView02 = new ImageView(exit);
 		imgView02.setFitWidth(250); // optional resizing
 		imgView02.setFitHeight(60);
@@ -55,14 +57,14 @@ public class EndingPage {
 
         // วางข้อความตรงกลางจริงๆ โดยไม่ใช้ VBox
         StackPane centerTextPane = new StackPane(animatedLabel);
-        centerTextPane.setPrefSize(1244, 700);  // ขนาดเท่ากับหน้าจอ
+        centerTextPane.setPrefSize(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);  // ขนาดเท่ากับหน้าจอ
         centerTextPane.setStyle("-fx-alignment: center;");
 
         StackPane root = new StackPane();
         root.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
         root.getChildren().addAll(centerTextPane, buttonPane);
 
-        scene = new Scene(root, 1244, 700);
+        scene = new Scene(root, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
 		
         SoundManager.playBGM("musics/Keyboard_typing.mp3",1);
         

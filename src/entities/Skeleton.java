@@ -74,8 +74,9 @@ public class Skeleton extends Monster {
 		gc.setFill(Color.LIMEGREEN);
 		gc.fillRect(drawX, drawY - 10, 40 * healthPercent, 5);
 	}
-
-	private void moveTowardPlayer(double dx) {
+	
+	@Override
+	public void moveTowardPlayer(double dx) {
 		if (dx > 0) {
 			x += GameConfig.SKELETON_SPEED * getSpeedMultipiler();
 		} else {

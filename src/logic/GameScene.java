@@ -66,7 +66,7 @@ public class GameScene extends AnimationTimer implements Updatable {
 	public GameScene(Canvas canvas, Stage stage) {
 		this.canvas = canvas;
 		this.gc = canvas.getGraphicsContext2D();
-		this.camera = new Camera(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
+		this.camera = new Camera(GameConfig.SCREEN_WIDTH);
 		this.stage = stage;
 
 		List<Character> team = new ArrayList<>();
@@ -85,7 +85,8 @@ public class GameScene extends AnimationTimer implements Updatable {
 
 		int[] minotaurX = { -2500, -2000, -1000, 2000, 3000, 3500, 5000 };
 		for (int x : minotaurX) {
-			monsters.add(new Minotaur(x, GameConfig.GROUND_LEVEL - 37, currentPlayer));
+			Monster m = new Minotaur(x, GameConfig.GROUND_LEVEL - 37, currentPlayer);
+			monsters.add(m);
 		}
 
 		tempMessage.setFont(Font.font("Impact", FontWeight.BOLD, 50));
@@ -463,11 +464,11 @@ public class GameScene extends AnimationTimer implements Updatable {
 		tempMessage.setVisible(true);
 
 		PauseTransition pause = new PauseTransition(Duration.millis(100));
-		pause.setOnFinished(e -> {
+		pause.setOnFinished(_ -> {
 			FadeTransition fade = new FadeTransition(Duration.seconds(5), tempMessage);
 			fade.setFromValue(1.0);
 			fade.setToValue(0.0);
-			fade.setOnFinished(ev -> tempMessage.setVisible(false));
+			fade.setOnFinished(_ -> tempMessage.setVisible(false));
 			fade.play();
 		});
 		pause.play();

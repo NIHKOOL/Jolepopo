@@ -14,6 +14,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import utils.Assets;
 import utils.ButtonUtils;
 import utils.SoundManager;
 
@@ -22,7 +23,7 @@ public class HowToPlayPage {
 
 	public HowToPlayPage(Stage stage, Scene mainMenuScene) {
 		//create background
-		Image backgroundImage = new Image("gamemenu/night.png");
+		Image backgroundImage = Assets.loadImage("gamemenu/night.png");
 		ImageView backgroundImageView = new ImageView(backgroundImage);
 		backgroundImageView.setPreserveRatio(false);
 		backgroundImageView.setFitWidth(800);
@@ -108,7 +109,7 @@ public class HowToPlayPage {
 		root.getChildren().addAll(backgroundImageView, page2Layout);
 
 		// Create scene
-		scene = new Scene(root, 1244, 700);
+		scene = new Scene(root, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
 
 		// Optional: resize background when window resizes
 		backgroundImageView.fitWidthProperty().bind(scene.widthProperty());
@@ -117,7 +118,7 @@ public class HowToPlayPage {
 	}
 	
 	public ImageView createimageview(String string) {
-		Image image = new Image(string);
+		Image image = Assets.loadImage(string);
 		ImageView imageView = new ImageView(image);
 		imageView.setFitHeight(40);
 		imageView.setFitWidth(40);

@@ -105,7 +105,8 @@ public class GorgonBoss extends Monster implements Renderable, Updatable {
 					drawHeight);
 	}
 
-	private void moveTowardPlayer(double dx) {
+	@Override
+	public void moveTowardPlayer(double dx) {
 		if (dx > 0) {
 			x += GameConfig.BOSS_SPEED * getSpeedMultipiler();
 		} else {

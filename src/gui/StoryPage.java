@@ -37,7 +37,7 @@ public class StoryPage {
 		ButtonUtils.addHoverEffect(nextButton);
 
 		nextButton.setOnAction(_ -> {
-			Canvas canvas = new Canvas(1244, 700);
+			Canvas canvas = new Canvas(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
 			GameScene gameScene = new GameScene(canvas, stage);
 
 			StackPane root = new StackPane(canvas, gameScene.getTempMessage());
@@ -60,14 +60,14 @@ public class StoryPage {
 
 		// create stackPane
 		StackPane centerTextPane = new StackPane(animatedLabel);
-		centerTextPane.setPrefSize(1244, 700);
+		centerTextPane.setPrefSize(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
 		centerTextPane.setStyle("-fx-alignment: center;");
 
 		StackPane root = new StackPane();
 		root.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
 		root.getChildren().addAll(centerTextPane, buttonPane);
 
-		scene = new Scene(root, 1244, 700);
+		scene = new Scene(root, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
 
 		SoundManager.playBGM("musics/Keyboard_typing.mp3", 1);
 

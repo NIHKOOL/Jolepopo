@@ -13,6 +13,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import logic.GameScene;
+import utils.Assets;
 import utils.ButtonUtils;
 import utils.SoundManager;
 
@@ -46,7 +47,7 @@ public class GameStopPage {
 				GameConfig.OTHER_HEIGHT);
 		restartButton.setOnAction(_ -> {
 			SoundManager.stopAllSounds();
-			Canvas canvas = new Canvas(1244, 700);
+			Canvas canvas = new Canvas(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
 			GameScene gameScene = new GameScene(canvas, stage);
 
 			StackPane newroot = new StackPane(canvas, gameScene.getTempMessage());
@@ -78,15 +79,15 @@ public class GameStopPage {
 		Image backgroundImage;
 
 		if (currentMapIndex == 0) {
-			backgroundImage = new Image("/map/BG_1.png");
+			backgroundImage = Assets.loadImage("map/BG_1.png");
 		} else if (currentMapIndex == 1) {
-			backgroundImage = new Image("/map/terrace.png");
+			backgroundImage = Assets.loadImage("map/terrace.png");
 		} else if (currentMapIndex == 2) {
-			backgroundImage = new Image("/map/BG_2.png");
+			backgroundImage = Assets.loadImage("map/BG_2.png");
 		} else if (currentMapIndex == 3) {
-			backgroundImage = new Image("/map/terrace.png");
+			backgroundImage = Assets.loadImage("map/terrace.png");
 		} else if (currentMapIndex == 4) {
-			backgroundImage = new Image("/map/BG_4.png");
+			backgroundImage = Assets.loadImage("map/BG_4.png");
 		} else {
 			backgroundImage = null;
 		}
@@ -101,7 +102,7 @@ public class GameStopPage {
 		root.getChildren().add(backgroundImageView);
 		root.getChildren().add(overlay);
 
-		Scene scene = new Scene(root, 1244, 700);
+		Scene scene = new Scene(root, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
 
 		scene.setOnKeyPressed(e -> {
 			if (e.getCode() == KeyCode.E) {
