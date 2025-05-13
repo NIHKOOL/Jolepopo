@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import logic.GameScene;
+import utils.Assets;
 import utils.ButtonUtils;
 import utils.SoundManager;
 
@@ -75,11 +76,11 @@ public class GameOverPage {
 		// create background
 		Image backgroundImage;
 		if(index == 0) {
-			backgroundImage = new Image("/map/BG_1.png");
+			backgroundImage = Assets.loadImage("map/BG_1.png");
 		} else if(index == 2) {
-			backgroundImage = new Image("/map/BG_2.png");
+			backgroundImage = Assets.loadImage("map/BG_2.png");
 		} else if(index == 4) {
-			backgroundImage = new Image("/map/BG_4.png");
+			backgroundImage = Assets.loadImage("map/BG_4.png");
 		} else {
 			backgroundImage = null;
 		}

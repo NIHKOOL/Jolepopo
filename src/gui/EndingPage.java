@@ -18,6 +18,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import utils.Assets;
 import utils.SoundManager;
 
 public class EndingPage {
@@ -29,7 +30,7 @@ public class EndingPage {
         Text animatedLabel = new Text();
         
         // botton create
-        Image exit = new Image("gamemenu/menu.png"); // place in resources or same folder
+        Image exit = Assets.loadImage("gamemenu/menu.png"); // place in resources or same folder
 		ImageView imgView02 = new ImageView(exit);
 		imgView02.setFitWidth(250); // optional resizing
 		imgView02.setFitHeight(60);

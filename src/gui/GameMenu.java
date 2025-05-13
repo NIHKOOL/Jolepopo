@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import utils.Assets;
 import utils.ButtonUtils;
 import utils.SoundManager;
 import config.GameConfig;
@@ -29,12 +30,12 @@ public class GameMenu {
 		ButtonUtils.addHoverEffect(quitbutton);
 
 		// import background
-		Image Logo = new Image("gamemenu/logo.png");
+		Image Logo = Assets.loadImage("gamemenu/logo.png");
 		ImageView logoImageView = new ImageView(Logo);
 		logoImageView.setFitHeight(250);
 		logoImageView.setFitWidth(240);
 
-		Image backgroundImage = new Image("gamemenu/homepage.png");
+		Image backgroundImage = Assets.loadImage("gamemenu/homepage.png");
 		ImageView backgroundImageView = new ImageView(backgroundImage);
 		backgroundImageView.setPreserveRatio(false);
 		backgroundImageView.setFitWidth(GameConfig.SCREEN_WIDTH);

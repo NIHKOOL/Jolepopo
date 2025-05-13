@@ -13,6 +13,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import logic.GameScene;
+import utils.Assets;
 import utils.ButtonUtils;
 import utils.SoundManager;
 
@@ -78,15 +79,15 @@ public class GameStopPage {
 		Image backgroundImage;
 
 		if (currentMapIndex == 0) {
-			backgroundImage = new Image("/map/BG_1.png");
+			backgroundImage = Assets.loadImage("map/BG_1.png");
 		} else if (currentMapIndex == 1) {
-			backgroundImage = new Image("/map/terrace.png");
+			backgroundImage = Assets.loadImage("map/terrace.png");
 		} else if (currentMapIndex == 2) {
-			backgroundImage = new Image("/map/BG_2.png");
+			backgroundImage = Assets.loadImage("map/BG_2.png");
 		} else if (currentMapIndex == 3) {
-			backgroundImage = new Image("/map/terrace.png");
+			backgroundImage = Assets.loadImage("map/terrace.png");
 		} else if (currentMapIndex == 4) {
-			backgroundImage = new Image("/map/BG_4.png");
+			backgroundImage = Assets.loadImage("map/BG_4.png");
 		} else {
 			backgroundImage = null;
 		}

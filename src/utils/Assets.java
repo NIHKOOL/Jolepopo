@@ -1,14 +1,16 @@
 package utils;
 
+import java.net.URL;
+
 import javafx.scene.image.Image;
 
 public class Assets {
 
-    public static Image loadImage(String name) {
-        var resource = Assets.class.getResource("/" + name);
-        if (resource == null) {
-            throw new IllegalArgumentException("Image not found: " + name);
-        }
-        return new Image(resource.toExternalForm());
-    }
+	public static Image loadImage(String path) {
+	    URL url = Assets.class.getResource("/" + path);
+	    if (url == null) {
+	        throw new IllegalArgumentException("Image not found: " + path);
+	    }
+	    return new Image(url.toExternalForm());
+	}
 }
