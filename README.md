@@ -13,7 +13,18 @@ every monster — culminating in the **Gorgon Boss** — to save the world.
 
 ---
 
+## 🎥 Instruction & Gameplay Video
+
+Watch the full instructions and gameplay walkthrough on YouTube:
+
+**▶ [Jolepopo — Instruction & Gameplay](https://www.youtube.com/watch?v=oEIywyK6eEs)**
+
+[![Jolepopo Instruction & Gameplay](https://img.youtube.com/vi/oEIywyK6eEs/maxresdefault.jpg)](https://www.youtube.com/watch?v=oEIywyK6eEs)
+
+---
+
 ## Table of Contents
+- [Instruction & Gameplay Video](#-instruction--gameplay-video)
 - [Gameplay Overview](#gameplay-overview)
 - [Controls](#controls)
 - [The Heroes](#the-heroes)
@@ -250,6 +261,7 @@ registered as classpath source roots in [`.classpath`](.classpath).
 
 ## Documentation
 
+- **🎥 Instruction & Gameplay video** — <https://www.youtube.com/watch?v=oEIywyK6eEs>
 - **`Handbook-1243412-17471434041553.pdf`** — full project documentation: rules, examples,
   scene-by-scene walkthrough, and a complete per-class / per-field / per-method reference.
 - **`UMLjole.png`** — the UML class diagram (a readable copy is also bundled in the JAR).
